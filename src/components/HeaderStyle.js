@@ -2,7 +2,16 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   base: {
     width: "100%",
-    flexDirection: "row"
+    position: "fixed",
+    top: "0",
+    flexDirection: "row",
+    zIndex: 10,
+    backgroundColor: "white",
+    paddingLeft: "20px",
+    paddingTop: "10px",
+    paddingRight: "20px",
+    paddingBottom: "10px",
+    boxShadow: " 0px 0 15px rgba(0, 0, 0, 0.8)"
   },
   subBase: { width: "50%", marginTop: "10px" },
   locationTitle: {
@@ -34,7 +43,7 @@ export default StyleSheet.create({
     justifyContent: "flex-end"
   },
   image: {
-    width: 70,
-    height: 70
+    width: 60,
+    height: 60
   }
 });

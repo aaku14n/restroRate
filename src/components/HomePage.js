@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import Header from "./Header";
 import RestroCard from "./RestroCard";
+import Footer from "./Footer";
 
 const TestJson = {
   pageName: "Feed Page",
@@ -61,22 +62,25 @@ const TestJson = {
   ]
 };
 
-function homePage(props) {
+function HomePage(props) {
   return (
-    <View style={styles.base}>
+    <View>
       <Header />
-      {TestJson.data.map((item, id) => {
-        return (
-          <RestroCard
-            imgUri={{
-              uri: item.dishImage
-            }}
-            name={item.restaurantName}
-            cusions={item.dishName}
-            distance={item.distance}
-          />
-        );
-      })}
+      <View style={styles.base}>
+        {TestJson.data.map((item, id) => {
+          return (
+            <RestroCard
+              imgUri={{
+                uri: item.dishImage
+              }}
+              name={item.restaurantName}
+              cusions={item.dishName}
+              distance={item.distance}
+            />
+          );
+        })}
+      </View>
+      <Footer />
     </View>
   );
 }
@@ -84,8 +88,9 @@ function homePage(props) {
 const styles = StyleSheet.create({
   base: {
     width: "100%",
-    padding: "20px"
+    padding: "20px",
+    marginTop: "60px"
   }
 });
 
-export default homePage;
+export default HomePage;
