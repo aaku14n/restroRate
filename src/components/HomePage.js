@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import Header from "./Header";
 import RestroCard from "./RestroCard";
 import Footer from "./Footer";
@@ -66,7 +66,8 @@ function HomePage(props) {
   return (
     <View>
       <Header />
-      <View style={styles.base}>
+      <Footer />
+      <ScrollView style={styles.base}>
         {TestJson.data.map((item, id) => {
           return (
             <RestroCard
@@ -79,7 +80,7 @@ function HomePage(props) {
             />
           );
         })}
-      </View>
+      </ScrollView>
       <Footer />
     </View>
   );
@@ -88,8 +89,8 @@ function HomePage(props) {
 const styles = StyleSheet.create({
   base: {
     width: "100%",
-    padding: "20px",
-    marginTop: "60px"
+    padding: 20,
+    marginTop: 60
   }
 });
 

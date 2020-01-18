@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   base: {
     width: "100%",
-    marginTop: "25px"
+    marginTop: 25
   },
   foodImage: {
     width: "100%",
@@ -10,7 +10,7 @@ export default StyleSheet.create({
     borderRadius: 15
   },
   detailSection: {
-    marginTop: "25px"
+    marginTop: 25
   },
   nameRatingWrapper: {
     width: "100%",
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "flex-end"
   },
-  distanceWrapper: { width: "100%", flexDirection: "row", marginTop: "8px" },
+  distanceWrapper: { width: "100%", flexDirection: "row", marginTop: 8 },
   name: {
     fontSize: 18,
     fontWeight: "500"

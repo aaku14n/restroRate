@@ -2,18 +2,18 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   base: {
     width: "100%",
-    position: "fixed",
-    top: "0",
+    // position: "fixed",
+    // top: "0",
     flexDirection: "row",
     zIndex: 10,
     backgroundColor: "white",
-    paddingLeft: "20px",
-    paddingTop: "10px",
-    paddingRight: "20px",
-    paddingBottom: "10px",
-    boxShadow: " 0px 0 15px rgba(0, 0, 0, 0.8)"
+    paddingLeft: 20,
+    paddingTop: 10,
+    paddingRight: 20,
+    paddingBottom: 10
+    // boxShadow: " 0px 0 15px rgba(0, 0, 0, 0.8)"
   },
-  subBase: { width: "50%", marginTop: "10px" },
+  subBase: { width: "50%", marginTop: 10 },
   locationTitle: {
     fontSize: 12,
     color: "grey"
@@ -31,11 +31,11 @@ export default StyleSheet.create({
     flexDirection: "row",
     marginTop: 5
   },
-  downIcon: { marginLeft: "10px", marginTop: "5px" },
+  downIcon: { marginLeft: 10, marginTop: 5 },
   upIcon: {
     transform: [{ rotate: "180deg" }],
-    marginLeft: "10px",
-    marginTop: "5px"
+    marginLeft: 10,
+    marginTop: 5
   },
   profileImage: {
     width: "50%",
