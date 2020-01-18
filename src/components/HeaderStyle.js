@@ -2,9 +2,11 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   base: {
     width: "100%",
-    flexDirection: "row"
+    flexDirection: "row",
+    paddingLeft: 10,
+    paddingRight: 10
   },
-  subBase: { width: "50%", marginTop: "10px" },
+  subBase: { width: "50%", marginTop: 10 },
   locationTitle: {
     fontSize: 12,
     color: "grey"
@@ -22,11 +24,11 @@ export default StyleSheet.create({
     flexDirection: "row",
     marginTop: 5
   },
-  downIcon: { marginLeft: "10px", marginTop: "5px" },
+  downIcon: { marginLeft: 10, marginTop: 5 },
   upIcon: {
     transform: [{ rotate: "180deg" }],
-    marginLeft: "10px",
-    marginTop: "5px"
+    marginLeft: 10,
+    marginTop: 5
   },
   profileImage: {
     width: "50%",
