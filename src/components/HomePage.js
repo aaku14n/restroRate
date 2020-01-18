@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, FlatList } from "react-native";
 import Header from "./Header";
 import RestroCard from "./RestroCard";
 import Footer from "./Footer";
@@ -8,7 +8,7 @@ const TestJson = {
   pageName: "Feed Page",
   data: [
     {
-      id: "221cb8b8-4812-4fa7-a0a6-f1752e4f206c",
+      id: "1",
       restaurantName: "Sanraku",
       restaurantImage:
         "https://c8.alamy.com/comp/BDE787/dummy-or-manikin-holding-a-menu-outside-the-village-restaurant-in-BDE787.jpg",
@@ -21,7 +21,7 @@ const TestJson = {
       cost: 500
     },
     {
-      id: "221cb8b8-4812-4fa7-a0a6-f1752e4f206c",
+      id: "2",
       restaurantName: "Sushi Special",
       restaurantImage:
         "https://c8.alamy.com/comp/BDE787/dummy-or-manikin-holding-a-menu-outside-the-village-restaurant-in-BDE787.jpg",
@@ -34,7 +34,7 @@ const TestJson = {
       cost: 500
     },
     {
-      id: "221cb8b8-4812-4fa7-a0a6-f1752e4f206c",
+      id: "3",
       restaurantName: "Tsubasa Sushi",
       restaurantImage:
         "https://c8.alamy.com/comp/BDE787/dummy-or-manikin-holding-a-menu-outside-the-village-restaurant-in-BDE787.jpg",
@@ -47,7 +47,7 @@ const TestJson = {
       cost: 500
     },
     {
-      id: "221cb8b8-4812-4fa7-a0a6-f1752e4f206c",
+      id: "4",
       restaurantName: "Sanraku",
       restaurantImage:
         "https://c8.alamy.com/comp/BDE787/dummy-or-manikin-holding-a-menu-outside-the-village-restaurant-in-BDE787.jpg",
@@ -66,7 +66,6 @@ function HomePage(props) {
   return (
     <View>
       <Header />
-      <Footer />
       <ScrollView style={styles.base}>
         {TestJson.data.map((item, id) => {
           return (
@@ -81,6 +80,7 @@ function HomePage(props) {
           );
         })}
       </ScrollView>
+      <Footer />
     </View>
   );
 }

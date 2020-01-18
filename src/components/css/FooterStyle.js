@@ -9,14 +9,11 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 20
+    padding: 20,
+    position: "absolute",
+    bottom: 0
     // boxShadow: " 0px 0 15px rgba(0, 0, 0, 0.8)"
   },
-  //   iconWrapper: {
-  //     flexDirection: "row",
-  //     justifyContent: "space-between",
-  //     alignItems: "center"
-  //   },
   icon: {
     width: 30,
     height: 30

@@ -2,10 +2,9 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   base: {
     width: "100%",
-    // position: "fixed",
-    // top: "0",
+    position: "absolute",
+    top: 0,
     flexDirection: "row",
-    zIndex: 10,
     backgroundColor: "white",
     paddingLeft: 20,
     paddingTop: 10,
