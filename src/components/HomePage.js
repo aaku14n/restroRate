@@ -81,7 +81,6 @@ function HomePage(props) {
           );
         })}
       </ScrollView>
-      <Footer />
     </View>
   );
 }

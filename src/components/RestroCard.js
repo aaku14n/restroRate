@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
-import styles from "./RestroCardStyle";
+import styles from "./css/RestroCardStyle";
 
 function RestroCard(props) {
   return (

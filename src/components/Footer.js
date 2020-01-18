@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
-import styles from "./FooterStyle";
+import styles from "./css/FooterStyle";
 
 function Footer(props) {
   return (

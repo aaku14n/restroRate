@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableHighlight } from "react-native";
-import styles from "../components/CounterStyle";
+import styles from "./css/CounterStyle";
 import PropTypes from "prop-types";
 
 function Counter(props) {

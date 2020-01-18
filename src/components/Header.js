@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, Image, TouchableHighlight } from "react-native";
-import styles from "./HeaderStyle";
+import styles from "./css/HeaderStyle";
 
 function Header(props) {
   const [dropDown, setdropDown] = useState(false);
