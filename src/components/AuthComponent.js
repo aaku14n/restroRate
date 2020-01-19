@@ -9,9 +9,10 @@ import homeNonActiveIcon from "../../assets/fork.png";
 import searchIcon from "../../assets/search.png";
 import discountIcon from "../../assets/discount.png";
 import profileIcon from "../../assets/profile.png";
+import AuthLogin from "./AuthLogin";
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: HomePage,
+    Home: AuthLogin,
     Search: Search,
     Account: Search,
     Setting: Search
