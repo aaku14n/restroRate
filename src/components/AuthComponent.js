@@ -12,7 +12,7 @@ import profileIcon from "../../assets/profile.png";
 import AuthLogin from "./AuthLogin";
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: HomePage,
+    Home: AuthLogin,
     Search: Search,
     Account: Search,
     Setting: Search
