@@ -10,9 +10,10 @@ import searchIcon from "../../assets/search.png";
 import discountIcon from "../../assets/discount.png";
 import profileIcon from "../../assets/profile.png";
 import AuthLogin from "./AuthLogin";
+import SocialLoginContainer from "../containers/SocialLoginContainer";
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: AuthLogin,
+    Home: SocialLoginContainer,
     Search: Search,
     Account: Search,
     Setting: Search
