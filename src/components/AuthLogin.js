@@ -14,7 +14,15 @@ function AuthLogin(props) {
         scopes: ["profile", "email"]
       });
       if (result.type === "success") {
-        await this.props.userLogin(result);
+        const userDetailsObj = {
+          accessToken: result.accessToken,
+          idToken: result.idToken,
+          name: result.user.name,
+          email: result.user.email,
+          socialPlatform: "Google",
+          profilePic: result.user.photoUrl
+        };
+        await this.props.userLogin(userDetailsObj);
         return result.accessToken;
       } else {
         return { cancelled: true };
@@ -41,8 +49,10 @@ function AuthLogin(props) {
         const response = await fetch(
           `https://graph.facebook.com/me?access_token=${token}`
         );
+        // console.log(response);
+        // console.log(response.json());
         // await this.props.userLogin(response.json());
-        alert("Logged in!", `Hi ${(await response.json()).name}!`);
+        alert("Logged in!", `Hi ${await response.json()}!`);
       } else {
         // type === 'cancel'
       }
