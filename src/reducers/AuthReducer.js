@@ -1,4 +1,5 @@
 import * as AuthActions from "../actions/AuthAction";
+import { AsyncStorage} from "react-native";
 const AuthReducer = (
   state = {
     userLoginLoading: false,
@@ -14,6 +15,7 @@ const AuthReducer = (
       });
 
     case AuthActions.USER_LOGIN_SUCCESS:
+      AsyncStorage.setItem("userData", JSON.stringify(action.userDetails));
       return Object.assign({}, state, {
         userLoginLoading: false,
         userLoginDetails: action.userDetails
