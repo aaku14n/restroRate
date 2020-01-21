@@ -47,9 +47,19 @@ function AuthLogin(props) {
       if (type === "success") {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(
-          `https://graph.facebook.com/me?access_token=${token}`
+          `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture`
         );
-        await props.userLogin(response.json());
+        const userDetail = await response.json();
+        console.log(userDetail);
+        const userDetailsObj = {
+          id: userDetail.id,
+          accessToken: token,
+          name: userDetail.name,
+          email: "test@gmail.com",
+          socialPlatform: "Facebook",
+          profilePic: "qwerty"
+        };
+        await props.userLogin(userDetailsObj);
         alert("Logged in!", `Hi ${await response.json()}!`);
       } else {
         // type === 'cancel'
