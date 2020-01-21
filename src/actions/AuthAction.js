@@ -3,12 +3,10 @@ export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_LOGIN_FAILURE = "USER_LOGIN_FAILURE";
 
 export function userLogin(userDetailsObject) {
-  console.log(userDetailsObject);
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: USER_LOGIN_REQUEST });
       const result = await api.post("register", userDetailsObject);
-      console.log(result);
       const resultJson = await result.json();
       return dispatch({
         type: USER_LOGIN_SUCCESS,
