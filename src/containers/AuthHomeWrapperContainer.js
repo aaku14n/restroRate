@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { userLogin } from "../actions/AuthAction";
-import HomePageWrapper from "../components/HomepageWrapper";
+import AuthHomeWrapper from "../components/AuthHomeWrapper";
 
 const mapStateToProps = state => {
   return {
@@ -17,5 +17,5 @@ const mapDispatchToProps = dispatch => {
 const HomePageWrapperContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomePageWrapper);
+)(AuthHomeWrapper);
 export default HomePageWrapperContainer;

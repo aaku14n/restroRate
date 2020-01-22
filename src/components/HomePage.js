@@ -63,6 +63,7 @@ const TestJson = {
 };
 
 function HomePage(props) {
+  console.log("here");
   return (
     <View>
       <Header />
@@ -70,6 +71,7 @@ function HomePage(props) {
         {TestJson.data.map((item, id) => {
           return (
             <RestroCard
+              key={id}
               imgUri={{
                 uri: item.dishImage
               }}
