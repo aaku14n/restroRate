@@ -4,20 +4,11 @@ import HomePage from "./HomePage";
 import SocialLoginContainer from "../containers/SocialLoginContainer";
 import AuthContainer from "../containers/AuthContainer";
 
-function HomePageWrapper(props) {
-  return (
-    <View>
-      {props.loginDetails ? (
-        <View>
-          <AuthContainer />
-        </View>
-      ) : (
-        <View>
-          <SocialLoginContainer />
-        </View>
-      )}
-    </View>
-  );
+function AuthHomeWrapper(props) {
+  if (props.loginDetails) {
+    return <AuthContainer />;
+  }
+  return <SocialLoginContainer />;
 }
 
-export default HomePageWrapper;
+export default AuthHomeWrapper;
