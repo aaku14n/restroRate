@@ -63,7 +63,6 @@ const TestJson = {
 };
 
 function HomePage(props) {
-  console.log("here");
   return (
     <View>
       <Header />
