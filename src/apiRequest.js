@@ -1,4 +1,4 @@
-const API_URL = "http://littra.in:4200/";
+const API_URL = "http://littra.in:4200";
 
 export const get = url => {
   const headers = {

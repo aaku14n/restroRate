@@ -1,6 +1,6 @@
-import AuthComponent from "../components/AuthComponent";
 import { connect } from "react-redux";
 import { userLogin } from "../actions/AuthAction";
+import AuthLogin from "../components/AuthLogin";
 
 const mapStateToProps = state => {
   return {
@@ -14,8 +14,8 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-const AuthContainer = connect(
+const SocialLoginContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AuthComponent);
-export default AuthContainer;
+)(AuthLogin);
+export default SocialLoginContainer;
