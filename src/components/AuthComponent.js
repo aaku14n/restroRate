@@ -9,11 +9,10 @@ import homeNonActiveIcon from "../../assets/fork.png";
 import searchIcon from "../../assets/search.png";
 import discountIcon from "../../assets/discount.png";
 import profileIcon from "../../assets/profile.png";
-import HomePageWrapperContainer from "../containers/HomePageWrapperContainer";
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: HomePageWrapperContainer,
+    Home: HomePage,
     Search: Search,
     Account: Search,
     Setting: Search
