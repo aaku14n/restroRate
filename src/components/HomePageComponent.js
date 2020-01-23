@@ -8,7 +8,7 @@ class HomePageComponent extends React.Component {
     this.props.getHomeData();
   }
   gotoRestroPage = () => {
-    props.navigation.navigate("RestroDetails");
+    this.props.navigation.navigate("RestroDetails");
   };
   render() {
     return (
