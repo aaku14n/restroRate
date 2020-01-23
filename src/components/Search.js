@@ -99,7 +99,7 @@ const AppNavigator = createStackNavigator({
   SearchScreen: {
     screen: SearchComponent,
     navigationOptions: {
-      header: null
+      headerShown: null
     }
   },
   HomeScreen: { screen: MyNotificationsScreen }

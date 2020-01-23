@@ -8,13 +8,13 @@ const HomePage = createStackNavigator({
   SettingScreen: {
     screen: HomePageContainer,
     navigationOptions: {
-      header: null
+      headerShown: null
     }
   },
   RestroDetails: {
     screen: RestroDetailsComponent,
     navigationOptions: {
-      header: null,
+      headerShown: null,
       tabBarVisible: false
     }
   }
