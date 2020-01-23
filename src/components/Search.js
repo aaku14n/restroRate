@@ -16,7 +16,8 @@ const TestJson = {
       dishImage:
         "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg",
 
-      name: "Susi"
+      name: "Susi",
+      rating: 2
     },
     {
       id: "2",
@@ -24,7 +25,8 @@ const TestJson = {
       dishImage:
         "https://c-lj.gnst.jp/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20180116120327",
 
-      name: "Indian"
+      name: "Indian",
+      rating: 2.5
     },
     {
       id: "3",
@@ -32,7 +34,8 @@ const TestJson = {
       dishImage:
         "https://res.cloudinary.com/sagacity/image/upload/c_crop,h_2000,w_3000,x_0,y_0/c_limit,dpr_auto,f_auto,fl_lossy,q_80,w_1080/shutterstock_365954354_nghgkk.jpg",
 
-      name: "Chiense"
+      name: "Chiense",
+      rating: 3.5
     },
     {
       id: "4",
@@ -40,7 +43,8 @@ const TestJson = {
       dishImage:
         "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg",
 
-      name: "Itelian"
+      name: "Itelian",
+      rating: 3
     }
   ]
 };
@@ -101,6 +105,7 @@ function SearchComponent(props) {
                   imgUri={recent.dishImage}
                   name={recent.name}
                   onPress={onGotoDetails}
+                  rating={recent.rating}
                 />
               );
             })}
@@ -126,7 +131,6 @@ const AppNavigator = createStackNavigator({
       headerShown: false
     }
   }
-  // HomeScreen: { screen: MyNotificationsScreen }
 });
 const Search = createAppContainer(AppNavigator);
 

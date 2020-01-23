@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Image } from "react-native";
 import styles from "./css/ListItemStyle";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import RatingComponent from "./General/RatingComponent";
 
 function ListItemComponent(props) {
   return (
@@ -23,10 +24,7 @@ function ListItemComponent(props) {
           <Text style={styles.discription}>Susi Bars, Japanese</Text>
           <View style={styles.ratingWrapper}>
             <View>
-              <Image
-                style={styles.ratingStarImg}
-                source={require("../../assets/rating.jpg")}
-              />
+              <RatingComponent rating={props.rating} size={15} />
             </View>
           </View>
           <Text style={styles.discription}>212 peoples recomended</Text>
