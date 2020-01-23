@@ -25,7 +25,7 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   recentSearch: {
-    marginTop: 25
+    marginTop: 28
   },
   recentSearchTitle: {
     fontSize: 23,
@@ -33,10 +33,23 @@ export default StyleSheet.create({
     color: "black"
   },
   image: {
-    width: 100,
-    height: 100
+    width: 110,
+    height: 110,
+    borderRadius: 55
   },
   imagesWrapper: {
-    flexDirection: "row"
+    flexDirection: "row",
+    marginTop: 20
+  },
+  imageTitleWrapper: {
+    marginRight: 35
+  },
+  title: {
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 15
+  },
+  recommendWrapper: {
+    marginTop: 28
   }
 });
