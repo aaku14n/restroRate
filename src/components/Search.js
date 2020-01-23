@@ -6,6 +6,8 @@ import styles from "./css/SearchStyle";
 import Header from "./Header";
 import ListItemComponent from "./ListItemComponent";
 import searchIcon from "../../assets/search.png";
+import HeaderContainer from "../containers/HeaderContainer";
+import RestroDetailsComponent from "./RestroDetailComponent";
 
 const TestJson = {
   data: [
@@ -44,10 +46,13 @@ const TestJson = {
 };
 
 function SearchComponent(props) {
+  const onGotoDetails = id => {
+    props.navigation.navigate("RestroDetails");
+  };
   return (
-    <ScrollView style={styles.base}>
+    <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-        <Header />
+        <HeaderContainer />
       </View>
       <View style={styles.subBase}>
         <View style={styles.searchInput}>
@@ -61,7 +66,11 @@ function SearchComponent(props) {
           <View>
             <Text style={styles.recentSearchTitle}>Recent Searches</Text>
           </View>
-          <ScrollView horizontal={true} style={styles.imagesWrapper}>
+          <ScrollView
+            horizontal={true}
+            style={styles.imagesWrapper}
+            showsHorizontalScrollIndicator={false}
+          >
             {TestJson.data.map((recent, id) => {
               return (
                 <View style={styles.imageTitleWrapper}>
@@ -91,6 +100,7 @@ function SearchComponent(props) {
                   key={id}
                   imgUri={recent.dishImage}
                   name={recent.name}
+                  onPress={onGotoDetails}
                 />
               );
             })}
@@ -107,10 +117,16 @@ const AppNavigator = createStackNavigator({
   SearchScreen: {
     screen: SearchComponent,
     navigationOptions: {
-      headerShown: null
+      headerShown: false
     }
   },
-  HomeScreen: { screen: MyNotificationsScreen }
+  RestroDetails: {
+    screen: RestroDetailsComponent,
+    navigationOptions: {
+      headerShown: false
+    }
+  }
+  // HomeScreen: { screen: MyNotificationsScreen }
 });
 const Search = createAppContainer(AppNavigator);
 
