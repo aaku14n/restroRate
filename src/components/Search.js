@@ -18,7 +18,8 @@ const TestJson = {
 
       name: "Susi",
       rating: 2,
-      price: "$23.55"
+      price: "$23.55",
+      peoples: 200
     },
     {
       id: "2",
@@ -28,7 +29,8 @@ const TestJson = {
 
       name: "Indian",
       rating: 2.5,
-      price: "$20.55"
+      price: "$20.55",
+      peoples: 200
     },
     {
       id: "3",
@@ -38,7 +40,8 @@ const TestJson = {
 
       name: "Chiense",
       rating: 3.5,
-      price: "$23.55"
+      price: "$23.55",
+      peoples: 200
     },
     {
       id: "4",
@@ -48,14 +51,16 @@ const TestJson = {
 
       name: "Itelian",
       rating: 3,
-      price: "$23.55"
+      price: "$23.55",
+      peoples: 200
     },
     {
       id: "5",
       dishImage: "",
       name: "Itelian",
       rating: 3,
-      price: "$23.55"
+      price: "$23.55",
+      peoples: 200
     }
   ]
 };
@@ -92,9 +97,13 @@ function SearchComponent(props) {
                   <Image
                     key={id}
                     style={styles.image}
-                    source={{
-                      uri: recent.dishImage
-                    }}
+                    source={
+                      recent.dishImage
+                        ? {
+                            uri: recent.dishImage
+                          }
+                        : require("../../assets/defaultRestro.png")
+                    }
                   />
                   <Text style={styles.title}>{recent.name}</Text>
                 </View>
@@ -118,7 +127,7 @@ function SearchComponent(props) {
                   onPress={onGotoDetails}
                   rating={recent.rating}
                   price={recent.price}
-                  peoples
+                  peoples={recent.peoples}
                 />
               );
             })}
