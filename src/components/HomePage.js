@@ -4,6 +4,7 @@ import RestroCard from "./RestroCard";
 import HeaderContainer from "../containers/HeaderContainer";
 import RestroDetailsComponent from "./RestroDetailComponent";
 import { createStackNavigator } from "react-navigation-stack";
+import { HOME_SCREEN } from "../Constant";
 const TestJson = {
   pageName: "Feed Page",
   data: [
