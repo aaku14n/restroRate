@@ -6,6 +6,7 @@ import styles from "./css/SearchStyle";
 import Header from "./Header";
 import ListItemComponent from "./ListItemComponent";
 import searchIcon from "../../assets/search.png";
+import RatingComponent from "./General/RatingComponent";
 
 const TestJson = {
   data: [
@@ -46,7 +47,8 @@ const TestJson = {
 function SearchComponent(props) {
   return (
     <ScrollView style={styles.base}>
-      <View style={styles.header}>
+      <RatingComponent rating={3} size={20} />
+      {/* <View style={styles.header}>
         <Header />
       </View>
       <View style={styles.subBase}>
@@ -96,7 +98,7 @@ function SearchComponent(props) {
             })}
           </ScrollView>
         </View>
-      </View>
+      </View> */}
     </ScrollView>
   );
 }
