@@ -39,7 +39,7 @@ export default StyleSheet.create({
   },
   imagesWrapper: {
     flexDirection: "row",
-    marginTop: 20
+    marginTop: 30
   },
   imageTitleWrapper: {
     marginRight: 35
@@ -50,6 +50,9 @@ export default StyleSheet.create({
     marginTop: 15
   },
   recommendWrapper: {
-    marginTop: 28
+    marginTop: 32
+  },
+  listItemWrapper: {
+    marginTop: 25
   }
 });

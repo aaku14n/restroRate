@@ -45,7 +45,7 @@ const TestJson = {
 
 function SearchComponent(props) {
   return (
-    <View style={styles.base}>
+    <ScrollView style={styles.base}>
       <View style={styles.header}>
         <Header />
       </View>
@@ -85,11 +85,19 @@ function SearchComponent(props) {
             </Text>
           </View>
           <ScrollView style={styles.listItemWrapper}>
-            <ListItemComponent />
+            {TestJson.data.map((recent, id) => {
+              return (
+                <ListItemComponent
+                  key={id}
+                  imgUri={recent.dishImage}
+                  name={recent.name}
+                />
+              );
+            })}
           </ScrollView>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 function MyNotificationsScreen() {
