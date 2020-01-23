@@ -9,7 +9,8 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingTop: 10,
     paddingRight: 20,
-    paddingBottom: 10
+    paddingBottom: 10,
+    zIndex: 2
     // boxShadow: " 0px 0 15px rgba(0, 0, 0, 0.8)"
   },
   subBase: { width: "50%", marginTop: 10 },
@@ -43,6 +44,7 @@ export default StyleSheet.create({
   },
   image: {
     width: 60,
-    height: 60
+    height: 60,
+    borderRadius: 30
   }
 });

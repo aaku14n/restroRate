@@ -17,3 +17,12 @@ export async function getAsyncStorage(key) {
     console.log("Something went wrong", error);
   }
 }
+export async function removeAsyncStorage(key) {
+  try {
+    await AsyncStorage.removeItem(key);
+
+    return data;
+  } catch (error) {
+    console.log("Something went wrong", error);
+  }
+}

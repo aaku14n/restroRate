@@ -3,45 +3,58 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import HomePage from "./HomePage";
 import Search from "./Search";
 import IconComponent from "./IconComponent";
+import AccountContainer from "../containers/AccountContainer";
 import React from "react";
-import homeActiveIcon from "../../assets/fork.png";
-import homeNonActiveIcon from "../../assets/fork.png";
+import homeIcon from "../../assets/fork.png";
+import homeActiveIcon from "../../assets/forkActive.png";
 import searchIcon from "../../assets/search.png";
-import discountIcon from "../../assets/discount.png";
+import searchActiveIcon from "../../assets/searchActive.png";
+import reviewIcon from "../../assets/review.png";
+import reviewActiveIcon from "../../assets/reviewActive.png";
 import profileIcon from "../../assets/profile.png";
+import profileActiveIcon from "../../assets/profileActive.png";
+import {
+  HOME_SCREEN,
+  SEARCH_SCREEN,
+  ADD_REVIEW_SCREEN,
+  ACCOUNT_SCREEN
+} from "../Constant";
 
-const TabNavigator = createBottomTabNavigator(
-  {
-    Home: HomePage,
-    Search: Search,
-    Account: Search,
-    Setting: Search
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state;
+const tabs = {};
+tabs[HOME_SCREEN] = HomePage;
+tabs[SEARCH_SCREEN] = Search;
+tabs[ADD_REVIEW_SCREEN] = Search;
+tabs[ACCOUNT_SCREEN] = AccountContainer;
 
-        let iconName = homeActiveIcon;
-        if (routeName === "Home") {
-          iconName = focused ? homeActiveIcon : homeNonActiveIcon;
-        } else if (routeName === "Search") {
-          iconName = focused ? searchIcon : searchIcon;
-        } else if (routeName === "Account") {
-          iconName = focused ? discountIcon : discountIcon;
-        } else if (routeName === "Setting") {
-          iconName = focused ? profileIcon : profileIcon;
-        }
-
-        // You can return any component that you like here!
-        return <IconComponent name={iconName} size={25} color={tintColor} />;
-      }
-    }),
-    tabBarOptions: {
-      activeTintColor: "tomato",
-      inactiveTintColor: "gray"
-    }
+const renderTabBar = navigation => {
+  const { routeName } = navigation.state;
+  console.log(navigation.state);
+  const { isFocused, tintColor } = navigation;
+  const focused = isFocused();
+  let iconName = homeActiveIcon;
+  if (routeName === HOME_SCREEN) {
+    iconName = focused ? homeActiveIcon : homeIcon;
+  } else if (routeName === SEARCH_SCREEN) {
+    iconName = focused ? searchActiveIcon : searchIcon;
+  } else if (routeName === ADD_REVIEW_SCREEN) {
+    iconName = focused ? reviewActiveIcon : reviewIcon;
+  } else if (routeName === ACCOUNT_SCREEN) {
+    iconName = focused ? profileActiveIcon : profileIcon;
   }
-);
+
+  // You can return any component that you like here!
+  return <IconComponent name={iconName} size={25} color={tintColor} />;
+};
+const TabNavigator = createBottomTabNavigator(tabs, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: renderTabBar(navigation)
+    // tabBarVisible: navigation.state.index == 1 ? false : true
+  }),
+
+  tabBarOptions: {
+    activeTintColor: "#fdd835",
+    inactiveTintColor: "black"
+  }
+});
 
 export default createAppContainer(TabNavigator);

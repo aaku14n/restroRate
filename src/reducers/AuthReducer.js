@@ -13,6 +13,7 @@ const AuthReducer = (
         userLoginLoading: true
       });
     case AuthActions.USER_LOGIN_SUCCESS:
+    case AuthActions.USER_LOGGED_IN:
       return Object.assign({}, state, {
         userLoginLoading: false,
         userLoginDetails: action.userDetails
@@ -22,6 +23,10 @@ const AuthReducer = (
       return Object.assign({}, state, {
         userLoginDetailsError: action.error,
         userLoginLoading: false
+      });
+    case AuthActions.LOG_OUT_USER:
+      return Object.assign({}, state, {
+        userLoginDetails: ""
       });
     default:
       return state;

@@ -1,15 +1,48 @@
 import React, { useState } from "react";
 import { Text, View, Image, TouchableHighlight } from "react-native";
 import styles from "./css/HeaderStyle";
+import { Dimensions, Platform } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { ACCOUNT_SCREEN } from "../Constant";
 
+function isIphoneX() {
+  const dim = Dimensions.get("window");
+
+  return (
+    // This has to be iOS
+    Platform.OS === "ios" &&
+    // Check either, iPhone X or XR
+    (isIPhoneXSize(dim) || isIPhoneXrSize(dim))
+  );
+}
+
+function isIPhoneXSize(dim) {
+  return dim.height == 812 || dim.width == 812;
+}
+
+function isIPhoneXrSize(dim) {
+  return dim.height == 896 || dim.width == 896;
+}
+
+// --- main.js Example
+
+const PADDING_TOP = isIphoneX() ? 30 : 10;
 function Header(props) {
+  let profilePic;
+  if (props.loginDetails && props.loginDetails.data) {
+    profilePic = props.loginDetails.data.profilePic;
+  }
+
   const [dropDown, setdropDown] = useState(false);
 
   const onPress = () => {
     setdropDown(!dropDown);
   };
+  const gotoMyAccount = () => {
+    props.navigation.navigate(ACCOUNT_SCREEN);
+  };
   return (
-    <View style={styles.base}>
+    <View style={styles.base} paddingTop={PADDING_TOP}>
       <View style={styles.subBase}>
         <View>
           <Text style={styles.locationTitle}>Your Location</Text>
@@ -32,10 +65,18 @@ function Header(props) {
         </TouchableHighlight>
       </View>
       <View style={styles.profileImage}>
-        <Image
-          style={styles.image}
-          source={require("../../assets/profilePic.png")}
-        />
+        <TouchableOpacity onPress={() => gotoMyAccount()}>
+          <Image
+            style={styles.image}
+            source={
+              profilePic
+                ? {
+                    uri: profilePic
+                  }
+                : require("../../assets/profilePic.png")
+            }
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );

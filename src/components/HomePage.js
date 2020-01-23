@@ -1,9 +1,10 @@
 import React from "react";
 import { View, StyleSheet, ScrollView, FlatList } from "react-native";
-import Header from "./Header";
 import RestroCard from "./RestroCard";
-import Footer from "./Footer";
-
+import HeaderContainer from "../containers/HeaderContainer";
+import RestroDetailsComponent from "./RestroDetailComponent";
+import { createStackNavigator } from "react-navigation-stack";
+import { HOME_SCREEN } from "../Constant";
 const TestJson = {
   pageName: "Feed Page",
   data: [
@@ -62,10 +63,13 @@ const TestJson = {
   ]
 };
 
-function HomePage(props) {
+function HomePageComponent(props) {
+  const gotoRestroPage = () => {
+    props.navigation.navigate("RestroDetails");
+  };
   return (
     <View>
-      <Header />
+      <HeaderContainer {...props} />
       <ScrollView style={styles.base}>
         {TestJson.data.map((item, id) => {
           return (
@@ -77,6 +81,7 @@ function HomePage(props) {
               name={item.restaurantName}
               cusions={item.dishName}
               distance={item.distance}
+              onPress={gotoRestroPage}
             />
           );
         })}
@@ -90,6 +95,21 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 20,
     marginTop: 60
+  }
+});
+const HomePage = createStackNavigator({
+  SettingScreen: {
+    screen: HomePageComponent,
+    navigationOptions: {
+      header: null
+    }
+  },
+  RestroDetails: {
+    screen: RestroDetailsComponent,
+    navigationOptions: {
+      header: null,
+      tabBarVisible: false
+    }
   }
 });
 

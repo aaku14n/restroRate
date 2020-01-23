@@ -50,7 +50,7 @@ function AuthLogin(props) {
           `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture`
         );
         const userDetail = await response.json();
-        console.log(userDetail);
+
         const userDetailsObj = {
           id: userDetail.id,
           accessToken: token,
