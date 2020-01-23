@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { userLogin } from "../actions/AuthAction";
+import { userLogin, validateUserLogin } from "../actions/AuthAction";
 import AuthHomeWrapper from "../components/AuthHomeWrapper";
 
 const mapStateToProps = state => {
@@ -11,6 +11,9 @@ const mapDispatchToProps = dispatch => {
   return {
     userLogin: userDetailsObject => {
       return dispatch(userLogin(userDetailsObject));
+    },
+    validateUserLogin: () => {
+      dispatch(validateUserLogin());
     }
   };
 };

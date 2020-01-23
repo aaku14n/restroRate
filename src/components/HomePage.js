@@ -4,6 +4,7 @@ import Header from "./Header";
 import RestroCard from "./RestroCard";
 import Footer from "./Footer";
 import HeaderContainer from "../containers/HeaderContainer";
+import { getAsyncStorage } from "../utils/AsyncStorage.utils";
 
 const TestJson = {
   pageName: "Feed Page",
@@ -64,7 +65,6 @@ const TestJson = {
 };
 
 function HomePage(props) {
-  console.log("here");
   return (
     <View>
       <HeaderContainer {...props} />

@@ -3,6 +3,7 @@ import { Text, View, Image, TouchableHighlight } from "react-native";
 import styles from "./css/HeaderStyle";
 import { Dimensions, Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { ACCOUNT_SCREEN } from "../Constant";
 
 function isIphoneX() {
   const dim = Dimensions.get("window");
@@ -38,7 +39,7 @@ function Header(props) {
     setdropDown(!dropDown);
   };
   const gotoMyAccount = () => {
-    props.navigation.navigate("Setting");
+    props.navigation.navigate(ACCOUNT_SCREEN);
   };
   return (
     <View style={styles.base} paddingTop={PADDING_TOP}>
