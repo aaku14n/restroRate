@@ -10,7 +10,14 @@ function RestroCard(props) {
     >
       <View style={styles.base}>
         <View style={styles.imgBox}>
-          <Image style={styles.foodImage} source={props.imgUri} />
+          <Image
+            style={styles.foodImage}
+            source={
+              props.imgUri && props.imgUri.includes("http")
+                ? { uri: props.imgUri }
+                : require("../../assets/placeholderRestro.jpg")
+            }
+          />
         </View>
         <View style={styles.detailSection}>
           <View style={styles.nameRatingWrapper}>

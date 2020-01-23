@@ -67,9 +67,8 @@ class HomePageComponent extends React.Component {
     props.navigation.navigate("RestroDetails");
   };
   render() {
-    console.log(this.props.homeData);
     return (
-      <View>
+      <View style={styles.wrapper}>
         <HeaderContainer {...this.props} />
         <ScrollView style={styles.base}>
           {this.props.homeData &&
@@ -78,9 +77,7 @@ class HomePageComponent extends React.Component {
               return (
                 <RestroCard
                   key={id}
-                  imgUri={{
-                    uri: item.dishImage
-                  }}
+                  imgUri={item.dishImage}
                   name={item.restaurantName}
                   cusions={item.dishName}
                   //   distance={item.distance}
@@ -98,6 +95,10 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 20,
     marginTop: 60,
+    backgroundColor: "#fff"
+  },
+  wrapper: {
+    // marginBottom: 50,
     backgroundColor: "#fff"
   }
 });
