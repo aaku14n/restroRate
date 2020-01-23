@@ -1,10 +1,13 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, TouchableWithoutFeedback } from "react-native";
 import styles from "./css/RestroCardStyle";
 
 function RestroCard(props) {
   return (
-    <TouchableOpacity onPress={() => props.onPress()}>
+    <TouchableWithoutFeedback
+      style={styles.wrapper}
+      onPress={() => props.onPress()}
+    >
       <View style={styles.base}>
         <View style={styles.imgBox}>
           <Image style={styles.foodImage} source={props.imgUri} />
@@ -26,13 +29,15 @@ function RestroCard(props) {
             <View style={styles.nameStrip}>
               <Text style={styles.rating}>{props.cusions}</Text>
             </View>
-            <View style={styles.ratingStrip}>
-              <Text style={styles.rating}>{props.distance} Km</Text>
-            </View>
+            {props.distance && (
+              <View style={styles.ratingStrip}>
+                <Text style={styles.rating}>{props.distance} Km</Text>
+              </View>
+            )}
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 }
 

@@ -1,19 +1,32 @@
+import { getAsyncStorage } from "./utils/AsyncStorage.utils";
+
 const API_URL = "http://littra.in:4200";
 
-export const get = url => {
+export const get = async url => {
+  const userDetails = await getAsyncStorage("userDetails");
   const headers = {
     "Content-Type": "application/json"
   };
+
+  if (userDetails) {
+    headers["Authorization"] = `Bearer ${userDetails.token}`;
+  }
+
   return fetch(`${API_URL}/${url}`, {
     method: "get",
     headers
   });
 };
 
-export const post = (url, data = []) => {
+export const post = async (url, data = []) => {
+  const userDetails = await getAsyncStorage("userDetails");
   const headers = {
     "Content-Type": "application/json"
   };
+
+  if (userDetails) {
+    headers["Authorization"] = `Bearer ${userDetails.token}`;
+  }
   return fetch(`${API_URL}/${url}`, {
     method: "post",
     body: JSON.stringify(data),
