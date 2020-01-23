@@ -25,26 +25,32 @@ tabs[HOME_SCREEN] = HomePage;
 tabs[SEARCH_SCREEN] = Search;
 tabs[ADD_REVIEW_SCREEN] = Search;
 tabs[ACCOUNT_SCREEN] = AccountContainer;
+
+const renderTabBar = navigation => {
+  const { routeName } = navigation.state;
+  console.log(navigation.state.index);
+  const { isFocused, tintColor } = navigation;
+  const focused = isFocused();
+  let iconName = homeActiveIcon;
+  if (routeName === HOME_SCREEN) {
+    iconName = focused ? homeActiveIcon : homeIcon;
+  } else if (routeName === SEARCH_SCREEN) {
+    iconName = focused ? searchActiveIcon : searchIcon;
+  } else if (routeName === ADD_REVIEW_SCREEN) {
+    iconName = focused ? reviewActiveIcon : reviewIcon;
+  } else if (routeName === ACCOUNT_SCREEN) {
+    iconName = focused ? profileActiveIcon : profileIcon;
+  }
+
+  // You can return any component that you like here!
+  return <IconComponent name={iconName} size={25} color={tintColor} />;
+};
 const TabNavigator = createBottomTabNavigator(tabs, {
   defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, horizontal, tintColor }) => {
-      const { routeName } = navigation.state;
-
-      let iconName = homeActiveIcon;
-      if (routeName === HOME_SCREEN) {
-        iconName = focused ? homeActiveIcon : homeIcon;
-      } else if (routeName === SEARCH_SCREEN) {
-        iconName = focused ? searchActiveIcon : searchIcon;
-      } else if (routeName === ADD_REVIEW_SCREEN) {
-        iconName = focused ? reviewActiveIcon : reviewIcon;
-      } else if (routeName === ACCOUNT_SCREEN) {
-        iconName = focused ? profileActiveIcon : profileIcon;
-      }
-
-      // You can return any component that you like here!
-      return <IconComponent name={iconName} size={25} color={tintColor} />;
-    }
+    tabBarIcon: renderTabBar(navigation)
+    // tabBarVisible: navigation.state.index == 1 ? false : true
   }),
+
   tabBarOptions: {
     activeTintColor: "#fdd835",
     inactiveTintColor: "black"
