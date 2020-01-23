@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, FlatList } from "react-native";
 import Header from "./Header";
 import RestroCard from "./RestroCard";
 import Footer from "./Footer";
+import HeaderContainer from "../containers/HeaderContainer";
 
 const TestJson = {
   pageName: "Feed Page",
@@ -66,7 +67,7 @@ function HomePage(props) {
   console.log("here");
   return (
     <View>
-      <Header />
+      <HeaderContainer {...props} />
       <ScrollView style={styles.base}>
         {TestJson.data.map((item, id) => {
           return (
