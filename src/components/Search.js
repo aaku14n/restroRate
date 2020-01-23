@@ -17,7 +17,9 @@ const TestJson = {
         "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg",
 
       name: "Susi",
-      rating: 2
+      rating: 2,
+      price: "$23.55",
+      peoples: 200
     },
     {
       id: "2",
@@ -26,7 +28,9 @@ const TestJson = {
         "https://c-lj.gnst.jp/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20180116120327",
 
       name: "Indian",
-      rating: 2.5
+      rating: 2.5,
+      price: "$20.55",
+      peoples: 200
     },
     {
       id: "3",
@@ -35,7 +39,9 @@ const TestJson = {
         "https://res.cloudinary.com/sagacity/image/upload/c_crop,h_2000,w_3000,x_0,y_0/c_limit,dpr_auto,f_auto,fl_lossy,q_80,w_1080/shutterstock_365954354_nghgkk.jpg",
 
       name: "Chiense",
-      rating: 3.5
+      rating: 3.5,
+      price: "$23.55",
+      peoples: 200
     },
     {
       id: "4",
@@ -44,7 +50,17 @@ const TestJson = {
         "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg",
 
       name: "Itelian",
-      rating: 3
+      rating: 3,
+      price: "$23.55",
+      peoples: 200
+    },
+    {
+      id: "5",
+      dishImage: "",
+      name: "Itelian",
+      rating: 3,
+      price: "$23.55",
+      peoples: 200
     }
   ]
 };
@@ -81,9 +97,13 @@ function SearchComponent(props) {
                   <Image
                     key={id}
                     style={styles.image}
-                    source={{
-                      uri: recent.dishImage
-                    }}
+                    source={
+                      recent.dishImage
+                        ? {
+                            uri: recent.dishImage
+                          }
+                        : require("../../assets/defaultRestro.png")
+                    }
                   />
                   <Text style={styles.title}>{recent.name}</Text>
                 </View>
@@ -106,6 +126,8 @@ function SearchComponent(props) {
                   name={recent.name}
                   onPress={onGotoDetails}
                   rating={recent.rating}
+                  price={recent.price}
+                  peoples={recent.peoples}
                 />
               );
             })}

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text, View, Image, TouchableHighlight } from "react-native";
+import React from "react";
+import { View, Image } from "react-native";
 import fullStar from "../../../assets/fullStar.png";
 import emptyStart from "../../../assets/emptyStar.png";
 import halfStar from "../../../assets/halfStar.png";

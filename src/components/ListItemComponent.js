@@ -11,23 +11,37 @@ function ListItemComponent(props) {
         <View style={styles.imageWrapper}>
           <Image
             style={styles.image}
-            source={{
-              uri: props.imgUri
-            }}
+            source={
+              props.imgUri
+                ? {
+                    uri: props.imgUri
+                  }
+                : require("../../assets/defaultRestro.png")
+            }
           />
         </View>
         <View style={styles.detailWrapper}>
           <View style={styles.namePriceWrapper}>
             <Text style={styles.restroName}>{props.name}</Text>
-            <Text style={styles.price}>$24.00</Text>
+            {props.price ? (
+              <Text style={styles.price}>{props.price}</Text>
+            ) : (
+              <Text />
+            )}
           </View>
           <Text style={styles.discription}>Susi Bars, Japanese</Text>
-          <View style={styles.ratingWrapper}>
-            <View>
-              <RatingComponent rating={props.rating} size={15} />
+          {props.rating ? (
+            <View style={styles.ratingWrapper}>
+              <View style={styles.stars}>
+                <RatingComponent rating={props.rating} size={15} />
+              </View>
+              <Text style={styles.peoplesReview}>
+                Based on {props.peoples} reviews
+              </Text>
             </View>
-          </View>
-          <Text style={styles.discription}>212 peoples recomended</Text>
+          ) : (
+            <Text style={styles.discription}>212 peoples recomended</Text>
+          )}
         </View>
       </View>
     </TouchableWithoutFeedback>

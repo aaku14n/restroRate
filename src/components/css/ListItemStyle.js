@@ -38,6 +38,17 @@ export default StyleSheet.create({
     height: 20
   },
   ratingWrapper: {
-    marginTop: 10
+    marginTop: 10,
+    flexDirection: "row"
+  },
+  peoplesReview: {
+    color: "#999999",
+    fontSize: 14,
+    fontWeight: "bold",
+    marginTop: 6,
+    marginLeft: 10
+  },
+  stars: {
+    marginTop: 8
   }
 });
