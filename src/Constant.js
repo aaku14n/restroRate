@@ -1,4 +1,4 @@
-export const THEME_COLOR = "#fdd835";
+export const THEME_COLOR = "#faa511";
 export const ANDROID_CLIENT_ID =
   "256489819169-fbrimsq4tnjcjdab5cunbl3f7mpft81p.apps.googleusercontent.com";
 export const IOS_CLIENT_ID =

@@ -6,18 +6,17 @@ import IconComponent from "./IconComponent";
 import AccountContainer from "../containers/AccountContainer";
 import React from "react";
 import homeIcon from "../../assets/fork.png";
-import homeActiveIcon from "../../assets/forkActive.png";
 import searchIcon from "../../assets/search.png";
-import searchActiveIcon from "../../assets/searchActive.png";
 import reviewIcon from "../../assets/review.png";
-import reviewActiveIcon from "../../assets/reviewActive.png";
+
 import profileIcon from "../../assets/profile.png";
-import profileActiveIcon from "../../assets/profileActive.png";
+
 import {
   HOME_SCREEN,
   SEARCH_SCREEN,
   ADD_REVIEW_SCREEN,
-  ACCOUNT_SCREEN
+  ACCOUNT_SCREEN,
+  THEME_COLOR
 } from "../Constant";
 
 const tabs = {};
@@ -28,22 +27,29 @@ tabs[ACCOUNT_SCREEN] = AccountContainer;
 
 const renderTabBar = navigation => {
   const { routeName } = navigation.state;
-
+  console.log(navigation);
   const { isFocused, tintColor } = navigation;
   const focused = isFocused();
-  let iconName = homeActiveIcon;
+  let iconName = homeIcon;
   if (routeName === HOME_SCREEN) {
-    iconName = focused ? homeActiveIcon : homeIcon;
+    iconName = homeIcon;
   } else if (routeName === SEARCH_SCREEN) {
-    iconName = focused ? searchActiveIcon : searchIcon;
+    iconName = searchIcon;
   } else if (routeName === ADD_REVIEW_SCREEN) {
-    iconName = focused ? reviewActiveIcon : reviewIcon;
+    iconName = reviewIcon;
   } else if (routeName === ACCOUNT_SCREEN) {
-    iconName = focused ? profileActiveIcon : profileIcon;
+    iconName = profileIcon;
   }
 
   // You can return any component that you like here!
-  return <IconComponent name={iconName} size={25} color={tintColor} />;
+  console.log(tintColor);
+  return (
+    <IconComponent
+      name={iconName}
+      size={25}
+      color={focused ? THEME_COLOR : "black"}
+    />
+  );
 };
 const TabNavigator = createBottomTabNavigator(tabs, {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -52,7 +58,7 @@ const TabNavigator = createBottomTabNavigator(tabs, {
   }),
 
   tabBarOptions: {
-    activeTintColor: "#fdd835",
+    activeTintColor: THEME_COLOR,
     inactiveTintColor: "black"
   }
 });
