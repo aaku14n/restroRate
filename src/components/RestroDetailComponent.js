@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import styles from "./css/RestroDetailComponent";
+import RatingComponent from "./General/RatingComponent";
 const restroDetails = {
   id: "1",
   restaurantName: "Sanraku , Hong Cong",
@@ -61,6 +62,11 @@ export default class RestroDetailsComponent extends React.Component {
         </View>
         <View style={styles.rateWrapper}>
           <View style={styles.details}>
+            <RatingComponent
+              rating={details.ratings}
+              size={15}
+              marginRight={2}
+            />
             <Text style={styles.textDes}>Based on 12,999 reviews</Text>
           </View>
           <View style={styles.callIcon}>

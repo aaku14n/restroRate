@@ -24,6 +24,7 @@ class HomePageComponent extends React.Component {
                   name={item.restaurantName}
                   cusions={item.dishName}
                   //   distance={item.distance}
+                  rate={item.rate}
                   onPress={this.gotoRestroPage}
                 />
               );

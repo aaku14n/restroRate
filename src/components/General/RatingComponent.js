@@ -18,7 +18,11 @@ function RatingComponent(props) {
         return (
           <Image
             key={item}
-            style={{ width: props.size, height: props.size }}
+            style={{
+              width: props.size,
+              height: props.size,
+              marginRight: props.marginRight ? props.marginRight : 5
+            }}
             source={icon}
           />
         );

@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, Image, TouchableWithoutFeedback } from "react-native";
 import styles from "./css/RestroCardStyle";
+import RatingComponent from "./General/RatingComponent";
 
 function RestroCard(props) {
   return (
@@ -25,10 +26,7 @@ function RestroCard(props) {
               <Text style={styles.name}>{props.name}</Text>
             </View>
             <View style={styles.ratingStrip}>
-              <Image
-                style={styles.ratingStarImg}
-                source={require("../../assets/rating.jpg")}
-              />
+              <RatingComponent size={20} rating={props.rate} />
               {/* <Text style={styles.rating}>{props.reviews} Reviews</Text> */}
             </View>
           </View>
