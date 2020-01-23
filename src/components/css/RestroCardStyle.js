@@ -1,5 +1,8 @@
 import { StyleSheet } from "react-native";
 export default StyleSheet.create({
+  wrapper: {
+    backgroundColor: "#fff"
+  },
   base: {
     width: "100%",
     marginTop: 25

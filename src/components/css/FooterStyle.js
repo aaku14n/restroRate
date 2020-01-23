@@ -15,7 +15,7 @@ export default StyleSheet.create({
     // boxShadow: " 0px 0 15px rgba(0, 0, 0, 0.8)"
   },
   icon: {
-    width: 30,
-    height: 30
+    width: 20,
+    height: 20
   }
 });

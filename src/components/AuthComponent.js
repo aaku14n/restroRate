@@ -28,7 +28,7 @@ tabs[ACCOUNT_SCREEN] = AccountContainer;
 
 const renderTabBar = navigation => {
   const { routeName } = navigation.state;
-  console.log(navigation.state);
+
   const { isFocused, tintColor } = navigation;
   const focused = isFocused();
   let iconName = homeActiveIcon;

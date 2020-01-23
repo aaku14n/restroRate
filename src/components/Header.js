@@ -26,7 +26,7 @@ function isIPhoneXrSize(dim) {
 
 // --- main.js Example
 
-const PADDING_TOP = isIphoneX() ? 30 : 10;
+const PADDING_TOP = isIphoneX() ? 30 : 20;
 function Header(props) {
   let profilePic;
   if (props.loginDetails && props.loginDetails.data) {
