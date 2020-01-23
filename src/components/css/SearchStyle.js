@@ -5,8 +5,8 @@ export default StyleSheet.create({
     backgroundColor: "white"
   },
   subBase: {
-    paddingLeft: 30,
-    paddingRight: 30
+    paddingLeft: 20,
+    paddingRight: 20
   },
   input: {
     height: 50,
@@ -33,8 +33,8 @@ export default StyleSheet.create({
     color: "black"
   },
   image: {
-    width: 110,
-    height: 110,
+    width: 100,
+    height: 100,
     borderRadius: 55
   },
   imagesWrapper: {
