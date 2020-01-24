@@ -4,6 +4,7 @@ import { Text, View, Image, TouchableHighlight, Button } from "react-native";
 import * as Google from "expo-google-app-auth";
 import * as Facebook from "expo-facebook";
 import { ANDROID_CLIENT_ID, IOS_CLIENT_ID, APP_ID } from "../Constant";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 function AuthLogin(props) {
   const googleLogin = async function signInWithGoogleAsync() {
@@ -71,13 +72,12 @@ function AuthLogin(props) {
   return (
     <View style={styles.base}>
       <View style={styles.companyLogoWrapper}>
-        <Text style={styles.companyName}> RESTAURANT NAME</Text>
+        <Text style={styles.companyName}> Welcome to Restro</Text>
       </View>
       <View style={styles.loginButtonWrapper}>
-        <TouchableHighlight
+        <TouchableWithoutFeedback
           style={styles.gbBase}
           onPress={() => googleLogin()}
-          underlayColor={"#ea4335"}
         >
           <View style={styles.googleLogin}>
             <View>
@@ -87,14 +87,13 @@ function AuthLogin(props) {
               />
             </View>
             <View style={styles.google}>
-              <Text style={styles.googleText}>Google</Text>
+              <Text style={styles.googleText}>Continue with Google</Text>
             </View>
           </View>
-        </TouchableHighlight>
-        <TouchableHighlight
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
           style={styles.fbBase}
           onPress={() => facebookLogin()}
-          underlayColor={"#1877f2"}
         >
           <View style={styles.facebookLogin}>
             <View>
@@ -104,10 +103,10 @@ function AuthLogin(props) {
               />
             </View>
             <View style={styles.facebook}>
-              <Text style={styles.facebookText}>Facebook</Text>
+              <Text style={styles.facebookText}>Continue with Facebook</Text>
             </View>
           </View>
-        </TouchableHighlight>
+        </TouchableWithoutFeedback>
       </View>
     </View>
   );

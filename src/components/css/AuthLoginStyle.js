@@ -1,10 +1,12 @@
 import { StyleSheet } from "react-native";
+import { THEME_COLOR } from "../../Constant";
 export default StyleSheet.create({
   base: {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     height: "100%"
+    // backgroundColor: THEME_COLOR
   },
   loginButtonWrapper: {
     justifyContent: "center",
@@ -30,12 +32,14 @@ export default StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderColor: "#ea4335",
-    height: 50,
+    height: 60,
     paddingLeft: 70,
-    paddingRight: 70
+    paddingRight: 70,
+    backgroundColor: "#ea4335",
+    borderRadius: 30
   },
   googleText: {
-    color: "#ea4335",
+    color: "#fff",
     fontWeight: "bold",
     fontSize: 18
   },
@@ -51,12 +55,14 @@ export default StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderColor: "#1877f2",
-    height: 50,
+    height: 60,
     paddingLeft: 60,
-    paddingRight: 60
+    paddingRight: 60,
+    backgroundColor: "#1877f2",
+    borderRadius: 30
   },
   facebookText: {
-    color: "#1877f2",
+    color: "#fff",
     fontWeight: "bold",
     fontSize: 18
   },
