@@ -93,5 +93,8 @@ export default StyleSheet.create({
     paddingTop: 10,
     borderTopColor: "#c4c4c4",
     borderTopWidth: 2
+  },
+  listItemWrapper: {
+    marginTop: 25
   }
 });

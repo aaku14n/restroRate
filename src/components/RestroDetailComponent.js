@@ -1,7 +1,8 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import styles from "./css/RestroDetailComponent";
 import RatingComponent from "./General/RatingComponent";
+import ListItemComponent from "./ListItemComponent";
 const restroDetails = {
   id: "1",
   restaurantName: "Sanraku , Hong Cong",
@@ -16,6 +17,42 @@ const restroDetails = {
   cost: 500,
   address: "392, 7th Cross"
 };
+const TestJson = {
+  data: [
+    {
+      id: "1",
+      dishImage:
+        "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg",
+
+      name: "Susi",
+      rating: 2,
+      price: "$23.55",
+      peoples: 200
+    },
+    {
+      id: "2",
+
+      dishImage:
+        "https://c-lj.gnst.jp/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20180116120327",
+
+      name: "Indian",
+      rating: 2.5,
+      price: "$20.55",
+      peoples: 200
+    },
+    {
+      id: "3",
+
+      dishImage:
+        "https://res.cloudinary.com/sagacity/image/upload/c_crop,h_2000,w_3000,x_0,y_0/c_limit,dpr_auto,f_auto,fl_lossy,q_80,w_1080/shutterstock_365954354_nghgkk.jpg",
+
+      name: "Chiense",
+      rating: 3.5,
+      price: "$23.55",
+      peoples: 200
+    }
+  ]
+};
 export default class RestroDetailsComponent extends React.Component {
   goBack = () => {
     this.props.navigation.goBack();
@@ -25,7 +62,7 @@ export default class RestroDetailsComponent extends React.Component {
     const details = restroDetails;
 
     return (
-      <View style={styles.base}>
+      <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <TouchableOpacity onPress={this.goBack}>
             <Image
@@ -111,8 +148,20 @@ export default class RestroDetailsComponent extends React.Component {
 
         <View style={styles.dishesList}>
           <Text style={styles.summaryHeading}>Popular Dishes</Text>
+          <ScrollView style={styles.listItemWrapper}>
+            {TestJson.data.map((recent, id) => {
+              return (
+                <ListItemComponent
+                  key={id}
+                  imgUri={recent.dishImage}
+                  name={recent.name}
+                  price={recent.price}
+                />
+              );
+            })}
+          </ScrollView>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
