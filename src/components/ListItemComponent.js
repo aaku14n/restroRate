@@ -3,6 +3,7 @@ import { View, Text, Image } from "react-native";
 import styles from "./css/ListItemStyle";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import RatingComponent from "./General/RatingComponent";
+import thumbsUp from "../../assets/thumbs-up.png";
 
 function ListItemComponent(props) {
   return (
@@ -40,7 +41,13 @@ function ListItemComponent(props) {
               </Text>
             </View>
           ) : (
-            <Text style={styles.discription}>212 peoples recomended</Text>
+            <View style={styles.thumb}>
+              <Image
+                style={{ width: 15, height: 15, marginTop: 2 }}
+                source={thumbsUp}
+              />
+              <Text style={styles.recomend}>212 peoples recomended</Text>
+            </View>
           )}
         </View>
       </View>

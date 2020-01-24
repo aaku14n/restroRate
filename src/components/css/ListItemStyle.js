@@ -30,8 +30,13 @@ export default StyleSheet.create({
   discription: {
     color: "#999999",
     fontSize: 14,
+    fontWeight: "bold"
+  },
+  recomend: {
+    color: "#999999",
+    fontSize: 14,
     fontWeight: "bold",
-    marginTop: 6
+    marginLeft: 8
   },
   ratingStarImg: {
     width: "60%",
@@ -50,5 +55,9 @@ export default StyleSheet.create({
   },
   stars: {
     marginTop: 8
+  },
+  thumb: {
+    flexDirection: "row",
+    marginTop: 10
   }
 });
