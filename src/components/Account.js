@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./css/AccountStyle";
 import { View, Text, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import ReviewComponent from "./General/ReviewComponent";
 function Account(props) {
   let profilePic,
     name = "Hi User",
@@ -49,7 +50,20 @@ function Account(props) {
         <View style={styles.heading}>
           <Text style={styles.myReview}>My Reviews</Text>
         </View>
-        <Text>No Reviews</Text>
+        <View style={styles.reviewComponentWrapper}>
+          <ReviewComponent
+            dishname={"Susi Tasty"}
+            restroName={"Indian Somu Da"}
+            pic={
+              "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg"
+            }
+            review={
+              " ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with d"
+            }
+            rating={3.5}
+            time={"2 days ago"}
+          />
+        </View>
       </View>
     </View>
   );

@@ -73,6 +73,11 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold"
   },
+  reviewHeading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 20
+  },
   tiniIcon: {
     width: 15,
     height: 15,
