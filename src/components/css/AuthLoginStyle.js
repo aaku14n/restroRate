@@ -6,7 +6,6 @@ export default StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: "100%"
-    // backgroundColor: THEME_COLOR
   },
   loginButtonWrapper: {
     justifyContent: "center",
@@ -25,6 +24,10 @@ export default StyleSheet.create({
   },
   fbBase: {
     marginTop: 30
+  },
+  logo: {
+    height: 140,
+    width: 140
   },
   googleLogin: {
     justifyContent: "center",
@@ -68,7 +71,8 @@ export default StyleSheet.create({
   },
   companyName: {
     fontWeight: "bold",
-    fontSize: 35
+    fontSize: 35,
+    marginTop: 20
   },
   companyLogoWrapper: {
     justifyContent: "center",

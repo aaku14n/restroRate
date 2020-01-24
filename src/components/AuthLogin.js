@@ -5,6 +5,7 @@ import * as Google from "expo-google-app-auth";
 import * as Facebook from "expo-facebook";
 import { ANDROID_CLIENT_ID, IOS_CLIENT_ID, APP_ID } from "../Constant";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import logoImg from "../../assets/logo.png";
 
 function AuthLogin(props) {
   const googleLogin = async function signInWithGoogleAsync() {
@@ -72,7 +73,10 @@ function AuthLogin(props) {
   return (
     <View style={styles.base}>
       <View style={styles.companyLogoWrapper}>
-        <Text style={styles.companyName}> Welcome to Restro</Text>
+        <View>
+          <Image style={styles.logo} source={logoImg} />
+        </View>
+        <Text style={styles.companyName}> Welcome to Dish Serve</Text>
       </View>
       <View style={styles.loginButtonWrapper}>
         <TouchableWithoutFeedback
