@@ -3,6 +3,7 @@ import { Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import styles from "./css/RestroDetailComponent";
 import RatingComponent from "./General/RatingComponent";
 import ListItemComponent from "./ListItemComponent";
+import ReviewComponent from "./General/ReviewComponent";
 const restroDetails = {
   id: "1",
   restaurantName: "Sanraku , Hong Cong",
@@ -160,6 +161,20 @@ export default class RestroDetailsComponent extends React.Component {
               );
             })}
           </ScrollView>
+        </View>
+        <View>
+          <Text style={styles.reviewHeading}>Reviews</Text>
+          <ReviewComponent
+            restroName={"Indian Somu Da"}
+            pic={
+              "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg"
+            }
+            review={
+              " ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with d"
+            }
+            rating={3.5}
+            time={"2 days ago"}
+          />
         </View>
       </ScrollView>
     );
