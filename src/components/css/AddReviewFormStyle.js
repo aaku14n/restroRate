@@ -44,5 +44,12 @@ export default StyleSheet.create({
   restroName: {
     marginBottom: 20
   },
-  button: {}
+  imgBox: {
+    position: "relative"
+  },
+  editIcon: {
+    position: "absolute",
+    left: 130,
+    top: 28
+  }
 });

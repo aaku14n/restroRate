@@ -25,8 +25,7 @@ export default StyleSheet.create({
     color: "#999999"
   },
   review: {
-    fontSize: 13,
-    fontWeight: "bold"
+    fontSize: 13
   },
   reviewWrapper: {
     marginTop: 15

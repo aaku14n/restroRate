@@ -2,6 +2,10 @@ export const GET_HOME_DATA_REQUEST = "GET_HOME_DATA_REQUEST";
 export const GET_HOME_DATA_SUCCESS = "GET_HOME_DATA_SUCCESS";
 export const GET_HOME_DATA_FAILURE = "GET_HOME_DATA_FAILURE";
 
+export const ADD_REVIEW_REQUEST = "ADD_REVIEW_REQUEST";
+export const ADD_REVIEW_SUCCESS = "ADD_REVIEW_SUCCESS";
+export const ADD_REVIEW_FAILURE = "ADD_REVIEW_FAILURE";
+
 export function getHomeData() {
   return async (dispatch, getState, { api }) => {
     try {
@@ -16,6 +20,26 @@ export function getHomeData() {
     } catch (e) {
       dispatch({
         type: GET_HOME_DATA_FAILURE,
+        error: e.message
+      });
+    }
+  };
+}
+
+export function submitReview(reviewObj) {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: ADD_REVIEW_REQUEST });
+      const result = await api.post("review", reviewObj);
+      const resultJson = await result.json();
+
+      dispatch({
+        type: ADD_REVIEW_SUCCESS,
+        addReview: resultJson.data
+      });
+    } catch (e) {
+      dispatch({
+        type: ADD_REVIEW_FAILURE,
         error: e.message
       });
     }
