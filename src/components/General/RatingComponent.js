@@ -10,7 +10,7 @@ function RatingComponent(props) {
     <View style={styles.base}>
       {[1, 2, 3, 4, 5].map((rate, item) => {
         let icon = emptyStart;
-        if (rate < props.rating) {
+        if (rate <= props.rating) {
           icon = fullStar;
         } else if (rate - 1 < props.rating && rate > props.rating) {
           icon = halfStar;
