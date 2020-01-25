@@ -1,7 +1,7 @@
 import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import HomePage from "./HomePage";
-import Search from "./Search";
+import Search from "./SearchPage";
 import AddReviewForm from "../containers/AddReviewContainer";
 import IconComponent from "./IconComponent";
 import AccountContainer from "../containers/AccountContainer";

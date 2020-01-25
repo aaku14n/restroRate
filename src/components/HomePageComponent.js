@@ -11,6 +11,7 @@ class HomePageComponent extends React.Component {
     this.props.navigation.navigate("RestroDetails");
   };
   render() {
+    console.log(this.props.homeData);
     return (
       <View style={styles.wrapper}>
         <HeaderContainer {...this.props} />
@@ -21,7 +22,7 @@ class HomePageComponent extends React.Component {
                 <RestroCard
                   key={id}
                   imgUri={item.dishImage}
-                  name={item.restaurantName}
+                  name={item.restaurantInfo.name}
                   cusions={item.dishName}
                   //   distance={item.distance}
                   rate={item.rate}
