@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { THEME_COLOR } from "../../Constant";
 
 export default StyleSheet.create({
   base: {
@@ -7,10 +8,11 @@ export default StyleSheet.create({
     paddingLeft: 15,
     paddingTop: 15,
     paddingRight: 15,
-    paddingBottom: 15
+    paddingBottom: 15,
+    marginTop: 40
   },
   review: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center"
   },
@@ -25,23 +27,17 @@ export default StyleSheet.create({
   input: {
     height: 50,
     backgroundColor: "#f4f4f4",
-    fontWeight: "bold",
-    borderColor: "gray",
-    borderWidth: 1,
     paddingLeft: 30,
     width: "100%",
-    borderRadius: 15
+    borderRadius: 5
   },
   textArea: {
     height: 150,
     backgroundColor: "#f4f4f4",
-    fontWeight: "bold",
-    borderColor: "gray",
-    borderWidth: 1,
     paddingLeft: 30,
     paddingTop: 10,
     width: "100%",
-    borderRadius: 15
+    borderRadius: 5
   },
   restroName: {
     marginBottom: 30,
@@ -58,5 +54,28 @@ export default StyleSheet.create({
     position: "absolute",
     right: 15,
     top: 15
+  },
+  button: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+    height: 50
+  },
+  buttonStyle: {
+    backgroundColor: THEME_COLOR,
+    height: 50,
+    width: 300,
+    borderRadius: 5,
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center"
+  },
+  buttonTitle: {
+    color: "#ffffff",
+    fontSize: 16,
+    marginTop: 15
   }
 });

@@ -14,6 +14,8 @@ import styles from "./css/AddReviewFormStyle";
 import editIcon from "../../assets/edit.png";
 import defaultPic from "../../assets/defaultRestro.png";
 import compass from "../../assets/compass.png";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { getRestaurant } from "../actions/Action";
 
 class AddReviewForm extends React.Component {
   state = {
@@ -45,26 +47,40 @@ class AddReviewForm extends React.Component {
       review
     });
   };
-  // componentDidMount() {
-  //   navigator.geolocation.getCurrentPosition(
-  //     position => {
-  //       const location = JSON.stringify(position);
+  accessRestaurantDetails = async loc => {
+    const detailsRes = await this.props.getRestaurant(loc);
 
-  //       this.setState({ location });
-  //     },
-  //     error => Alert.alert(error.message),
-  //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-  //   );
-  // }
-  submitReview = () => {
+    if (detailsRes[0]) {
+      this.setState({ restaurantDetails: [detailsRes[0]] });
+      this.onChnageRestraurentName(detailsRes[0].name);
+    }
+  };
+  onAccessCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const location = JSON.stringify(position);
+
+        this.accessRestaurantDetails("12.9153688,77.5969855");
+        this.setState({ location });
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  };
+
+  // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=12.9153688,77.5969855&radius=100&type=restaurant&key=AIzaSyDM4BtVx-2cRWTEEu3JOdx0szr735nXzPU
+  componentDidMount() {
+    this.onAccessCurrentLocation();
+  }
+  submitReview = async () => {
     const reviewObj = {
       dishName: this.state.dishName,
       feedback: this.state.review,
       rate: this.state.rating,
       dishImage: "image-1579893195828.jpeg",
-      restaurantData: this.state.restroName
+      restaurantData: { candidates: this.state.restaurantDetails }
     };
-    const submitReviewResponse = this.props.submitReview(reviewObj);
+    const submitReviewResponse = await this.props.submitReview(reviewObj);
   };
   uploadImage = () => {};
   render() {
@@ -84,7 +100,9 @@ class AddReviewForm extends React.Component {
             />
           </View>
           <View style={styles.compassIcon}>
-            <Image source={compass} style={{ width: 20, height: 20 }} />
+            <TouchableWithoutFeedback onPress={this.onAccessCurrentLocation}>
+              <Image source={compass} style={{ width: 20, height: 20 }} />
+            </TouchableWithoutFeedback>
           </View>
           <View style={styles.restroName}>
             <View style={styles.imgBox}>
@@ -115,15 +133,6 @@ class AddReviewForm extends React.Component {
           </View>
 
           <View style={styles.restroName}>
-            <AirbnbRating
-              count={5}
-              defaultRating={0}
-              size={50}
-              showRating={false}
-              onFinishRating={r => this.completeRate(r)}
-            />
-          </View>
-          <View style={styles.restroName}>
             <TextInput
               textAlignVertical={"top"}
               style={styles.textArea}
@@ -134,12 +143,23 @@ class AddReviewForm extends React.Component {
               value={this.state.review}
             />
           </View>
+          <View style={styles.restroName}>
+            <AirbnbRating
+              count={5}
+              defaultRating={0}
+              size={50}
+              showRating={false}
+              onFinishRating={r => this.completeRate(r)}
+            />
+          </View>
           <View style={styles.button}>
-            <Button
+            <TouchableWithoutFeedback
               onPress={() => this.submitReview()}
               title="SUBMIT REVIEW"
-              color="#000"
-            />
+              style={styles.buttonStyle}
+            >
+              <Text style={styles.buttonTitle}>SUBMIT REVIEW</Text>
+            </TouchableWithoutFeedback>
           </View>
         </View>
       </ScrollView>

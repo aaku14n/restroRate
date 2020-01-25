@@ -30,6 +30,7 @@ export function submitReview(reviewObj) {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: ADD_REVIEW_REQUEST });
+
       const result = await api.post("review", reviewObj);
       const resultJson = await result.json();
 
@@ -42,6 +43,23 @@ export function submitReview(reviewObj) {
         type: ADD_REVIEW_FAILURE,
         error: e.message
       });
+    }
+  };
+}
+
+export function getRestaurant(loc) {
+  return async (dispatch, getState, { api }) => {
+    try {
+      const result = await fetch(
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${loc}&radius=100&type=restaurant&key=AIzaSyDM4BtVx-2cRWTEEu3JOdx0szr735nXzPU`
+      );
+      const resultJson = await result.json();
+
+      return resultJson.results;
+    } catch (e) {
+      return {
+        type: "Erro"
+      };
     }
   };
 }
