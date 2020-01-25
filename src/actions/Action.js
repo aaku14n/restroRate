@@ -37,7 +37,7 @@ export function submitReview(reviewObj) {
 
       const result = await api.post("review", reviewObj);
       const resultJson = await result.json();
-
+      console.log(resultJson);
       dispatch({
         type: ADD_REVIEW_SUCCESS,
         addReview: resultJson.data

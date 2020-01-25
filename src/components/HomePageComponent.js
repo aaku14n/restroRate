@@ -11,7 +11,6 @@ class HomePageComponent extends React.Component {
     this.props.navigation.navigate("RestroDetails");
   };
   render() {
-    console.log(this.props.homeData);
     return (
       <View style={styles.wrapper}>
         <HeaderContainer {...this.props} />

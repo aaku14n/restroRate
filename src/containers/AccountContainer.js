@@ -5,7 +5,8 @@ import Account from "../components/Account";
 
 const mapStateToProps = state => {
   return {
-    loginDetails: state.AuthReducer.userLoginDetails
+    loginDetails: state.AuthReducer.userLoginDetails,
+    reviewList: state.Reducer.homeData
   };
 };
 const mapDispatchToProps = dispatch => {
