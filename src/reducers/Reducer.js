@@ -4,9 +4,14 @@ const Reducer = (
     homeDataLoading: false,
     homeData: "",
     error: "",
+
     addReviewLoading: false,
     addReview: "",
-    reviewError: ""
+    reviewError: "",
+
+    searchLoading: false,
+    searchResult: "",
+    searchError: ""
   },
   action
 ) => {
@@ -40,6 +45,21 @@ const Reducer = (
     case Actions.ADD_REVIEW_FAILURE:
       return Object.assign({}, state, {
         addReviewLoading: false
+      });
+    case Actions.SEARCH_REQUEST:
+      return Object.assign({}, state, {
+        searchLoading: true
+      });
+
+    case Actions.SEARCH_SUCCESS:
+      return Object.assign({}, state, {
+        searchLoading: false,
+        searchResult: action.searchResult
+      });
+
+    case Actions.SEARCH_FAILURE:
+      return Object.assign({}, state, {
+        searchError: false
       });
 
     default:

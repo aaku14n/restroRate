@@ -6,13 +6,17 @@ export const ADD_REVIEW_REQUEST = "ADD_REVIEW_REQUEST";
 export const ADD_REVIEW_SUCCESS = "ADD_REVIEW_SUCCESS";
 export const ADD_REVIEW_FAILURE = "ADD_REVIEW_FAILURE";
 
+export const SEARCH_REQUEST = "SEARCH_REQUEST";
+export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+export const SEARCH_FAILURE = "SEARCH_FAILURE";
+
 export function getHomeData() {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: GET_HOME_DATA_REQUEST });
       const result = await api.get("review");
       const resultJson = await result.json();
-
+      // console.log(resultJson);
       dispatch({
         type: GET_HOME_DATA_SUCCESS,
         homeData: resultJson.data
@@ -40,6 +44,25 @@ export function submitReview(reviewObj) {
     } catch (e) {
       dispatch({
         type: ADD_REVIEW_FAILURE,
+        error: e.message
+      });
+    }
+  };
+}
+
+export function searchs(string) {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: SEARCH_REQUEST });
+      const result = await api.get(`search?keyword=${string}`);
+      const resultJson = await result.json();
+      dispatch({
+        type: SEARCH_SUCCESS,
+        searchResult: resultJson
+      });
+    } catch (e) {
+      dispatch({
+        type: SEARCH_FAILURE,
         error: e.message
       });
     }

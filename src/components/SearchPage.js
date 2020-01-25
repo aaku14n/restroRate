@@ -1,10 +1,10 @@
 import RestroDetailsComponent from "./RestroDetailComponent";
 import { createStackNavigator } from "react-navigation-stack";
+import SearchContainer from "../containers/SearchContainer";
 
-import HomePageContainer from "../containers/HomePageContainer";
-const HomePage = createStackNavigator({
-  SettingScreen: {
-    screen: HomePageContainer,
+const SearchPage = createStackNavigator({
+  SearchScreen: {
+    screen: SearchContainer,
     navigationOptions: {
       headerShown: false
     }
@@ -17,4 +17,4 @@ const HomePage = createStackNavigator({
   }
 });
 
-export default HomePage;
+export default SearchPage;

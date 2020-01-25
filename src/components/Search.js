@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { Text, View, TextInput, Image, ScrollView } from "react-native";
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  View,
+  TextInput,
+  Image,
+  ScrollView,
+  ActivityIndicator
+} from "react-native";
 import styles from "./css/SearchStyle";
-import Header from "./Header";
 import ListItemComponent from "./ListItemComponent";
-import searchIcon from "../../assets/search.png";
 import HeaderContainer from "../containers/HeaderContainer";
-import RestroDetailsComponent from "./RestroDetailComponent";
 
 const TestJson = {
   data: [
@@ -64,96 +66,129 @@ const TestJson = {
     }
   ]
 };
-
-function SearchComponent(props) {
-  const onGotoDetails = id => {
-    props.navigation.navigate("RestroDetails");
-  };
-  return (
-    <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <HeaderContainer />
-      </View>
-      <View style={styles.subBase}>
-        <View style={styles.searchInput}>
-          <TextInput
-            style={styles.input}
-            placeholder="Search restaurants or Cuisines"
-            placeholderTextColor="black"
-          />
-        </View>
-        <View style={styles.recentSearch}>
-          <View>
-            <Text style={styles.recentSearchTitle}>Recent Searches</Text>
-          </View>
-          <ScrollView
-            horizontal={true}
-            style={styles.imagesWrapper}
-            showsHorizontalScrollIndicator={false}
-          >
-            {TestJson.data.map((recent, id) => {
-              return (
-                <View style={styles.imageTitleWrapper}>
-                  <Image
-                    key={id}
-                    style={styles.image}
-                    source={
-                      recent.dishImage
-                        ? {
-                            uri: recent.dishImage
-                          }
-                        : require("../../assets/defaultRestro.png")
-                    }
-                  />
-                  <Text style={styles.title}>{recent.name}</Text>
-                </View>
-              );
-            })}
-          </ScrollView>
-        </View>
-        <View style={styles.recommendWrapper}>
-          <View>
-            <Text style={styles.recentSearchTitle}>
-              Recomendation based on your search
-            </Text>
-          </View>
-          <ScrollView style={styles.listItemWrapper}>
-            {TestJson.data.map((recent, id) => {
-              return (
-                <ListItemComponent
-                  key={id}
-                  imgUri={recent.dishImage}
-                  name={recent.name}
-                  onPress={onGotoDetails}
-                  rating={recent.rating}
-                  price={recent.price}
-                  peoples={recent.peoples}
-                />
-              );
-            })}
-          </ScrollView>
-        </View>
-      </View>
-    </ScrollView>
-  );
-}
-function MyNotificationsScreen() {
-  return <Text>Natifiaction </Text>;
-}
-const AppNavigator = createStackNavigator({
-  SearchScreen: {
-    screen: SearchComponent,
-    navigationOptions: {
-      headerShown: false
-    }
-  },
-  RestroDetails: {
-    screen: RestroDetailsComponent,
-    navigationOptions: {
-      headerShown: false
-    }
+class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchString: ""
+    };
   }
-});
-const Search = createAppContainer(AppNavigator);
+  onGotoDetails = id => {
+    this.props.navigation.navigate("RestroDetails");
+  };
+
+  searchText = searchString => {
+    this.setState({
+      searchString
+    });
+  };
+  onBlurCall = () => {
+    this.props.searchResults(this.state.searchString);
+  };
+  render() {
+    const searchResult = this.props.searchResult;
+    return (
+      <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <HeaderContainer />
+        </View>
+        <View style={styles.subBase}>
+          <View style={styles.searchInput}>
+            <TextInput
+              style={styles.input}
+              placeholder="Search restaurants or Cuisines"
+              placeholderTextColor="black"
+              onChangeText={text => this.searchText(text)}
+              onBlur={() => this.onBlurCall()}
+              value={this.state.restroName}
+            />
+          </View>
+          <View style={styles.recentSearch}>
+            <View>
+              <Text style={styles.recentSearchTitle}>Recent Searches</Text>
+            </View>
+            <ScrollView
+              horizontal={true}
+              style={styles.imagesWrapper}
+              showsHorizontalScrollIndicator={false}
+            >
+              {TestJson.data.map((recent, id) => {
+                return (
+                  <View style={styles.imageTitleWrapper}>
+                    <Image
+                      key={id}
+                      style={styles.image}
+                      source={
+                        recent.dishImage
+                          ? {
+                              uri: recent.dishImage
+                            }
+                          : require("../../assets/defaultRestro.png")
+                      }
+                    />
+                    <Text style={styles.title}>{recent.name}</Text>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          </View>
+          {this.props.searchLoading ? (
+            <View style={styles.recommendWrapper}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          ) : (
+            <View style={styles.recommendWrapper}>
+              <View>
+                {searchResult.dishes && searchResult.restaurants && (
+                  <Text style={styles.recentSearchTitle}>
+                    Recomendation based on your search
+                  </Text>
+                )}
+              </View>
+              <ScrollView style={styles.listItemWrapper}>
+                {searchResult &&
+                searchResult.dishes &&
+                searchResult.dishes.map ? (
+                  searchResult.dishes.map((recent, id) => {
+                    return (
+                      <ListItemComponent
+                        key={id}
+                        imgUri={recent.dishImage}
+                        name={recent.name}
+                        onPress={this.onGotoDetails}
+                        rating={recent.averageRating}
+                        peoples={recent.totalReviews}
+                      />
+                    );
+                  })
+                ) : (
+                  <Text />
+                )}
+                {searchResult &&
+                searchResult.restaurants &&
+                searchResult.restaurants.map ? (
+                  searchResult.restaurants.map((recent, id) => {
+                    return (
+                      <ListItemComponent
+                        key={id}
+                        imgUri={recent.restaurantImage}
+                        name={recent.name}
+                        onPress={this.onGotoDetails}
+                        rating={recent.averageRating}
+                        peoples={recent.totalReviews}
+                      />
+                    );
+                  })
+                ) : (
+                  <Text />
+                )}
+              </ScrollView>
+            </View>
+          )}
+        </View>
+      </ScrollView>
+    );
+  }
+}
 
 export default Search;
