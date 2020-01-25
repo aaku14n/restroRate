@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TextInput,
-  Button,
+  ToastAndroid,
   Image,
   ScrollView,
   ActivityIndicator,
@@ -59,8 +59,15 @@ class AddReviewForm extends React.Component {
     navigator.geolocation.getCurrentPosition(
       position => {
         const location = JSON.stringify(position);
-
-        this.accessRestaurantDetails("12.9153688,77.5969855");
+        const latitude =
+          JSON.parse(location) &&
+          JSON.parse(location).coords &&
+          JSON.parse(location).coords.latitude;
+        const longitude =
+          JSON.parse(location) &&
+          JSON.parse(location).coords &&
+          JSON.parse(location).coords.longitude;
+        this.accessRestaurantDetails(`${latitude},${longitude}`);
         this.setState({ location });
       },
       error => Alert.alert(error.message),
@@ -81,6 +88,12 @@ class AddReviewForm extends React.Component {
       restaurantData: { candidates: this.state.restaurantDetails }
     };
     const submitReviewResponse = await this.props.submitReview(reviewObj);
+
+    ToastAndroid.show(
+      "Review added successfully",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
   };
   uploadImage = () => {};
   render() {
