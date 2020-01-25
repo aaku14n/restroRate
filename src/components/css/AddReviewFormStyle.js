@@ -4,10 +4,10 @@ export default StyleSheet.create({
   base: {
     width: "100%",
     backgroundColor: "white",
-    paddingLeft: 10,
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 10
+    paddingLeft: 15,
+    paddingTop: 15,
+    paddingRight: 15,
+    paddingBottom: 15
   },
   review: {
     fontSize: 25,
@@ -31,7 +31,18 @@ export default StyleSheet.create({
     paddingLeft: 30,
     width: "100%"
   },
+  textArea: {
+    height: 150,
+    backgroundColor: "#f4f4f4",
+    fontWeight: "bold",
+    borderColor: "gray",
+    borderWidth: 1,
+    paddingLeft: 30,
+    paddingTop: 10,
+    width: "100%"
+  },
   restroName: {
     marginBottom: 20
-  }
+  },
+  button: {}
 });
