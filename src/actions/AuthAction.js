@@ -3,6 +3,7 @@ import {
   getAsyncStorage,
   removeAsyncStorage
 } from "../utils/AsyncStorage.utils";
+import { Alert } from "react-native";
 
 export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";

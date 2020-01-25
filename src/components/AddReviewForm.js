@@ -6,12 +6,14 @@ import {
   Button,
   Image,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import styles from "./css/AddReviewFormStyle";
 import editIcon from "../../assets/edit.png";
 import defaultPic from "../../assets/defaultRestro.png";
+import compass from "../../assets/compass.png";
 
 class AddReviewForm extends React.Component {
   state = {
@@ -19,7 +21,8 @@ class AddReviewForm extends React.Component {
     rating: 0,
     restroName: "",
     dishName: "",
-    review: ""
+    review: "",
+    location: null
   };
   completeRate(rating) {
     this.setState({
@@ -42,6 +45,17 @@ class AddReviewForm extends React.Component {
       review
     });
   };
+  // componentDidMount() {
+  //   navigator.geolocation.getCurrentPosition(
+  //     position => {
+  //       const location = JSON.stringify(position);
+
+  //       this.setState({ location });
+  //     },
+  //     error => Alert.alert(error.message),
+  //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+  //   );
+  // }
   submitReview = () => {
     const reviewObj = {
       dishName: this.state.dishName,
@@ -62,7 +76,6 @@ class AddReviewForm extends React.Component {
         </View>
         <View style={styles.form}>
           <View style={styles.restroName}>
-            <Text style={styles.title}>Restraurent Name</Text>
             <TextInput
               style={styles.input}
               placeholder="Search restaurants"
@@ -70,8 +83,10 @@ class AddReviewForm extends React.Component {
               value={this.state.restroName}
             />
           </View>
+          <View style={styles.compassIcon}>
+            <Image source={compass} style={{ width: 20, height: 20 }} />
+          </View>
           <View style={styles.restroName}>
-            <Text style={styles.title}>Upload Image</Text>
             <View style={styles.imgBox}>
               <Image
                 source={
@@ -84,14 +99,13 @@ class AddReviewForm extends React.Component {
                 style={{ width: 150, height: 150 }}
               />
             </View>
-            {!photo && (
+            {/* {!photo && (
               <View style={styles.editIcon}>
                 <Image source={editIcon} style={{ width: 20, height: 20 }} />
               </View>
-            )}
+            )} */}
           </View>
           <View style={styles.restroName}>
-            <Text style={styles.title}>Dish Name</Text>
             <TextInput
               style={styles.input}
               placeholder="Dish Name"
@@ -101,17 +115,15 @@ class AddReviewForm extends React.Component {
           </View>
 
           <View style={styles.restroName}>
-            <Text style={styles.title}>Rating</Text>
             <AirbnbRating
               count={5}
               defaultRating={0}
-              size={30}
+              size={50}
               showRating={false}
               onFinishRating={r => this.completeRate(r)}
             />
           </View>
           <View style={styles.restroName}>
-            <Text style={styles.title}>Review</Text>
             <TextInput
               textAlignVertical={"top"}
               style={styles.textArea}
@@ -127,7 +139,6 @@ class AddReviewForm extends React.Component {
               onPress={() => this.submitReview()}
               title="SUBMIT REVIEW"
               color="#000"
-              accessibilityLabel="Learn more about this purple button"
             />
           </View>
         </View>

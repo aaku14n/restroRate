@@ -29,7 +29,8 @@ export default StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     paddingLeft: 30,
-    width: "100%"
+    width: "100%",
+    borderRadius: 15
   },
   textArea: {
     height: 150,
@@ -39,17 +40,23 @@ export default StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 30,
     paddingTop: 10,
-    width: "100%"
+    width: "100%",
+    borderRadius: 15
   },
   restroName: {
-    marginBottom: 20
+    marginBottom: 30,
+    width: "100%",
+    alignItems: "center"
   },
-  imgBox: {
-    position: "relative"
-  },
+  imgBox: {},
   editIcon: {
     position: "absolute",
     left: 130,
     top: 28
+  },
+  compassIcon: {
+    position: "absolute",
+    right: 15,
+    top: 15
   }
 });
