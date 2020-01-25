@@ -2,6 +2,7 @@ import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import HomePage from "./HomePage";
 import Search from "./Search";
+import AddReviewForm from "../containers/AddReviewContainer";
 import IconComponent from "./IconComponent";
 import AccountContainer from "../containers/AccountContainer";
 import React from "react";
@@ -22,12 +23,11 @@ import {
 const tabs = {};
 tabs[HOME_SCREEN] = HomePage;
 tabs[SEARCH_SCREEN] = Search;
-tabs[ADD_REVIEW_SCREEN] = Search;
+tabs[ADD_REVIEW_SCREEN] = AddReviewForm;
 tabs[ACCOUNT_SCREEN] = AccountContainer;
 
 const renderTabBar = navigation => {
   const { routeName } = navigation.state;
-  console.log(navigation);
   const { isFocused, tintColor } = navigation;
   const focused = isFocused();
   let iconName = homeIcon;
