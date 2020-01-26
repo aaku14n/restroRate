@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./css/AccountStyle";
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ReviewComponent from "./General/ReviewComponent";
 import { renderDateFormat } from "../utils/DateUtils";
@@ -13,6 +13,19 @@ function Account(props) {
     name = props.loginDetails.data.name;
     email = props.loginDetails.data.email;
   }
+  const logout = () => {
+    Alert.alert(
+      "LOG OUT",
+      "Are you sure you want to logout?",
+      [
+        {
+          text: "Cancel"
+        },
+        { text: "OK", onPress: () => props.logoutUser() }
+      ],
+      { cancelable: false }
+    );
+  };
   return (
     <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
       <View style={styles.infoWrapper}>
@@ -38,7 +51,7 @@ function Account(props) {
             </View>
           </View>
           <View>
-            <TouchableOpacity onPress={() => props.logoutUser()}>
+            <TouchableOpacity onPress={() => logout()}>
               <Image
                 style={styles.logout}
                 source={require("../../assets/logout.png")}
