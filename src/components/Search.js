@@ -88,7 +88,6 @@ class Search extends React.Component {
   };
   render() {
     const searchResult = this.props.searchResult;
-    console.log(searchResult);
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
@@ -136,7 +135,7 @@ class Search extends React.Component {
           </View>
           {this.props.searchLoading ? (
             <View style={styles.recommendWrapper}>
-              <ActivityIndicator size="large" color="#0000ff" />
+              <ActivityIndicator size="large" color="#c4c4c4" />
             </View>
           ) : (
             <View style={styles.recommendWrapper}>
@@ -152,7 +151,6 @@ class Search extends React.Component {
                 searchResult.dishes &&
                 searchResult.dishes.map ? (
                   searchResult.dishes.map((recent, id) => {
-                    console.log(recent);
                     return (
                       <ListItemComponent
                         key={id}

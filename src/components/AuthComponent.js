@@ -42,7 +42,7 @@ const renderTabBar = navigation => {
   }
 
   // You can return any component that you like here!
-  console.log(tintColor);
+
   return (
     <IconComponent
       name={iconName}

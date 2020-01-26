@@ -77,5 +77,11 @@ export default StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     marginTop: 15
+  },
+  loader: {
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });

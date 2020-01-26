@@ -1,7 +1,16 @@
 import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   base: {
-    marginBottom: 60
+    marginBottom: 40,
+    padding: 20,
+    borderColor: "#c4c4c4",
+    borderWidth: 1,
+    borderRadius: 5,
+    shadowColor: "#c4c4c4",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    elevation: 2
   },
   imgNameWrapper: {
     flexDirection: "row",

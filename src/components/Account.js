@@ -56,6 +56,7 @@ function Account(props) {
             ? props.reviewList.map((review, id) => {
                 return (
                   <ReviewComponent
+                    key={id}
                     dishname={review.restaurantInfo.name}
                     restroName={review.dishInfo.name}
                     pic={review.dishImage}

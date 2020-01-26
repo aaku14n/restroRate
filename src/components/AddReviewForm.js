@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  ToastAndroid,
   Image,
   ScrollView,
   ActivityIndicator,
@@ -88,16 +87,25 @@ class AddReviewForm extends React.Component {
       restaurantData: { candidates: this.state.restaurantDetails }
     };
     const submitReviewResponse = await this.props.submitReview(reviewObj);
-
-    ToastAndroid.show(
-      "Review added successfully",
-      ToastAndroid.SHORT,
-      ToastAndroid.CENTER
-    );
+    this.props.navigation.navigate("SettingScreen");
+    this.setState({
+      photo: null,
+      rating: 0,
+      restroName: "",
+      dishName: "",
+      review: ""
+    });
   };
   uploadImage = () => {};
   render() {
     const { photo } = this.state;
+    if (this.props.addReviewLoading) {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#c4c4c4" />
+        </View>
+      );
+    }
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.heading}>
