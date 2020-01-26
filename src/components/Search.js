@@ -10,6 +10,7 @@ import {
 import styles from "./css/SearchStyle";
 import ListItemComponent from "./ListItemComponent";
 import HeaderContainer from "../containers/HeaderContainer";
+import { getRestaurantsUrl } from "../utils/Utils";
 
 const TestJson = {
   data: [
@@ -87,6 +88,7 @@ class Search extends React.Component {
   };
   render() {
     const searchResult = this.props.searchResult;
+    console.log(searchResult);
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
@@ -114,7 +116,7 @@ class Search extends React.Component {
             >
               {TestJson.data.map((recent, id) => {
                 return (
-                  <View style={styles.imageTitleWrapper}>
+                  <View style={styles.imageTitleWrapper} key={id}>
                     <Image
                       key={id}
                       style={styles.image}
@@ -150,6 +152,7 @@ class Search extends React.Component {
                 searchResult.dishes &&
                 searchResult.dishes.map ? (
                   searchResult.dishes.map((recent, id) => {
+                    console.log(recent);
                     return (
                       <ListItemComponent
                         key={id}
@@ -158,6 +161,7 @@ class Search extends React.Component {
                         onPress={this.onGotoDetails}
                         rating={recent.averageRating}
                         peoples={recent.totalReviews}
+                        subHeading={recent.restaurantInfo.name}
                       />
                     );
                   })
@@ -171,7 +175,7 @@ class Search extends React.Component {
                     return (
                       <ListItemComponent
                         key={id}
-                        imgUri={recent.restaurantImage}
+                        imgUri={getRestaurantsUrl(recent.restaurantImage)}
                         name={recent.name}
                         onPress={this.onGotoDetails}
                         rating={recent.averageRating}

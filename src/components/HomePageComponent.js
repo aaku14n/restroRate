@@ -20,9 +20,9 @@ class HomePageComponent extends React.Component {
               return (
                 <RestroCard
                   key={id}
-                  imgUri={item.dishImage}
-                  name={item.restaurantInfo.name}
-                  cusions={item.dishName}
+                  imgUri={item.dishInfo.dishImage}
+                  name={item.dishInfo.name}
+                  cusions={item.restaurantInfo.name}
                   //   distance={item.distance}
                   rate={item.rate}
                   onPress={this.gotoRestroPage}

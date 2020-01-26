@@ -30,7 +30,9 @@ function ListItemComponent(props) {
               <Text />
             )}
           </View>
-          <Text style={styles.discription}>Susi Bars, Japanese</Text>
+          {props.subHeading && (
+            <Text style={styles.discription}>{props.subHeading}</Text>
+          )}
           {props.rating ? (
             <View style={styles.ratingWrapper}>
               <View style={styles.stars}>

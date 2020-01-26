@@ -67,7 +67,7 @@ class AddReviewForm extends React.Component {
           JSON.parse(location) &&
           JSON.parse(location).coords &&
           JSON.parse(location).coords.longitude;
-        this.accessRestaurantDetails(`${latitude},${longitude}`);
+        this.accessRestaurantDetails(`12.916217,77.615363`);
         this.setState({ location });
       },
       error => Alert.alert(error.message),
@@ -84,7 +84,7 @@ class AddReviewForm extends React.Component {
       dishName: this.state.dishName,
       feedback: this.state.review,
       rate: this.state.rating,
-      dishImage: "image-1579893195828.jpeg",
+      dishImage: "image-1580025245487.jpeg",
       restaurantData: { candidates: this.state.restaurantDetails }
     };
     const submitReviewResponse = await this.props.submitReview(reviewObj);
