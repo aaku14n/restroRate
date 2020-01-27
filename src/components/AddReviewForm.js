@@ -199,31 +199,14 @@ class AddReviewForm extends React.Component {
               <Image source={compass} style={{ width: 20, height: 20 }} />
             </TouchableWithoutFeedback>
           </View>
-          <View style={styles.restroName}>
-            <View style={styles.imgBox}>
-              <Image
-                source={
-                  photo && photo.uri
-                    ? {
-                        uri: photo.uri
-                      }
-                    : defaultPic
-                }
-                style={{ width: 200, height: 200, borderRadius: 10 }}
-              />
-            </View>
-            {/* {this.props.uploadImageLoading && (
-              <View style={styles.imageLoader}>
-                <ActivityIndicator size="large" color="#c4c4c4" />
+          <View style={styles.imageWrapper}>
+            {photo && photo.uri ? (
+              <View style={styles.imgBox}>
+                <Image
+                  source={{ uri: photo.uri }}
+                  style={{ width: 200, height: 200, borderRadius: 10 }}
+                />
               </View>
-            )} */}
-            {this.state.photo ? (
-              <TouchableWithoutFeedback
-                onPress={this.removeImage}
-                style={styles.closeIcon}
-              >
-                <Image source={cross} style={styles.editIcon} />
-              </TouchableWithoutFeedback>
             ) : (
               <View style={styles.captureButtonWrapper}>
                 <TouchableWithoutFeedback
@@ -245,6 +228,14 @@ class AddReviewForm extends React.Component {
                   />
                 </TouchableWithoutFeedback>
               </View>
+            )}
+            {photo && photo.uri && (
+              <TouchableWithoutFeedback
+                onPress={this.removeImage}
+                style={styles.closeIcon}
+              >
+                <Image source={cross} style={styles.editIcon} />
+              </TouchableWithoutFeedback>
             )}
           </View>
           <View style={styles.restroName}>

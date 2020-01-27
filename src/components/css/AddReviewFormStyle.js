@@ -44,6 +44,12 @@ export default StyleSheet.create({
     width: "100%",
     alignItems: "center"
   },
+  imageWrapper: {
+    marginBottom: 30,
+    width: "100%",
+    alignItems: "center",
+    height: 250
+  },
   imageLoader: {
     position: "absolute",
     top: 90,
@@ -103,7 +109,10 @@ export default StyleSheet.create({
   },
   captureButtonWrapper: {
     flexDirection: "row",
-    marginTop: 18
+    marginTop: 18,
+    height: 250,
+    justifyContent: "center",
+    alignItems: "center"
   },
   buttonTitle: {
     color: "#ffffff",
