@@ -10,7 +10,9 @@ import {
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import styles from "./css/AddReviewFormStyle";
-import editIcon from "../../assets/edit.png";
+import camera from "../../assets/camera.png";
+import galary from "../../assets/galary.png";
+import cross from "../../assets/plus.png";
 import defaultPic from "../../assets/defaultRestro.png";
 import compass from "../../assets/compass.png";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -92,22 +94,35 @@ class AddReviewForm extends React.Component {
       type
     };
     const imageRes = await this.props.uploadImage(imageObj);
-    const reviewObj = {
-      dishName: this.state.dishName,
-      feedback: this.state.review,
-      rate: this.state.rating,
-      dishImage: imageRes.imageInfo.filename,
-      restaurantData: { candidates: this.state.restaurantDetails }
-    };
-    const submitReviewResponse = await this.props.submitReview(reviewObj);
-    this.props.navigation.navigate("SettingScreen");
-    this.setState({
-      photo: null,
-      rating: 0,
-      restroName: "",
-      dishName: "",
-      review: ""
-    });
+    if (imageRes.imageInfo.err) {
+      Alert.alert(
+        "ERROR",
+        "Image size should be less than 5 mb",
+        [
+          {
+            text: "Cancel"
+          }
+        ],
+        { cancelable: false }
+      );
+      return false;
+    } else {
+      const reviewObj = {
+        dishName: this.state.dishName,
+        feedback: this.state.review,
+        rate: this.state.rating,
+        dishImage: imageRes.imageInfo.filename,
+        restaurantData: { candidates: this.state.restaurantDetails }
+      };
+      const submitReviewResponse = await this.props.submitReview(reviewObj);
+      this.props.navigation.navigate("SettingScreen");
+      this.setState({
+        photo: null,
+        rating: 0,
+        dishName: "",
+        review: ""
+      });
+    }
   };
   getLocationAsync = async () => {
     const { status, permissions } = await Permissions.askAsync(
@@ -130,9 +145,11 @@ class AddReviewForm extends React.Component {
       allowsEditing: true,
       aspect: [4, 3]
     });
-    this.setState({
-      photo: pickerResult
-    });
+    if (pickerResult.cancelled == false) {
+      this.setState({
+        photo: pickerResult
+      });
+    }
   };
   takeImageFormGallary = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -143,16 +160,17 @@ class AddReviewForm extends React.Component {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    this.setState({
-      photo: pickerResult
-    });
+    if (pickerResult.cancelled == false) {
+      this.setState({
+        photo: pickerResult
+      });
+    }
   };
   removeImage = () => {
     this.setState({
       photo: null
     });
   };
-  uploadImage = () => {};
   render() {
     const { photo } = this.state;
     if (this.props.addReviewLoading) {
@@ -194,28 +212,37 @@ class AddReviewForm extends React.Component {
                 style={{ width: 200, height: 200, borderRadius: 10 }}
               />
             </View>
-            {this.state.photo ? (
-              <View style={styles.captureButtonWrapper}>
-                <TouchableWithoutFeedback
-                  onPress={this.removeImage}
-                  style={styles.captureImageButton}
-                >
-                  <Text style={styles.buttonText}>REMOVE IMAGE</Text>
-                </TouchableWithoutFeedback>
+            {/* {this.props.uploadImageLoading && (
+              <View style={styles.imageLoader}>
+                <ActivityIndicator size="large" color="#c4c4c4" />
               </View>
+            )} */}
+            {this.state.photo ? (
+              <TouchableWithoutFeedback
+                onPress={this.removeImage}
+                style={styles.closeIcon}
+              >
+                <Image source={cross} style={styles.editIcon} />
+              </TouchableWithoutFeedback>
             ) : (
               <View style={styles.captureButtonWrapper}>
                 <TouchableWithoutFeedback
                   onPress={this.captureImageFromCamera}
                   style={styles.captureImageButton}
                 >
-                  <Text style={styles.buttonText}>CAPTURE IMAGE</Text>
+                  <Image
+                    source={camera}
+                    style={{ width: 50, height: 50, borderRadius: 10 }}
+                  />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
                   onPress={this.takeImageFormGallary}
                   style={styles.captureImageButton}
                 >
-                  <Text style={styles.buttonText}>TAKE IMAGE</Text>
+                  <Image
+                    source={galary}
+                    style={{ width: 50, height: 50, borderRadius: 10 }}
+                  />
                 </TouchableWithoutFeedback>
               </View>
             )}

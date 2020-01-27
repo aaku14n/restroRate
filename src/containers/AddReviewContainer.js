@@ -4,7 +4,8 @@ import { submitReview, getRestaurant, uploadImage } from "../actions/Action";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    addReviewLoading: state.Reducer.addReviewLoading
+    addReviewLoading: state.Reducer.addReviewLoading,
+    uploadImageLoading: state.Reducer.uploadImageLoading
   };
 };
 

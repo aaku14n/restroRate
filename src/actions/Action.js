@@ -90,22 +90,18 @@ export function searchs(string) {
 }
 
 export function uploadImage(image) {
-  console.log(image);
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: UPLOAD_IMAGE_REQUEST });
       const formData = new FormData();
       formData.append("image", image);
-      console.log(formData);
       const result = await api.imagePost("saveImage", formData);
       const resultJson = await result.json();
-      console.log(resultJson);
       return {
         type: UPLOAD_IMAGE_SUCCESS,
         imageInfo: resultJson
       };
     } catch (e) {
-      console.log(e);
       return {
         type: UPLOAD_IMAGE_FAILURE,
         error: e.message
