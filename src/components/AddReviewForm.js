@@ -27,7 +27,8 @@ class AddReviewForm extends React.Component {
     restroName: "",
     dishName: "",
     review: "",
-    location: null
+    location: null,
+    imageLoading: false
   };
   completeRate(rating) {
     this.setState({
@@ -83,6 +84,9 @@ class AddReviewForm extends React.Component {
     this.onAccessCurrentLocation();
   }
   submitReview = async () => {
+    this.setState({
+      imageLoading: true
+    });
     let localUri = this.state.photo.uri;
     let filename = localUri.split("/").pop();
     let match = /\.(\w+)$/.exec(filename);
@@ -105,6 +109,9 @@ class AddReviewForm extends React.Component {
         ],
         { cancelable: false }
       );
+      this.setState({
+        imageLoading: false
+      });
       return false;
     } else {
       const reviewObj = {
@@ -120,7 +127,8 @@ class AddReviewForm extends React.Component {
         photo: null,
         rating: 0,
         dishName: "",
-        review: ""
+        review: "",
+        imageLoading: false
       });
     }
   };
@@ -160,6 +168,7 @@ class AddReviewForm extends React.Component {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    console.log(pickerResult);
     if (pickerResult.cancelled == false) {
       this.setState({
         photo: pickerResult
@@ -180,6 +189,7 @@ class AddReviewForm extends React.Component {
         </View>
       );
     }
+
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.heading}>
@@ -206,6 +216,11 @@ class AddReviewForm extends React.Component {
                   source={{ uri: photo.uri }}
                   style={{ width: 200, height: 200, borderRadius: 10 }}
                 />
+                {this.state.imageLoading && (
+                  <View style={styles.imageLoader}>
+                    <ActivityIndicator size="large" color="#c4c4c4" />
+                  </View>
+                )}
               </View>
             ) : (
               <View style={styles.captureButtonWrapper}>

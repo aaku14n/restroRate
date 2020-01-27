@@ -124,5 +124,10 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center"
+  },
+  imageLoader: {
+    position: "absolute",
+    right: 90,
+    top: 90
   }
 });
