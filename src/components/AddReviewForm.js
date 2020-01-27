@@ -10,11 +10,15 @@ import {
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import styles from "./css/AddReviewFormStyle";
-import editIcon from "../../assets/edit.png";
+import camera from "../../assets/camera.png";
+import galary from "../../assets/galary.png";
+import cross from "../../assets/plus.png";
 import defaultPic from "../../assets/defaultRestro.png";
 import compass from "../../assets/compass.png";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import * as ImagePicker from "expo-image-picker";
 import { getRestaurant } from "../actions/Action";
+import * as Permissions from "expo-permissions";
 
 class AddReviewForm extends React.Component {
   state = {
@@ -79,24 +83,94 @@ class AddReviewForm extends React.Component {
     this.onAccessCurrentLocation();
   }
   submitReview = async () => {
-    const reviewObj = {
-      dishName: this.state.dishName,
-      feedback: this.state.review,
-      rate: this.state.rating,
-      dishImage: "image-1580025245487.jpeg",
-      restaurantData: { candidates: this.state.restaurantDetails }
+    let localUri = this.state.photo.uri;
+    let filename = localUri.split("/").pop();
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    const imageObj = {
+      uri: this.state.photo.uri,
+      name: filename,
+      type
     };
-    const submitReviewResponse = await this.props.submitReview(reviewObj);
-    this.props.navigation.navigate("SettingScreen");
+    const imageRes = await this.props.uploadImage(imageObj);
+    if (imageRes.imageInfo.err) {
+      Alert.alert(
+        "ERROR",
+        "Image size should be less than 5 mb",
+        [
+          {
+            text: "Cancel"
+          }
+        ],
+        { cancelable: false }
+      );
+      return false;
+    } else {
+      const reviewObj = {
+        dishName: this.state.dishName,
+        feedback: this.state.review,
+        rate: this.state.rating,
+        dishImage: imageRes.imageInfo.filename,
+        restaurantData: { candidates: this.state.restaurantDetails }
+      };
+      const submitReviewResponse = await this.props.submitReview(reviewObj);
+      this.props.navigation.navigate("SettingScreen");
+      this.setState({
+        photo: null,
+        rating: 0,
+        dishName: "",
+        review: ""
+      });
+    }
+  };
+  getLocationAsync = async () => {
+    const { status, permissions } = await Permissions.askAsync(
+      Permissions.CAMERA
+    );
+    if (status === "granted") {
+      return "";
+    } else {
+      throw new Error("Location permission not granted");
+    }
+  };
+  captureImageFromCamera = async () => {
+    let permissionResult = await this.getLocationAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+    let pickerResult = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3]
+    });
+    if (pickerResult.cancelled == false) {
+      this.setState({
+        photo: pickerResult
+      });
+    }
+  };
+  takeImageFormGallary = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    if (pickerResult.cancelled == false) {
+      this.setState({
+        photo: pickerResult
+      });
+    }
+  };
+  removeImage = () => {
     this.setState({
-      photo: null,
-      rating: 0,
-      restroName: "",
-      dishName: "",
-      review: ""
+      photo: null
     });
   };
-  uploadImage = () => {};
   render() {
     const { photo } = this.state;
     if (this.props.addReviewLoading) {
@@ -135,14 +209,43 @@ class AddReviewForm extends React.Component {
                       }
                     : defaultPic
                 }
-                style={{ width: 150, height: 150 }}
+                style={{ width: 200, height: 200, borderRadius: 10 }}
               />
             </View>
-            {/* {!photo && (
-              <View style={styles.editIcon}>
-                <Image source={editIcon} style={{ width: 20, height: 20 }} />
+            {/* {this.props.uploadImageLoading && (
+              <View style={styles.imageLoader}>
+                <ActivityIndicator size="large" color="#c4c4c4" />
               </View>
             )} */}
+            {this.state.photo ? (
+              <TouchableWithoutFeedback
+                onPress={this.removeImage}
+                style={styles.closeIcon}
+              >
+                <Image source={cross} style={styles.editIcon} />
+              </TouchableWithoutFeedback>
+            ) : (
+              <View style={styles.captureButtonWrapper}>
+                <TouchableWithoutFeedback
+                  onPress={this.captureImageFromCamera}
+                  style={styles.captureImageButton}
+                >
+                  <Image
+                    source={camera}
+                    style={{ width: 50, height: 50, borderRadius: 10 }}
+                  />
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
+                  onPress={this.takeImageFormGallary}
+                  style={styles.captureImageButton}
+                >
+                  <Image
+                    source={galary}
+                    style={{ width: 50, height: 50, borderRadius: 10 }}
+                  />
+                </TouchableWithoutFeedback>
+              </View>
+            )}
           </View>
           <View style={styles.restroName}>
             <TextInput

@@ -34,6 +34,22 @@ export const post = async (url, data = []) => {
   });
 };
 
+export const imagePost = async (url, data = []) => {
+  const userDetails = await getAsyncStorage("userDetails");
+  const headers = {
+    "Content-Type": "multipart/form-data"
+  };
+
+  if (userDetails) {
+    headers["Authorization"] = `Bearer ${userDetails.token}`;
+  }
+  return fetch(`${API_URL}/${url}`, {
+    method: "post",
+    body: data,
+    headers
+  });
+};
+
 export const put = (url, data = {}) => {
   const headers = {
     "Content-Type": "application/json"

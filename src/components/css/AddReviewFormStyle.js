@@ -44,11 +44,25 @@ export default StyleSheet.create({
     width: "100%",
     alignItems: "center"
   },
-  imgBox: {},
-  editIcon: {
+  imageLoader: {
     position: "absolute",
-    left: 130,
-    top: 28
+    top: 90,
+    zIndex: 10
+  },
+  closeIcon: {
+    marginTop: 18,
+    backgroundColor: "#c4c4c4",
+    height: 50,
+    width: 50,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 25
+  },
+  editIcon: {
+    width: 30,
+    height: 30,
+    transform: [{ rotate: "45deg" }]
   },
   compassIcon: {
     position: "absolute",
@@ -72,6 +86,24 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center"
+  },
+  captureImageButton: {
+    width: 150,
+    borderRadius: 5,
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+    marginLeft: 15
+  },
+  buttonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    marginTop: 12
+  },
+  captureButtonWrapper: {
+    flexDirection: "row",
+    marginTop: 18
   },
   buttonTitle: {
     color: "#ffffff",
