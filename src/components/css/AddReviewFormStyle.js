@@ -73,6 +73,26 @@ export default StyleSheet.create({
     alignContent: "center",
     justifyContent: "center"
   },
+  captureImageButton: {
+    backgroundColor: THEME_COLOR,
+    height: 50,
+    width: 200,
+    borderRadius: 5,
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+    marginLeft: 15
+  },
+  buttonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    marginTop: 12
+  },
+  captureButtonWrapper: {
+    flexDirection: "row",
+    marginTop: 18
+  },
   buttonTitle: {
     color: "#ffffff",
     fontSize: 16,

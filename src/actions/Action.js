@@ -10,6 +10,10 @@ export const SEARCH_REQUEST = "SEARCH_REQUEST";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
 export const SEARCH_FAILURE = "SEARCH_FAILURE";
 
+export const UPLOAD_IMAGE_REQUEST = "UPLOAD_IMAGE_REQUEST";
+export const UPLOAD_IMAGE_SUCCESS = "UPLOAD_IMAGE_SUCCESS";
+export const UPLOAD_IMAGE_FAILURE = "SEARCH_FAILURE";
+
 export function getHomeData() {
   return async (dispatch, getState, { api }) => {
     try {
@@ -37,7 +41,6 @@ export function submitReview(reviewObj) {
 
       const result = await api.post("review", reviewObj);
       const resultJson = await result.json();
-      console.log(resultJson);
       dispatch({
         type: ADD_REVIEW_SUCCESS,
         addReview: resultJson.data
@@ -82,6 +85,31 @@ export function searchs(string) {
         type: SEARCH_FAILURE,
         error: e.message
       });
+    }
+  };
+}
+
+export function uploadImage(image) {
+  console.log(image);
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: UPLOAD_IMAGE_REQUEST });
+      const formData = new FormData();
+      formData.append("file", image);
+      console.log(formData);
+      const result = await api.imagePost("saveImage", formData);
+      const resultJson = await result.json();
+      console.log(resultJson);
+      return {
+        type: UPLOAD_IMAGE_SUCCESS,
+        imageInfo: resultJson
+      };
+    } catch (e) {
+      console.log(e);
+      return {
+        type: UPLOAD_IMAGE_FAILURE,
+        error: e.message
+      };
     }
   };
 }

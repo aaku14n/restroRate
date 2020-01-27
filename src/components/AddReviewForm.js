@@ -14,7 +14,9 @@ import editIcon from "../../assets/edit.png";
 import defaultPic from "../../assets/defaultRestro.png";
 import compass from "../../assets/compass.png";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import * as ImagePicker from "expo-image-picker";
 import { getRestaurant } from "../actions/Action";
+import * as Permissions from "expo-permissions";
 
 class AddReviewForm extends React.Component {
   state = {
@@ -86,14 +88,61 @@ class AddReviewForm extends React.Component {
       dishImage: "image-1580025245487.jpeg",
       restaurantData: { candidates: this.state.restaurantDetails }
     };
-    const submitReviewResponse = await this.props.submitReview(reviewObj);
-    this.props.navigation.navigate("SettingScreen");
+    const imageObj = {
+      image: this.state.photo.uri
+    };
+    await this.props.uploadImage(imageObj);
+    // const submitReviewResponse = await this.props.submitReview(reviewObj);
+    // this.props.navigation.navigate("SettingScreen");
     this.setState({
       photo: null,
       rating: 0,
       restroName: "",
       dishName: "",
       review: ""
+    });
+  };
+  getLocationAsync = async () => {
+    const { status, permissions } = await Permissions.askAsync(
+      Permissions.CAMERA
+    );
+    if (status === "granted") {
+      return "";
+    } else {
+      throw new Error("Location permission not granted");
+    }
+  };
+  captureImageFromCamera = async () => {
+    let permissionResult = await this.getLocationAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+    let pickerResult = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3]
+    });
+    this.setState({
+      photo: pickerResult
+    });
+  };
+  takeImageFormGallary = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    this.setState({
+      photo: pickerResult
+    });
+  };
+  removeImage = () => {
+    this.setState({
+      photo: null
     });
   };
   uploadImage = () => {};
@@ -135,14 +184,34 @@ class AddReviewForm extends React.Component {
                       }
                     : defaultPic
                 }
-                style={{ width: 150, height: 150 }}
+                style={{ width: 200, height: 200, borderRadius: 10 }}
               />
             </View>
-            {/* {!photo && (
-              <View style={styles.editIcon}>
-                <Image source={editIcon} style={{ width: 20, height: 20 }} />
+            {this.state.photo ? (
+              <View style={styles.captureButtonWrapper}>
+                <TouchableWithoutFeedback
+                  onPress={this.removeImage}
+                  style={styles.captureImageButton}
+                >
+                  <Text style={styles.buttonText}>REMOVE IMAGE</Text>
+                </TouchableWithoutFeedback>
               </View>
-            )} */}
+            ) : (
+              <View style={styles.captureButtonWrapper}>
+                <TouchableWithoutFeedback
+                  onPress={this.captureImageFromCamera}
+                  style={styles.captureImageButton}
+                >
+                  <Text style={styles.buttonText}>CAPTURE IMAGE</Text>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
+                  onPress={this.takeImageFormGallary}
+                  style={styles.captureImageButton}
+                >
+                  <Text style={styles.buttonText}>TAKE IMAGE</Text>
+                </TouchableWithoutFeedback>
+              </View>
+            )}
           </View>
           <View style={styles.restroName}>
             <TextInput

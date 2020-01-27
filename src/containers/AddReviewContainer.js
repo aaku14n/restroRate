@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import AddReviewForm from "../components/AddReviewForm";
-import { submitReview, getRestaurant } from "../actions/Action";
+import { submitReview, getRestaurant, uploadImage } from "../actions/Action";
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -15,6 +15,9 @@ const mapDispatchToProps = dispatch => {
     },
     getRestaurant: loc => {
       return dispatch(getRestaurant(loc));
+    },
+    uploadImage: image => {
+      return dispatch(uploadImage(image));
     }
   };
 };
