@@ -81,19 +81,26 @@ class AddReviewForm extends React.Component {
     this.onAccessCurrentLocation();
   }
   submitReview = async () => {
+    let localUri = this.state.photo.uri;
+    let filename = localUri.split("/").pop();
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    const imageObj = {
+      uri: this.state.photo.uri,
+      name: filename,
+      type
+    };
+    const imageRes = await this.props.uploadImage(imageObj);
     const reviewObj = {
       dishName: this.state.dishName,
       feedback: this.state.review,
       rate: this.state.rating,
-      dishImage: "image-1580025245487.jpeg",
+      dishImage: imageRes.imageInfo.filename,
       restaurantData: { candidates: this.state.restaurantDetails }
     };
-    const imageObj = {
-      image: this.state.photo.uri
-    };
-    await this.props.uploadImage(imageObj);
-    // const submitReviewResponse = await this.props.submitReview(reviewObj);
-    // this.props.navigation.navigate("SettingScreen");
+    const submitReviewResponse = await this.props.submitReview(reviewObj);
+    this.props.navigation.navigate("SettingScreen");
     this.setState({
       photo: null,
       rating: 0,

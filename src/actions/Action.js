@@ -95,7 +95,7 @@ export function uploadImage(image) {
     try {
       dispatch({ type: UPLOAD_IMAGE_REQUEST });
       const formData = new FormData();
-      formData.append("file", image);
+      formData.append("image", image);
       console.log(formData);
       const result = await api.imagePost("saveImage", formData);
       const resultJson = await result.json();

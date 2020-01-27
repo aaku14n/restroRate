@@ -37,7 +37,6 @@ export const post = async (url, data = []) => {
 export const imagePost = async (url, data = []) => {
   const userDetails = await getAsyncStorage("userDetails");
   const headers = {
-    Accept: "application/json",
     "Content-Type": "multipart/form-data"
   };
 
@@ -46,7 +45,7 @@ export const imagePost = async (url, data = []) => {
   }
   return fetch(`${API_URL}/${url}`, {
     method: "post",
-    body: JSON.stringify(data),
+    body: data,
     headers
   });
 };
