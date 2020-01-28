@@ -6,14 +6,15 @@ import * as Facebook from "expo-facebook";
 import { ANDROID_CLIENT_ID, IOS_CLIENT_ID, APP_ID } from "../Constant";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import logoImg from "../../assets/logo.png";
-
+import Auth from "../Auth";
 function AuthLogin(props) {
   const googleLogin = async function signInWithGoogleAsync() {
     try {
       const result = await Google.logInAsync({
         androidClientId: ANDROID_CLIENT_ID,
         iosClientId: IOS_CLIENT_ID,
-        scopes: ["profile", "email"]
+        scopes: ["profile", "email"],
+        redirectUrl: Auth.packageName + ":/oauthredirect"
       });
       if (result.type === "success") {
         const userDetailsObj = {
