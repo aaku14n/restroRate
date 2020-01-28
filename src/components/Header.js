@@ -61,7 +61,7 @@ function Header(props) {
   });
 
   const onPress = () => {
-    setdropDown(!dropDown);
+    onAccessCurrentLocation();
   };
   const gotoMyAccount = () => {
     props.navigation.navigate(ACCOUNT_SCREEN);
@@ -78,7 +78,9 @@ function Header(props) {
         >
           <View style={styles.iconTitleWrapper}>
             <View>
-              <Text style={styles.location}>{location}</Text>
+              <Text style={styles.location}>
+                {location ? location : "Your Location"}
+              </Text>
             </View>
             <View style={styles.downIcon}>
               <Image
