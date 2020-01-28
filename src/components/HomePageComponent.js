@@ -21,8 +21,10 @@ class HomePageComponent extends React.Component {
   componentDidMount() {
     this.props.getHomeData();
   }
-  gotoRestroPage = () => {
-    this.props.navigation.navigate("RestroDetails");
+  gotoRestroPage = id => {
+    this.props.navigation.navigate("RestroDetails", {
+      restroId: id
+    });
   };
   doRefresh = async () => {
     await this.setState({ refreshing: true });
@@ -47,9 +49,8 @@ class HomePageComponent extends React.Component {
                   imgUri={item.dishInfo.dishImage}
                   name={item.dishInfo.name}
                   cusions={item.restaurantInfo.name}
-                  //   distance={item.distance}
                   rate={item.rate}
-                  onPress={this.gotoRestroPage}
+                  onPress={() => this.gotoRestroPage(item._id)}
                 />
               )}
               ref={ref => (this.flatlistref = ref)}

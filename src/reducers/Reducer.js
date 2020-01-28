@@ -19,7 +19,11 @@ const Reducer = (
 
     recentSearchLoading: false,
     recentSearch: "",
-    recentSearchError: ""
+    recentSearchError: "",
+
+    getRestroDetailLoading: false,
+    getRestroDetails: "",
+    getRestroDetailError: ""
   },
   action
 ) => {
@@ -97,6 +101,20 @@ const Reducer = (
     case Actions.RECENT_SEARCH_FAILURE:
       return Object.assign({}, state, {
         recentSearchLoading: false
+      });
+    case Actions.GET_RESTRO_REQUEST:
+      return Object.assign({}, state, {
+        getRestroDetailLoading: true
+      });
+    case Actions.GET_RESTRO_SUCCESS:
+      return Object.assign({}, state, {
+        getRestroDetailLoading: false,
+        getRestroDetails: action.getRestroDetails
+      });
+
+    case Actions.GET_RESTRO_FAILURE:
+      return Object.assign({}, state, {
+        getRestroDetailLoading: false
       });
 
     default:

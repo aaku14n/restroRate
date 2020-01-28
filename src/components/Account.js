@@ -72,7 +72,7 @@ function Account(props) {
                     key={id}
                     dishname={review.restaurantInfo.name}
                     restroName={review.dishInfo.name}
-                    pic={review.dishImage}
+                    pic={review.dishInfo.dishImage}
                     review={review.feedback}
                     rating={review.rate}
                     time={renderDateFormat(review.createdAt)}

@@ -14,9 +14,13 @@ export const RECENT_SEARCH_REQUEST = "RECENT_SEARCH_REQUEST";
 export const RECENT_SEARCH_SUCCESS = "RECENT_SEARCH_SUCCESS";
 export const RECENT_SEARCH_FAILURE = "RECENT_SEARCH_FAILURE";
 
+export const GET_RESTRO_REQUEST = "GET_RESTRO_REQUEST";
+export const GET_RESTRO_SUCCESS = "GET_RESTRO_SUCCESS";
+export const GET_RESTRO_FAILURE = "GET_RESTRO_FAILURE";
+
 export const UPLOAD_IMAGE_REQUEST = "UPLOAD_IMAGE_REQUEST";
 export const UPLOAD_IMAGE_SUCCESS = "UPLOAD_IMAGE_SUCCESS";
-export const UPLOAD_IMAGE_FAILURE = "SEARCH_FAILURE";
+export const UPLOAD_IMAGE_FAILURE = "UPLOAD_IMAGE_FAILURE";
 
 export function getHomeData() {
   return async (dispatch, getState, { api }) => {
@@ -121,6 +125,25 @@ export function getRecentSearches() {
     } catch (e) {
       dispatch({
         type: RECENT_SEARCH_FAILURE,
+        error: e.message
+      });
+    }
+  };
+}
+
+export function getRestoDetail(id) {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: GET_RESTRO_REQUEST });
+      const result = await api.get(`restaurant/:${id}`);
+      const resultJson = await result.json();
+      dispatch({
+        type: GET_RESTRO_SUCCESS,
+        getRestroDetails: resultJson
+      });
+    } catch (e) {
+      dispatch({
+        type: GET_RESTRO_FAILURE,
         error: e.message
       });
     }

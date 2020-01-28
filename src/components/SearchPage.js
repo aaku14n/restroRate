@@ -1,4 +1,4 @@
-import RestroDetailsComponent from "./RestroDetailComponent";
+import RestroDetailContainer from "../containers/RestroDetailContainer";
 import { createStackNavigator } from "react-navigation-stack";
 import SearchContainer from "../containers/SearchContainer";
 
@@ -10,7 +10,7 @@ const SearchPage = createStackNavigator({
     }
   },
   RestroDetails: {
-    screen: RestroDetailsComponent,
+    screen: RestroDetailContainer,
     navigationOptions: {
       headerShown: false
     }

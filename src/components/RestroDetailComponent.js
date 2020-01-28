@@ -58,10 +58,15 @@ export default class RestroDetailsComponent extends React.Component {
   goBack = () => {
     this.props.navigation.goBack();
   };
+  componentDidMount() {
+    const restroId = this.props.navigation.getParam("restroId");
+    console.log(restroId);
+    this.props.restroDetails(restroId);
+  }
   share = () => {};
   render() {
     const details = restroDetails;
-
+    console.log(this.props.getRestroDetails);
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>

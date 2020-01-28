@@ -1,4 +1,4 @@
-import RestroDetailsComponent from "./RestroDetailComponent";
+import RestroDetailContainer from "../containers/RestroDetailContainer";
 import { createStackNavigator } from "react-navigation-stack";
 
 import HomePageContainer from "../containers/HomePageContainer";
@@ -10,7 +10,7 @@ const HomePage = createStackNavigator({
     }
   },
   RestroDetails: {
-    screen: RestroDetailsComponent,
+    screen: RestroDetailContainer,
     navigationOptions: {
       headerShown: false
     }
