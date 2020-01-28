@@ -15,7 +15,11 @@ const Reducer = (
 
     uploadImageLoading: false,
     uploadImage: "",
-    uploadError: ""
+    uploadError: "",
+
+    recentSearchLoading: false,
+    recentSearch: "",
+    recentSearchError: ""
   },
   action
 ) => {
@@ -79,6 +83,20 @@ const Reducer = (
     case Actions.UPLOAD_IMAGE_FAILURE:
       return Object.assign({}, state, {
         uploadImageLoading: false
+      });
+    case Actions.RECENT_SEARCH_REQUEST:
+      return Object.assign({}, state, {
+        recentSearchLoading: true
+      });
+    case Actions.RECENT_SEARCH_SUCCESS:
+      return Object.assign({}, state, {
+        recentSearchLoading: false,
+        recentSearch: action.recentSearch
+      });
+
+    case Actions.RECENT_SEARCH_FAILURE:
+      return Object.assign({}, state, {
+        recentSearchLoading: false
       });
 
     default:

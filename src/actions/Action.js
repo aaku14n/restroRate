@@ -10,6 +10,10 @@ export const SEARCH_REQUEST = "SEARCH_REQUEST";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
 export const SEARCH_FAILURE = "SEARCH_FAILURE";
 
+export const RECENT_SEARCH_REQUEST = "RECENT_SEARCH_REQUEST";
+export const RECENT_SEARCH_SUCCESS = "RECENT_SEARCH_SUCCESS";
+export const RECENT_SEARCH_FAILURE = "RECENT_SEARCH_FAILURE";
+
 export const UPLOAD_IMAGE_REQUEST = "UPLOAD_IMAGE_REQUEST";
 export const UPLOAD_IMAGE_SUCCESS = "UPLOAD_IMAGE_SUCCESS";
 export const UPLOAD_IMAGE_FAILURE = "SEARCH_FAILURE";
@@ -20,7 +24,6 @@ export function getHomeData() {
       dispatch({ type: GET_HOME_DATA_REQUEST });
       const result = await api.get("review");
       const resultJson = await result.json();
-      // console.log(resultJson);
       dispatch({
         type: GET_HOME_DATA_SUCCESS,
         homeData: resultJson.data
@@ -99,6 +102,25 @@ export function searchs(string) {
     } catch (e) {
       dispatch({
         type: SEARCH_FAILURE,
+        error: e.message
+      });
+    }
+  };
+}
+
+export function getRecentSearches() {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: RECENT_SEARCH_REQUEST });
+      const result = await api.get(`recentSearches`);
+      const resultJson = await result.json();
+      dispatch({
+        type: RECENT_SEARCH_SUCCESS,
+        recentSearch: resultJson.data
+      });
+    } catch (e) {
+      dispatch({
+        type: RECENT_SEARCH_FAILURE,
         error: e.message
       });
     }

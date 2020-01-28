@@ -11,68 +11,17 @@ import styles from "./css/SearchStyle";
 import ListItemComponent from "./ListItemComponent";
 import HeaderContainer from "../containers/HeaderContainer";
 import { getRestaurantsUrl } from "../utils/Utils";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-const TestJson = {
-  data: [
-    {
-      id: "1",
-      dishImage:
-        "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg",
-
-      name: "Susi",
-      rating: 2,
-      price: "$23.55",
-      peoples: 200
-    },
-    {
-      id: "2",
-
-      dishImage:
-        "https://c-lj.gnst.jp/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20180116120327",
-
-      name: "Indian",
-      rating: 2.5,
-      price: "$20.55",
-      peoples: 200
-    },
-    {
-      id: "3",
-
-      dishImage:
-        "https://res.cloudinary.com/sagacity/image/upload/c_crop,h_2000,w_3000,x_0,y_0/c_limit,dpr_auto,f_auto,fl_lossy,q_80,w_1080/shutterstock_365954354_nghgkk.jpg",
-
-      name: "Chiense",
-      rating: 3.5,
-      price: "$23.55",
-      peoples: 200
-    },
-    {
-      id: "4",
-
-      dishImage:
-        "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg",
-
-      name: "Itelian",
-      rating: 3,
-      price: "$23.55",
-      peoples: 200
-    },
-    {
-      id: "5",
-      dishImage: "",
-      name: "Itelian",
-      rating: 3,
-      price: "$23.55",
-      peoples: 200
-    }
-  ]
-};
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       searchString: ""
     };
+  }
+  componentDidMount() {
+    this.props.getRecentSearches();
   }
   onGotoDetails = id => {
     this.props.navigation.navigate("RestroDetails");
@@ -83,11 +32,16 @@ class Search extends React.Component {
       searchString
     });
   };
-  onBlurCall = () => {
-    this.props.searchResults(this.state.searchString);
+  onBlurCall = keyword => {
+    this.props.searchResults(keyword ? keyword : this.state.searchString);
+    this.setState({
+      searchString: keyword
+    });
   };
+  onSearchKeyword = keyword => {};
   render() {
     const searchResult = this.props.searchResult;
+    const recentSearch = this.props.recentSearch;
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
@@ -101,38 +55,51 @@ class Search extends React.Component {
               placeholderTextColor="black"
               onChangeText={text => this.searchText(text)}
               onBlur={() => this.onBlurCall()}
-              value={this.state.restroName}
+              value={this.state.searchString}
             />
           </View>
-          <View style={styles.recentSearch}>
-            <View>
-              <Text style={styles.recentSearchTitle}>Recent Searches</Text>
-            </View>
-            <ScrollView
-              horizontal={true}
-              style={styles.imagesWrapper}
-              showsHorizontalScrollIndicator={false}
-            >
-              {TestJson.data.map((recent, id) => {
-                return (
-                  <View style={styles.imageTitleWrapper} key={id}>
-                    <Image
+          {recentSearch.length > 0 ? (
+            <View style={styles.recentSearch}>
+              <View>
+                <Text style={styles.recentSearchTitle}>Recent Searches</Text>
+              </View>
+              <ScrollView
+                horizontal={true}
+                style={styles.imagesWrapper}
+                showsHorizontalScrollIndicator={false}
+              >
+                {recentSearch.map((recent, id) => {
+                  return (
+                    <TouchableWithoutFeedback
+                      style={styles.imageTitleWrapper}
+                      onPress={() => this.onBlurCall(recent.keyword)}
                       key={id}
-                      style={styles.image}
-                      source={
-                        recent.dishImage
-                          ? {
-                              uri: recent.dishImage
-                            }
-                          : require("../../assets/defaultRestro.png")
-                      }
-                    />
-                    <Text style={styles.title}>{recent.name}</Text>
-                  </View>
-                );
-              })}
-            </ScrollView>
-          </View>
+                    >
+                      <Image
+                        key={id}
+                        style={styles.image}
+                        source={
+                          recent.type === "Dish"
+                            ? recent.dishImage
+                              ? {
+                                  uri: recent.dishImage
+                                }
+                              : require("../../assets/defaultRestro.png")
+                            : recent.dishImage
+                            ? {
+                                uri: getRestaurantsUrl(recent.dishImage)
+                              }
+                            : require("../../assets/defaultRestro.png")
+                        }
+                      />
+                      <Text style={styles.title}>{recent.name}</Text>
+                    </TouchableWithoutFeedback>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          ) : null}
+
           {this.props.searchLoading ? (
             <View style={styles.recommendWrapper}>
               <ActivityIndicator size="large" color="#c4c4c4" />
