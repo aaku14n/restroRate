@@ -81,7 +81,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
-    height: 50
+    height: 50,
+    marginBottom: 60
   },
   buttonStyle: {
     backgroundColor: THEME_COLOR,

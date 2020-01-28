@@ -168,7 +168,7 @@ class AddReviewForm extends React.Component {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log(pickerResult);
+  
     if (pickerResult.cancelled == false) {
       this.setState({
         photo: pickerResult

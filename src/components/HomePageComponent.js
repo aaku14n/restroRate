@@ -41,6 +41,7 @@ class HomePageComponent extends React.Component {
           <View style={styles.base}>
             <FlatList
               data={this.props.homeData}
+              keyExtractor={item => item._id}
               renderItem={({ item }) => (
                 <RestroCard
                   imgUri={item.dishInfo.dishImage}
