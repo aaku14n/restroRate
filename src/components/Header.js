@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text, View, Image, TouchableHighlight } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, Image, TouchableHighlight, Alert } from "react-native";
 import styles from "./css/HeaderStyle";
 import { Dimensions, Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -32,8 +32,33 @@ function Header(props) {
   if (props.loginDetails && props.loginDetails.data) {
     profilePic = props.loginDetails.data.profilePic;
   }
-
   const [dropDown, setdropDown] = useState(false);
+  const [location, setLocation] = useState("");
+  const onAccessCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const location = JSON.stringify(position);
+        const latitude =
+          JSON.parse(location) &&
+          JSON.parse(location).coords &&
+          JSON.parse(location).coords.latitude;
+        const longitude =
+          JSON.parse(location) &&
+          JSON.parse(location).coords &&
+          JSON.parse(location).coords.longitude;
+        getCityDetails(latitude, longitude);
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  };
+  const getCityDetails = async (lat, long) => {
+    const cityResponse = await props.getCityName(lat, long);
+    setLocation(cityResponse.compound_code.split(" ")[1].split(",")[0]);
+  };
+  useEffect(() => {
+    onAccessCurrentLocation();
+  });
 
   const onPress = () => {
     setdropDown(!dropDown);
@@ -53,9 +78,9 @@ function Header(props) {
         >
           <View style={styles.iconTitleWrapper}>
             <View>
-              <Text style={styles.location}>Gurugram</Text>
+              <Text style={styles.location}>{location}</Text>
             </View>
-            <View style={dropDown ? styles.upIcon : styles.downIcon}>
+            <View style={styles.downIcon}>
               <Image
                 style={styles.icon}
                 source={require("../../assets/downArrow.png")}

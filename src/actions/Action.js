@@ -70,6 +70,22 @@ export function getRestaurant(loc) {
     }
   };
 }
+
+export function getCityName(lat, long) {
+  return async (dispatch, getState, { api }) => {
+    try {
+      const result = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&sensor=true&key=AIzaSyDM4BtVx-2cRWTEEu3JOdx0szr735nXzPU`
+      );
+      const resultJson = await result.json();
+      return resultJson.plus_code;
+    } catch (e) {
+      return {
+        type: "Erro"
+      };
+    }
+  };
+}
 export function searchs(string) {
   return async (dispatch, getState, { api }) => {
     try {
