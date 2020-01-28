@@ -38,7 +38,7 @@ class Search extends React.Component {
       searchString: keyword
     });
   };
-  onSearchKeyword = keyword => {};
+
   render() {
     const searchResult = this.props.searchResult;
     const recentSearch = this.props.recentSearch;
