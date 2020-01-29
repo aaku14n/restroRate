@@ -23,7 +23,11 @@ const Reducer = (
 
     getRestroDetailLoading: false,
     getRestroDetails: "",
-    getRestroDetailError: ""
+    getRestroDetailError: "",
+
+    userListLoading: false,
+    userList: "",
+    userListError: ""
   },
   action
 ) => {
@@ -115,6 +119,21 @@ const Reducer = (
     case Actions.GET_RESTRO_FAILURE:
       return Object.assign({}, state, {
         getRestroDetailLoading: false
+      });
+
+    case Actions.ALL_USER_REQUEST:
+      return Object.assign({}, state, {
+        userListLoading: true
+      });
+    case Actions.ALL_USER_SUCCESS:
+      return Object.assign({}, state, {
+        userListLoading: false,
+        userList: action.userList
+      });
+
+    case Actions.ALL_USER_FAILURE:
+      return Object.assign({}, state, {
+        userListLoading: false
       });
 
     default:

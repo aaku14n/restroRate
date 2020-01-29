@@ -1,4 +1,5 @@
 import RestroDetailContainer from "../containers/RestroDetailContainer";
+import RecommendScreen from "../containers/RecommendFriendContainer";
 import { createStackNavigator } from "react-navigation-stack";
 import SearchContainer from "../containers/SearchContainer";
 
@@ -11,6 +12,12 @@ const SearchPage = createStackNavigator({
   },
   RestroDetails: {
     screen: RestroDetailContainer,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  RecommendScreen: {
+    screen: RecommendScreen,
     navigationOptions: {
       headerShown: false
     }

@@ -84,8 +84,9 @@ class AddReviewForm extends React.Component {
     this.onAccessCurrentLocation();
   }
 
-  shareToFriends = id => {
-    return <View>{id}</View>;
+  shareToFriends = () => {
+    console.log(this.props.addReview._id, "sf");
+    this.props.navigation.navigate("RecommendScreen");
   };
   submitReview = async () => {
     this.setState({
@@ -136,8 +137,7 @@ class AddReviewForm extends React.Component {
             },
             {
               text: "YES",
-              onPress: () =>
-                this.shareToFriends(submitReviewResponse.addReview.id)
+              onPress: () => this.shareToFriends()
             }
           ],
           { cancelable: false }

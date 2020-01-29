@@ -18,6 +18,10 @@ export const GET_RESTRO_REQUEST = "GET_RESTRO_REQUEST";
 export const GET_RESTRO_SUCCESS = "GET_RESTRO_SUCCESS";
 export const GET_RESTRO_FAILURE = "GET_RESTRO_FAILURE";
 
+export const ALL_USER_REQUEST = "ALL_USER_REQUEST";
+export const ALL_USER_SUCCESS = "ALL_USER_SUCCESS";
+export const ALL_USER_FAILURE = "ALL_USER_FAILURE";
+
 export const UPLOAD_IMAGE_REQUEST = "UPLOAD_IMAGE_REQUEST";
 export const UPLOAD_IMAGE_SUCCESS = "UPLOAD_IMAGE_SUCCESS";
 export const UPLOAD_IMAGE_FAILURE = "UPLOAD_IMAGE_FAILURE";
@@ -54,6 +58,25 @@ export function submitReview(reviewObj) {
     } catch (e) {
       return dispatch({
         type: ADD_REVIEW_FAILURE,
+        error: e.message
+      });
+    }
+  };
+}
+
+export function getAllUser() {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: ALL_USER_REQUEST });
+      const result = await api.get("users");
+      const resultJson = await result.json();
+      return dispatch({
+        type: ALL_USER_SUCCESS,
+        userList: resultJson.data
+      });
+    } catch (e) {
+      return dispatch({
+        type: ALL_USER_FAILURE,
         error: e.message
       });
     }
