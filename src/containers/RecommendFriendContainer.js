@@ -4,7 +4,8 @@ import { getAllUser } from "../actions/Action";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    userList: state.Reducer.userList
+    userList: state.Reducer.userList,
+    addReview: state.Reducer.addReview
   };
 };
 
