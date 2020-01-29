@@ -45,15 +45,14 @@ export function submitReview(reviewObj) {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: ADD_REVIEW_REQUEST });
-
       const result = await api.post("review", reviewObj);
       const resultJson = await result.json();
-      dispatch({
+      return dispatch({
         type: ADD_REVIEW_SUCCESS,
         addReview: resultJson.data
       });
     } catch (e) {
-      dispatch({
+      return dispatch({
         type: ADD_REVIEW_FAILURE,
         error: e.message
       });
@@ -135,14 +134,14 @@ export function getRestoDetail(id) {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: GET_RESTRO_REQUEST });
-      const result = await api.get(`restaurant/:${id}`);
+      const result = await api.get(`restaurant/${id}`);
       const resultJson = await result.json();
-      dispatch({
+      return dispatch({
         type: GET_RESTRO_SUCCESS,
-        getRestroDetails: resultJson
+        getRestroDetails: resultJson.data
       });
     } catch (e) {
-      dispatch({
+      return dispatch({
         type: GET_RESTRO_FAILURE,
         error: e.message
       });

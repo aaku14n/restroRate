@@ -4,7 +4,8 @@ import RestroDetailsComponent from "../components/RestroDetailComponent";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    getRestroDetails: state.Reducer.getRestroDetails
+    getRestroDetails: state.Reducer.getRestroDetails,
+    getRestroDetailLoading: state.Reducer.getRestroDetailLoading
   };
 };
 

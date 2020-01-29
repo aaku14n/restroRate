@@ -17,7 +17,7 @@ import defaultPic from "../../assets/defaultRestro.png";
 import compass from "../../assets/compass.png";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
-import { getRestaurant } from "../actions/Action";
+import { getRestaurant, ADD_REVIEW_SUCCESS } from "../actions/Action";
 import * as Permissions from "expo-permissions";
 
 class AddReviewForm extends React.Component {
@@ -83,6 +83,10 @@ class AddReviewForm extends React.Component {
   componentDidMount() {
     this.onAccessCurrentLocation();
   }
+
+  shareToFriends = id => {
+    return <View>{id}</View>;
+  };
   submitReview = async () => {
     this.setState({
       imageLoading: true
@@ -122,14 +126,30 @@ class AddReviewForm extends React.Component {
         restaurantData: { candidates: this.state.restaurantDetails }
       };
       const submitReviewResponse = await this.props.submitReview(reviewObj);
-      this.props.navigation.navigate("SettingScreen");
-      this.setState({
-        photo: null,
-        rating: 0,
-        dishName: "",
-        review: "",
-        imageLoading: false
-      });
+      if (submitReviewResponse.type === ADD_REVIEW_SUCCESS) {
+        Alert.alert(
+          "RECOMMEND FRIEND",
+          "Are you want to recommend to your friends",
+          [
+            {
+              text: "NO"
+            },
+            {
+              text: "YES",
+              onPress: () =>
+                this.shareToFriends(submitReviewResponse.addReview.id)
+            }
+          ],
+          { cancelable: false }
+        );
+        this.setState({
+          photo: null,
+          rating: 0,
+          dishName: "",
+          review: "",
+          imageLoading: false
+        });
+      }
     }
   };
   getLocationAsync = async () => {
@@ -168,7 +188,7 @@ class AddReviewForm extends React.Component {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-  
+
     if (pickerResult.cancelled == false) {
       this.setState({
         photo: pickerResult

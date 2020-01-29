@@ -101,5 +101,11 @@ export default StyleSheet.create({
   },
   listItemWrapper: {
     marginTop: 25
+  },
+  loader: {
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });

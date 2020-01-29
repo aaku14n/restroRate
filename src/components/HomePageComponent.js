@@ -50,7 +50,7 @@ class HomePageComponent extends React.Component {
                   name={item.dishInfo.name}
                   cusions={item.restaurantInfo.name}
                   rate={item.rate}
-                  onPress={() => this.gotoRestroPage(item._id)}
+                  onPress={() => this.gotoRestroPage(item.restaurantInfo._id)}
                 />
               )}
               ref={ref => (this.flatlistref = ref)}

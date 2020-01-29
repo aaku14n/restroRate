@@ -1,5 +1,12 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator
+} from "react-native";
 import styles from "./css/RestroDetailComponent";
 import RatingComponent from "./General/RatingComponent";
 import ListItemComponent from "./ListItemComponent";
@@ -52,8 +59,14 @@ export default class RestroDetailsComponent extends React.Component {
   }
   share = () => {};
   render() {
-    const details = restroDetails;
-    console.log(this.props.getRestroDetails);
+    if (this.props.getRestroDetailLoading) {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#c4c4c4" />
+        </View>
+      );
+    }
+    const details = this.props && this.props.getRestroDetails;
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
@@ -144,34 +157,38 @@ export default class RestroDetailsComponent extends React.Component {
         <View style={styles.dishesList}>
           <Text style={styles.summaryHeading}>Popular Dishes</Text>
           <ScrollView style={styles.listItemWrapper}>
-            {details.dishes.map((recent, id) => {
-              return (
-                <ListItemComponent
-                  key={id}
-                  imgUri={recent.dishImage}
-                  name={recent.name}
-                  price={recent.price}
-                  rating={recent.averageRating}
-                  peoples={recent.totalReviews}
-                />
-              );
-            })}
+            {details && details.dishes && details.dishes.map
+              ? details.dishes.map((recent, id) => {
+                  return (
+                    <ListItemComponent
+                      key={id}
+                      imgUri={recent.dishImage}
+                      name={recent.name}
+                      price={recent.price}
+                      rating={recent.averageRating}
+                      peoples={recent.totalReviews}
+                    />
+                  );
+                })
+              : null}
           </ScrollView>
         </View>
         <View>
           <Text style={styles.reviewHeading}>Reviews</Text>
-          {details.reviews.map((recent, id) => {
-            return (
-              <ReviewComponent
-                key={id}
-                restroName={recent.dishInfo.name}
-                pic={recent.dishInfo.dishImage}
-                review={recent.feedback}
-                rating={recent.rate}
-                time={renderDateFormat(recent.createdAt)}
-              />
-            );
-          })}
+          {details && details.reviews && details.reviews.map
+            ? details.reviews.map((recent, id) => {
+                return (
+                  <ReviewComponent
+                    key={id}
+                    restroName={recent.dishInfo.name}
+                    pic={recent.dishInfo.dishImage}
+                    review={recent.feedback}
+                    rating={recent.rate}
+                    time={renderDateFormat(recent.createdAt)}
+                  />
+                );
+              })
+            : null}
         </View>
       </ScrollView>
     );

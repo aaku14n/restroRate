@@ -24,7 +24,9 @@ class Search extends React.Component {
     this.props.getRecentSearches();
   }
   onGotoDetails = id => {
-    this.props.navigation.navigate("RestroDetails");
+    this.props.navigation.navigate("RestroDetails", {
+      restroId: id
+    });
   };
 
   searchText = searchString => {
@@ -123,7 +125,9 @@ class Search extends React.Component {
                         key={id}
                         imgUri={recent.dishImage}
                         name={recent.name}
-                        onPress={this.onGotoDetails}
+                        onPress={() =>
+                          this.onGotoDetails(recent.restaurantInfo._id)
+                        }
                         rating={recent.averageRating}
                         peoples={recent.totalReviews}
                         subHeading={recent.restaurantInfo.name}
@@ -142,7 +146,7 @@ class Search extends React.Component {
                         key={id}
                         imgUri={getRestaurantsUrl(recent.restaurantImage)}
                         name={recent.name}
-                        onPress={this.onGotoDetails}
+                        onPress={() => this.onGotoDetails(recent._id)}
                         rating={recent.averageRating}
                         peoples={recent.totalReviews}
                       />
