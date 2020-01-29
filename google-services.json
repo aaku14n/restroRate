@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "182541479279",
+    "firebase_url": "https://dishserve.firebaseio.com",
+    "project_id": "dishserve",
+    "storage_bucket": "dishserve.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182541479279:android:0682b86124fa3b5f0ecc9a",
+        "android_client_info": {
+          "package_name": "in.littra.dishserve"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182541479279-3ajl3sf9oklue84o6dn9laavk090b890.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALGEtmp54pEs-N_IL7vGBXBOvaoVWdcps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182541479279-3ajl3sf9oklue84o6dn9laavk090b890.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

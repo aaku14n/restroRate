@@ -1,3 +1,3 @@
 export default Auth = {
-  packageName: "in.littra.dishserve"
+  packageName: "in.littra.disherve"
 };

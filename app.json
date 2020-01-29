@@ -22,7 +22,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "in.littra.dishserve",
+      "bundleIdentifier": "in.littra.disherve",
       "config": {
         "googleSignIn": {
           "reservedClientId": "720867838172-7l5j52jfs0g5b85ivfsuegjdchtn87t4.apps.googleusercontent.com"
@@ -30,7 +30,7 @@
       }
     },
     "android": {
-      "package": "in.littra.dishserve"
+      "package": "in.littra.disherve"
     },
     "description": " Dish serve is platform for restaurants reviews"
   }
