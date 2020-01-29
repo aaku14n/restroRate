@@ -4,63 +4,50 @@ import styles from "./css/RestroDetailComponent";
 import RatingComponent from "./General/RatingComponent";
 import ListItemComponent from "./ListItemComponent";
 import ReviewComponent from "./General/ReviewComponent";
+import { getRestaurantsUrl } from "../utils/Utils";
+import { renderDateFormat } from "../utils/DateUtils";
 const restroDetails = {
-  id: "1",
-  restaurantName: "Sanraku , Hong Cong",
+  _id: "5e2d44d2ad77bb70d0fa177a",
+  name: "Sagar Fast Food",
+  fullAddress: "sd",
   restaurantImage:
-    "https://c8.alamy.com/comp/BDE787/dummy-or-manikin-holding-a-menu-outside-the-village-restaurant-in-BDE787.jpg",
-  dishName: "Japanese, Sushi Bars, Asian Fusion",
-  dishImage:
-    "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg",
-  ratings: 4.5,
-  distance: 0.4,
-  totalReviews: 132,
-  cost: 500,
-  address: "392, 7th Cross"
-};
-const TestJson = {
-  data: [
+    "https://maps.googleapis.com/maps/api/place/photo?photoreference=CmRaAAAA6rlCAGUO4mZb7MD99BIjs-jVis2JQGSmPPX9VpAMnpqdo_U49t8XrIz9GH6sjBw--8t--yDTmXinEy1HscNe6hzW7Na7fgqFqPFul5_lNu4OjbzOxLDesClfDn9LSMaJEhAivupkiMIDKIVpHgH2p-MyGhTnePULPu8FFu3JjumiBYgaX3VOsQ&maxwidth=UPDATE_IMAGE_WIDTH&maxheight=UPDATE_IMAGE_HEIGHT&key=UPDATE_GOOGLE_API_KEY",
+  latitude: "12.917437",
+  longitude: "77.61244429999999",
+  createdAt: "2020-01-26T07:50:42.582Z",
+  dishes: [
     {
-      id: "1",
-      dishImage:
-        "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg",
-
-      name: "Susi",
-      rating: 2,
-      price: "$23.55",
-      peoples: 200
-    },
-    {
-      id: "2",
-
-      dishImage:
-        "https://c-lj.gnst.jp/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20180116120327",
-
-      name: "Indian",
-      rating: 2.5,
-      price: "$20.55",
-      peoples: 200
-    },
-    {
-      id: "3",
-
-      dishImage:
-        "https://res.cloudinary.com/sagacity/image/upload/c_crop,h_2000,w_3000,x_0,y_0/c_limit,dpr_auto,f_auto,fl_lossy,q_80,w_1080/shutterstock_365954354_nghgkk.jpg",
-
-      name: "Chiense",
-      rating: 3.5,
-      price: "$23.55",
-      peoples: 200
+      _id: "5e2d44d2ad77bb70d0fa177b",
+      name: "Idli Bada",
+      dishImage: "http://www.littra.in:4200/storage/image-1580024008643.jpeg",
+      createdAt: "2020-01-26T07:50:42.584Z",
+      totalReviews: 1,
+      averageRating: 4
     }
-  ]
+  ],
+  reviews: [
+    {
+      dishId: "5e2d44d2ad77bb70d0fa177b",
+      feedback: "It’s awesome dish.. you must try come here and try ...",
+      rate: "4",
+      createdAt: "2020-01-26T07:50:42.586Z",
+      dishInfo: {
+        _id: "5e2d44d2ad77bb70d0fa177b",
+        name: "Idli Bada",
+        dishImage: "http://www.littra.in:4200/storage/image-1580024008643.jpeg"
+      }
+    }
+  ],
+  totalReviews: 1,
+  averageRating: 4
 };
+
 export default class RestroDetailsComponent extends React.Component {
   goBack = () => {
     this.props.navigation.goBack();
   };
   componentDidMount() {
     const restroId = this.props.navigation.getParam("restroId");
-    console.log(restroId);
     this.props.restroDetails(restroId);
   }
   share = () => {};
@@ -86,15 +73,15 @@ export default class RestroDetailsComponent extends React.Component {
             style={styles.image}
             source={
               details.restaurantImage
-                ? { uri: details.dishImage }
+                ? { uri: getRestaurantsUrl(details.restaurantImage) }
                 : require("../../assets/profile.png")
             }
           />
         </View>
         <View style={styles.infoWrapper}>
           <View style={styles.details}>
-            <Text style={styles.textName}>{details.restaurantName}</Text>
-            <Text style={styles.textDes}>{details.address}</Text>
+            <Text style={styles.textName}>{details.name}</Text>
+            <Text style={styles.textDes}>{details.fullAddress}</Text>
           </View>
           <View style={styles.callIcon}>
             <Image
@@ -106,11 +93,13 @@ export default class RestroDetailsComponent extends React.Component {
         <View style={styles.rateWrapper}>
           <View style={styles.details}>
             <RatingComponent
-              rating={details.ratings}
+              rating={details.averageRating}
               size={15}
               marginRight={2}
             />
-            <Text style={styles.textDes}>Based on 12,999 reviews</Text>
+            <Text style={styles.textDes}>
+              Based on {details.totalReviews} reviews
+            </Text>
           </View>
           <View style={styles.callIcon}>
             <Image
@@ -155,13 +144,15 @@ export default class RestroDetailsComponent extends React.Component {
         <View style={styles.dishesList}>
           <Text style={styles.summaryHeading}>Popular Dishes</Text>
           <ScrollView style={styles.listItemWrapper}>
-            {TestJson.data.map((recent, id) => {
+            {details.dishes.map((recent, id) => {
               return (
                 <ListItemComponent
                   key={id}
                   imgUri={recent.dishImage}
                   name={recent.name}
                   price={recent.price}
+                  rating={recent.averageRating}
+                  peoples={recent.totalReviews}
                 />
               );
             })}
@@ -169,17 +160,18 @@ export default class RestroDetailsComponent extends React.Component {
         </View>
         <View>
           <Text style={styles.reviewHeading}>Reviews</Text>
-          <ReviewComponent
-            restroName={"Indian Somu Da"}
-            pic={
-              "https://img.jakpost.net/c/2017/02/24/2017_02_24_22239_1487924367._large.jpg"
-            }
-            review={
-              " ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with d"
-            }
-            rating={3.5}
-            time={"2 days ago"}
-          />
+          {details.reviews.map((recent, id) => {
+            return (
+              <ReviewComponent
+                key={id}
+                restroName={recent.dishInfo.name}
+                pic={recent.dishInfo.dishImage}
+                review={recent.feedback}
+                rating={recent.rate}
+                time={renderDateFormat(recent.createdAt)}
+              />
+            );
+          })}
         </View>
       </ScrollView>
     );

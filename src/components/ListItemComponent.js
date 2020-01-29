@@ -48,7 +48,9 @@ function ListItemComponent(props) {
                 style={{ width: 15, height: 15, marginTop: 2 }}
                 source={thumbsUp}
               />
-              <Text style={styles.recomend}>212 peoples recomended</Text>
+              <Text style={styles.recomend}>
+                {recommedPeoples} peoples recomended
+              </Text>
             </View>
           )}
         </View>
