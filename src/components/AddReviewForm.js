@@ -382,7 +382,10 @@ class AddReviewForm extends React.Component {
                   </Picker>
                 </View>
                 <View style={styles.modalButton}>
-                  <TouchableHighlight onPress={() => this.sendRecommd()}>
+                  <TouchableHighlight
+                    onPress={() => this.sendRecommd()}
+                    underlayColor={"#fff"}
+                  >
                     <Text style={styles.buttonTitle}>RECOMMEND</Text>
                   </TouchableHighlight>
                 </View>
