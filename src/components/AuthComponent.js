@@ -49,6 +49,7 @@ const renderTabBar = navigation => {
 
   return (
     <IconComponent
+      route={routeName}
       name={iconName}
       size={25}
       color={focused ? THEME_COLOR : "black"}
