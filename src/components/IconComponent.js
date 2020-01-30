@@ -11,7 +11,8 @@ function IconComponent(props) {
         backgroundColor: props.route == ADD_REVIEW_SCREEN ? "#fff" : null,
         padding: props.route == ADD_REVIEW_SCREEN ? 20 : 0,
         borderWidth: props.route == ADD_REVIEW_SCREEN ? 1 : 0,
-        borderColor: props.route == ADD_REVIEW_SCREEN ? "#c4c4c4" : null,
+        borderColor: props.route == ADD_REVIEW_SCREEN ? "#fff" : null,
+
         // borderRadius: props.route == ADD_REVIEW_SCREEN ? 25 : 0,
         borderBottomWidth: 0,
         borderTopLeftRadius: 100,
