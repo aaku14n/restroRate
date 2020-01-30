@@ -21,7 +21,7 @@ export function userLogin(userDetailsObject) {
       const resultJson = await result.json();
 
       await createAsyncStorage("userDetails", resultJson);
-      console.log(result);
+
       return dispatch({
         type: USER_LOGIN_SUCCESS,
         userDetails: resultJson
