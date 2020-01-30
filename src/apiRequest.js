@@ -1,6 +1,6 @@
 import { getAsyncStorage } from "./utils/AsyncStorage.utils";
 
-const API_URL = "http://littra.in:4200";
+const API_URL = "http://54.77.46.103:4200";
 
 export const get = async url => {
   const userDetails = await getAsyncStorage("userDetails");
