@@ -27,7 +27,11 @@ const Reducer = (
 
     userListLoading: false,
     userList: "",
-    userListError: ""
+    userListError: "",
+
+    sendRecommendationLoading: false,
+    recommandationResponse: "",
+    recommandtionError: ""
   },
   action
 ) => {
@@ -134,6 +138,20 @@ const Reducer = (
     case Actions.ALL_USER_FAILURE:
       return Object.assign({}, state, {
         userListLoading: false
+      });
+    case Actions.SEND_RECOMMEND_REQUEST:
+      return Object.assign({}, state, {
+        sendRecommendationLoading: true
+      });
+    case Actions.SEND_RECOMMEND_SUCCESS:
+      return Object.assign({}, state, {
+        sendRecommendationLoading: false,
+        recommandationResponse: action.sendRecommandation
+      });
+
+    case Actions.SEND_RECOMMEND_FAILURE:
+      return Object.assign({}, state, {
+        sendRecommendationLoading: false
       });
 
     default:

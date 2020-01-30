@@ -32,7 +32,7 @@ function Header(props) {
   if (props.loginDetails && props.loginDetails.data) {
     profilePic = props.loginDetails.data.profilePic;
   }
-  const [dropDown, setdropDown] = useState(false);
+
   const [location, setLocation] = useState("");
   const onAccessCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(

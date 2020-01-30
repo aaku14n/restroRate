@@ -6,7 +6,9 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
-  Alert
+  Alert,
+  Modal,
+  Picker
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import styles from "./css/AddReviewFormStyle";
@@ -19,17 +21,23 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import { getRestaurant, ADD_REVIEW_SUCCESS } from "../actions/Action";
 import * as Permissions from "expo-permissions";
+import RecommendFriends from "./RecommendFriend";
 
 class AddReviewForm extends React.Component {
-  state = {
-    photo: null,
-    rating: 0,
-    restroName: "",
-    dishName: "",
-    review: "",
-    location: null,
-    imageLoading: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      photo: null,
+      rating: 0,
+      restroName: "",
+      dishName: "",
+      review: "",
+      location: null,
+      imageLoading: false,
+      openModalState: false
+    };
+  }
+
   completeRate(rating) {
     this.setState({
       rating
@@ -82,11 +90,9 @@ class AddReviewForm extends React.Component {
   // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=12.9153688,77.5969855&radius=100&type=restaurant&key=AIzaSyDM4BtVx-2cRWTEEu3JOdx0szr735nXzPU
   componentDidMount() {
     this.onAccessCurrentLocation();
+    this.props.getAllUser();
   }
 
-  shareToFriends = () => {
-    this.props.navigation.navigate("RecommendScreen");
-  };
   submitReview = async () => {
     this.setState({
       imageLoading: true
@@ -127,26 +133,13 @@ class AddReviewForm extends React.Component {
       };
       const submitReviewResponse = await this.props.submitReview(reviewObj);
       if (submitReviewResponse.type === ADD_REVIEW_SUCCESS) {
-        Alert.alert(
-          "RECOMMEND FRIEND",
-          "Are you want to recommend to your friends",
-          [
-            {
-              text: "NO"
-            },
-            {
-              text: "YES",
-              onPress: () => this.shareToFriends()
-            }
-          ],
-          { cancelable: false }
-        );
         this.setState({
           photo: null,
           rating: 0,
           dishName: "",
           review: "",
-          imageLoading: false
+          imageLoading: false,
+          openModalState: true
         });
       }
     }
@@ -197,6 +190,11 @@ class AddReviewForm extends React.Component {
   removeImage = () => {
     this.setState({
       photo: null
+    });
+  };
+  closeModal = () => {
+    this.setState({
+      openModalState: false
     });
   };
   render() {
@@ -311,6 +309,69 @@ class AddReviewForm extends React.Component {
             </TouchableWithoutFeedback>
           </View>
         </View>
+        {this.state.openModalState && (
+          <View style={styles.modalBase}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={this.state.openModalState}
+              onRequestClose={() => {
+                this.setState({ openModalState: false });
+              }}
+            >
+              <View style={styles.modal}>
+                <TouchableWithoutFeedback
+                  onPress={() => this.closeModal()}
+                  style={styles.closeModalIcon}
+                >
+                  <Image
+                    style={styles.icon}
+                    source={require("../../assets/plus.png")}
+                  />
+                </TouchableWithoutFeedback>
+                <View style={styles.header}>
+                  <View>
+                    <Text style={styles.heading}>Recommendation</Text>
+                  </View>
+                </View>
+                <View style={styles.dropdown}>
+                  <Picker
+                    selectedValue={this.state.selectedUser}
+                    style={{
+                      height: 50,
+                      width: "100%"
+                    }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({ selectedUser: itemValue })
+                    }
+                  >
+                    {this.props.userList && this.props.userList.map
+                      ? this.props.userList.map((item, id) => {
+                          return (
+                            <Picker.Item
+                              key={id}
+                              label={item.name}
+                              value={item.name}
+                            />
+                          );
+                        })
+                      : null}
+                  </Picker>
+                </View>
+                <View style={styles.modalButton}>
+                  <TouchableWithoutFeedback onPress={() => this.submitReview()}>
+                    <Text style={styles.buttonTitle}>RECOMMEND</Text>
+                  </TouchableWithoutFeedback>
+                </View>
+                <View style={styles.skipButton}>
+                  <TouchableWithoutFeedback onPress={() => this.closeModal()}>
+                    <Text style={styles.skipTitle}>SKIP</Text>
+                  </TouchableWithoutFeedback>
+                </View>
+              </View>
+            </Modal>
+          </View>
+        )}
       </ScrollView>
     );
   }

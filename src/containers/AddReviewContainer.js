@@ -1,12 +1,18 @@
 import { connect } from "react-redux";
 import AddReviewForm from "../components/AddReviewForm";
-import { submitReview, getRestaurant, uploadImage } from "../actions/Action";
+import {
+  submitReview,
+  getRestaurant,
+  uploadImage,
+  getAllUser
+} from "../actions/Action";
 
 const mapStateToProps = (state, ownProps) => {
   return {
     addReviewLoading: state.Reducer.addReviewLoading,
     uploadImageLoading: state.Reducer.uploadImageLoading,
-    addReview: state.Reducer.addReview
+    addReview: state.Reducer.addReview,
+    userList: state.Reducer.userList
   };
 };
 
@@ -20,6 +26,9 @@ const mapDispatchToProps = dispatch => {
     },
     uploadImage: image => {
       return dispatch(uploadImage(image));
+    },
+    getAllUser: () => {
+      return dispatch(getAllUser());
     }
   };
 };
