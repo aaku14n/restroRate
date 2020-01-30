@@ -85,7 +85,6 @@ class AddReviewForm extends React.Component {
   }
 
   shareToFriends = () => {
-    console.log(this.props.addReview._id, "sf");
     this.props.navigation.navigate("RecommendScreen");
   };
   submitReview = async () => {
