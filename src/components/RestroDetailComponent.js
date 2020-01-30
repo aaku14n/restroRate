@@ -122,7 +122,7 @@ export default class RestroDetailsComponent extends React.Component {
           </View>
         </View>
 
-        <View style={styles.summary}>
+        {/* <View style={styles.summary}>
           <Text style={styles.summaryHeading}>Summary</Text>
           <View style={styles.row}>
             <Image
@@ -152,7 +152,7 @@ export default class RestroDetailsComponent extends React.Component {
             />
             <Text style={styles.des}>CC/DC UPI,Phonepe, Bhim</Text>
           </View>
-        </View>
+        </View> */}
 
         <View style={styles.dishesList}>
           <Text style={styles.summaryHeading}>Popular Dishes</Text>
