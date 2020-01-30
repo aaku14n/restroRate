@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image, ScrollView } from "react-native";
+import { Text, View, Image, RefreshControl, FlatList } from "react-native";
 import styles from "./css/RecommendFriendStyle";
 import defaultRestro from "../../assets/defaultRestro.png";
 
@@ -7,58 +7,63 @@ class RecommendFriend extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedUser: ""
+      selectedUser: "",
+      refreshing: false
     };
   }
   componentDidMount() {
     this.props.myRecommendation();
   }
-
+  doRefresh = async () => {
+    await this.setState({ refreshing: true });
+    await this.props.myRecommendation();
+    await this.setState({ refreshing: false });
+  };
   render() {
     return (
-      <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
+      <View style={styles.base} showsVerticalScrollIndicator={false}>
         <View>
           <Text style={styles.heading}>MY RECOMMENDATION</Text>
         </View>
-        {this.props.myRecommandationList &&
-        this.props.myRecommandationList.map ? (
-          this.props.myRecommandationList.map((recommed, id) => {
-            return (
-              <View style={styles.recommendationWrapper} key={id}>
-                <View style={styles.card}>
-                  <View>
-                    <Text style={styles.userName}>
-                      {recommed.userInfo.name} Recommend me .
-                    </Text>
-                  </View>
-                  <View>
-                    <Image
-                      style={styles.dishImage}
-                      source={
-                        recommed.dishInfo.dishImage
-                          ? { uri: recommed.dishInfo.dishImage }
-                          : defaultRestro
-                      }
-                    />
-                  </View>
-                  <View>
-                    <Text style={styles.userName}>
-                      {recommed.dishInfo.name}
-                    </Text>
-                  </View>
-                  <View>
-                    <Text style={styles.discription}>
-                      {recommed.description}
-                    </Text>
-                  </View>
+        <FlatList
+          data={this.props.myRecommandationList}
+          keyExtractor={item => item._id}
+          renderItem={({ item }) => (
+            <View style={styles.recommendationWrapper}>
+              <View style={styles.card}>
+                <View>
+                  <Text style={styles.userName}>
+                    {item.userInfo.name} Recommend me .
+                  </Text>
+                </View>
+                <View>
+                  <Image
+                    style={styles.dishImage}
+                    source={
+                      item.dishInfo.dishImage
+                        ? { uri: item.dishInfo.dishImage }
+                        : defaultRestro
+                    }
+                  />
+                </View>
+                <View>
+                  <Text style={styles.userName}>{item.dishInfo.name}</Text>
+                </View>
+                <View>
+                  <Text style={styles.discription}>{item.description}</Text>
                 </View>
               </View>
-            );
-          })
-        ) : (
-          <Text />
-        )}
-      </ScrollView>
+            </View>
+          )}
+          ref={ref => (this.flatlistref = ref)}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.doRefresh}
+            />
+          }
+        />
+      </View>
     );
   }
 }
