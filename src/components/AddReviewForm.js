@@ -8,7 +8,8 @@ import {
   ActivityIndicator,
   Alert,
   Modal,
-  Picker
+  Picker,
+  TouchableHighlight
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import styles from "./css/AddReviewFormStyle";
@@ -19,7 +20,11 @@ import defaultPic from "../../assets/defaultRestro.png";
 import compass from "../../assets/compass.png";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
-import { getRestaurant, ADD_REVIEW_SUCCESS } from "../actions/Action";
+import {
+  getRestaurant,
+  ADD_REVIEW_SUCCESS,
+  SEND_RECOMMEND_SUCCESS
+} from "../actions/Action";
 import * as Permissions from "expo-permissions";
 import RecommendFriends from "./RecommendFriend";
 
@@ -34,7 +39,8 @@ class AddReviewForm extends React.Component {
       review: "",
       location: null,
       imageLoading: false,
-      openModalState: false
+      openModalState: false,
+      userID: this.props.userList ? this.props.userList[0]._id : ""
     };
   }
 
@@ -194,8 +200,24 @@ class AddReviewForm extends React.Component {
   };
   closeModal = () => {
     this.setState({
-      openModalState: false
+      openModalState: !this.state.openModalState
     });
+  };
+  selectedRecommendFriend = userID => {
+    this.setState({
+      userID
+    });
+  };
+  sendRecommd = async () => {
+    const recommendObj = {
+      recommendedTo: this.state.userID,
+      dishId: this.props.addReview.dishId,
+      description: this.props.addReview.feedback
+    };
+    const recommendResponse = await this.props.sendRecommandation(recommendObj);
+    if (recommendResponse.type === SEND_RECOMMEND_SUCCESS) {
+      this.setState({ openModalState: false });
+    }
   };
   render() {
     const { photo } = this.state;
@@ -320,15 +342,16 @@ class AddReviewForm extends React.Component {
               }}
             >
               <View style={styles.modal}>
-                <TouchableWithoutFeedback
+                <TouchableHighlight
                   onPress={() => this.closeModal()}
                   style={styles.closeModalIcon}
+                  underlayColor={"#fff"}
                 >
                   <Image
                     style={styles.icon}
                     source={require("../../assets/plus.png")}
                   />
-                </TouchableWithoutFeedback>
+                </TouchableHighlight>
                 <View style={styles.header}>
                   <View>
                     <Text style={styles.heading}>Recommendation</Text>
@@ -336,13 +359,13 @@ class AddReviewForm extends React.Component {
                 </View>
                 <View style={styles.dropdown}>
                   <Picker
-                    selectedValue={this.state.selectedUser}
+                    selectedValue={this.state.userID}
                     style={{
                       height: 50,
                       width: "100%"
                     }}
                     onValueChange={(itemValue, itemIndex) =>
-                      this.setState({ selectedUser: itemValue })
+                      this.selectedRecommendFriend(itemValue, itemIndex)
                     }
                   >
                     {this.props.userList && this.props.userList.map
@@ -351,7 +374,7 @@ class AddReviewForm extends React.Component {
                             <Picker.Item
                               key={id}
                               label={item.name}
-                              value={item.name}
+                              value={item._id}
                             />
                           );
                         })
@@ -359,14 +382,17 @@ class AddReviewForm extends React.Component {
                   </Picker>
                 </View>
                 <View style={styles.modalButton}>
-                  <TouchableWithoutFeedback onPress={() => this.submitReview()}>
+                  <TouchableHighlight onPress={() => this.sendRecommd()}>
                     <Text style={styles.buttonTitle}>RECOMMEND</Text>
-                  </TouchableWithoutFeedback>
+                  </TouchableHighlight>
                 </View>
                 <View style={styles.skipButton}>
-                  <TouchableWithoutFeedback onPress={() => this.closeModal()}>
+                  <TouchableHighlight
+                    underlayColor={"#fff"}
+                    onPress={() => this.closeModal()}
+                  >
                     <Text style={styles.skipTitle}>SKIP</Text>
-                  </TouchableWithoutFeedback>
+                  </TouchableHighlight>
                 </View>
               </View>
             </Modal>

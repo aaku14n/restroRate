@@ -4,7 +4,8 @@ import {
   submitReview,
   getRestaurant,
   uploadImage,
-  getAllUser
+  getAllUser,
+  sendRecommandation
 } from "../actions/Action";
 
 const mapStateToProps = (state, ownProps) => {
@@ -12,7 +13,9 @@ const mapStateToProps = (state, ownProps) => {
     addReviewLoading: state.Reducer.addReviewLoading,
     uploadImageLoading: state.Reducer.uploadImageLoading,
     addReview: state.Reducer.addReview,
-    userList: state.Reducer.userList
+    userList: state.Reducer.userList,
+    sendRecommendationLoading: state.Reducer.sendRecommendationLoading,
+    recommandationResponse: state.Reducer.recommandationResponse
   };
 };
 
@@ -29,6 +32,9 @@ const mapDispatchToProps = dispatch => {
     },
     getAllUser: () => {
       return dispatch(getAllUser());
+    },
+    sendRecommandation: recommedObj => {
+      return dispatch(sendRecommandation(recommedObj));
     }
   };
 };
