@@ -34,7 +34,7 @@ export function getHomeData() {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: GET_HOME_DATA_REQUEST });
-      const result = await api.get("review");
+      const result = await api.get("getAllReviews");
       const resultJson = await result.json();
       dispatch({
         type: GET_HOME_DATA_SUCCESS,
