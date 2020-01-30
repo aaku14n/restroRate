@@ -26,6 +26,10 @@ export const UPLOAD_IMAGE_REQUEST = "UPLOAD_IMAGE_REQUEST";
 export const UPLOAD_IMAGE_SUCCESS = "UPLOAD_IMAGE_SUCCESS";
 export const UPLOAD_IMAGE_FAILURE = "UPLOAD_IMAGE_FAILURE";
 
+export const SEND_RECOMMEND_REQUEST = "SEND_RECOMMEND_REQUEST";
+export const SEND_RECOMMEND_SUCCESS = "SEND_RECOMMEND_SUCCESS";
+export const SEND_RECOMMEND_FAILURE = "SEND_RECOMMEND_FAILURE";
+
 export function getHomeData() {
   return async (dispatch, getState, { api }) => {
     try {
@@ -189,6 +193,25 @@ export function uploadImage(image) {
         type: UPLOAD_IMAGE_FAILURE,
         error: e.message
       };
+    }
+  };
+}
+
+export function sendRecommandation(recommandationObj) {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: SEND_RECOMMEND_REQUEST });
+      const result = await api.post(`recommendApp`, recommandationObj);
+      const resultJson = await result.json();
+      return dispatch({
+        type: SEND_RECOMMEND_SUCCESS,
+        sendRecommandation: resultJson
+      });
+    } catch (e) {
+      return dispatch({
+        type: SEND_RECOMMEND_FAILURE,
+        error: e.message
+      });
     }
   };
 }

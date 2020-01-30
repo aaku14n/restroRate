@@ -53,14 +53,13 @@ function AuthLogin(props) {
           `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture`
         );
         const userDetail = await response.json();
-
         const userDetailsObj = {
           id: userDetail.id,
           accessToken: token,
           name: userDetail.name,
           email: "test@gmail.com",
           socialPlatform: "Facebook",
-          profilePic: "qwerty"
+          profilePic: userDetail.picture.data.url
         };
         await props.userLogin(userDetailsObj);
         alert("Logged in!", `Hi ${await response.json()}!`);

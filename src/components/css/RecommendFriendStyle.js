@@ -5,20 +5,28 @@ export default StyleSheet.create({
   base: {
     width: "100%",
     backgroundColor: "white",
+    height: "100%",
     paddingLeft: 10,
     paddingTop: 10,
     paddingRight: 10,
     paddingBottom: 10,
-    zIndex: 2
+    zIndex: 2,
+    position: "relative"
   },
   header: {
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    justifyContent: "space-between",
     marginTop: 30,
     paddingLeft: 10,
     paddingRight: 10
+  },
+  backIcon: {
+    width: "35%"
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold"
   },
   icon: {
     width: 30,
@@ -32,15 +40,17 @@ export default StyleSheet.create({
     marginRight: 10
   },
   button: {
-    width: "100%",
+    width: "80%",
     display: "flex",
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
     height: 50,
-    marginTop: 60,
+    bottom: 150,
     backgroundColor: THEME_COLOR,
-    borderRadius: 5
+    borderRadius: 5,
+    position: "absolute",
+    left: 50
   },
   buttonTitle: {
     color: "#ffffff",

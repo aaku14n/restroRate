@@ -11,6 +11,17 @@ export default StyleSheet.create({
     paddingBottom: 15,
     marginTop: 40
   },
+
+  modal: {
+    width: "100%",
+    backgroundColor: "#fff",
+    height: "100%",
+    paddingLeft: 10,
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    position: "relative"
+  },
   review: {
     fontSize: 20,
     fontWeight: "bold",
@@ -39,6 +50,21 @@ export default StyleSheet.create({
     width: "100%",
     borderRadius: 5
   },
+  header: {
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+    marginTop: 30
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold"
+  },
+  skipTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: THEME_COLOR
+  },
   restroName: {
     marginBottom: 30,
     width: "100%",
@@ -64,6 +90,12 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 25
+  },
+  closeModalIcon: {
+    marginTop: 20,
+    height: 50,
+    marginRight: 20,
+    alignItems: "flex-end"
   },
   editIcon: {
     width: 30,
@@ -130,5 +162,40 @@ export default StyleSheet.create({
     position: "absolute",
     right: 90,
     top: 90
+  },
+  dropdown: {
+    marginTop: 50,
+    height: 50,
+    backgroundColor: "#f4f4f4",
+    marginLeft: 10,
+    marginRight: 10
+  },
+  modalButton: {
+    width: "80%",
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+    height: 50,
+    bottom: 150,
+    backgroundColor: THEME_COLOR,
+    borderRadius: 5,
+    position: "absolute",
+    left: 50
+  },
+  skipButton: {
+    width: "80%",
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+    bottom: 100,
+    position: "absolute",
+    left: 50
+  },
+  icon: {
+    height: 30,
+    width: 30,
+    transform: [{ rotate: "45deg" }]
   }
 });

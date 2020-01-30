@@ -8,3 +8,4 @@ export const HOME_SCREEN = "Review";
 export const SEARCH_SCREEN = "Search";
 export const ADD_REVIEW_SCREEN = "Add Review";
 export const ACCOUNT_SCREEN = "Account";
+export const RECOMMEND_SCREEN = "Recommend";
