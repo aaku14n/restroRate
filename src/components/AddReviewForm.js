@@ -40,6 +40,7 @@ class AddReviewForm extends React.Component {
       location: null,
       imageLoading: false,
       openModalState: false,
+      comments: "",
       userID: this.props.userList ? this.props.userList[0]._id : ""
     };
   }
@@ -63,6 +64,11 @@ class AddReviewForm extends React.Component {
   onChnageReview = review => {
     this.setState({
       review
+    });
+  };
+  onChnageComments = comments => {
+    this.setState({
+      comments
     });
   };
   accessRestaurantDetails = async loc => {
@@ -212,7 +218,7 @@ class AddReviewForm extends React.Component {
     const recommendObj = {
       recommendedTo: this.state.userID,
       dishId: this.props.addReview.dishId,
-      description: this.props.addReview.feedback
+      description: this.state.comments
     };
     const recommendResponse = await this.props.sendRecommandation(recommendObj);
     if (recommendResponse.type === SEND_RECOMMEND_SUCCESS) {
@@ -380,6 +386,14 @@ class AddReviewForm extends React.Component {
                         })
                       : null}
                   </Picker>
+                </View>
+                <View style={styles.commentsInput}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Comments"
+                    onChangeText={text => this.onChnageComments(text)}
+                    value={this.state.comments}
+                  />
                 </View>
                 <View style={styles.modalButton}>
                   <TouchableHighlight

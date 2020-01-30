@@ -19,7 +19,7 @@ import {
   THEME_COLOR,
   RECOMMEND_SCREEN
 } from "../Constant";
-import RecommendFriendContainer from "../components/RecommendFriend";
+import RecommendFriendContainer from "../containers/RecommendFriendContainer";
 
 const tabs = {};
 tabs[HOME_SCREEN] = HomePage;

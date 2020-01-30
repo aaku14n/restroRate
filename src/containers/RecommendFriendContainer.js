@@ -1,18 +1,18 @@
 import { connect } from "react-redux";
 import RecommendFriend from "../components/RecommendFriend";
-import { getAllUser } from "../actions/Action";
+import { getAllUser, myRecommendation } from "../actions/Action";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    userList: state.Reducer.userList,
-    addReview: state.Reducer.addReview
+    myRecommendationLoading: state.Reducer.myRecommendationLoading,
+    myRecommandationList: state.Reducer.myRecommandationList
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllUser: () => {
-      return dispatch(getAllUser());
+    myRecommendation: () => {
+      return dispatch(myRecommendation());
     }
   };
 };

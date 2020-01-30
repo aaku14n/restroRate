@@ -30,6 +30,10 @@ export const SEND_RECOMMEND_REQUEST = "SEND_RECOMMEND_REQUEST";
 export const SEND_RECOMMEND_SUCCESS = "SEND_RECOMMEND_SUCCESS";
 export const SEND_RECOMMEND_FAILURE = "SEND_RECOMMEND_FAILURE";
 
+export const MY_RECOMMEND_REQUEST = "MY_RECOMMEND_REQUEST";
+export const MY_RECOMMEND_SUCCESS = "MY_RECOMMEND_SUCCESS";
+export const MY_RECOMMEND_FAILURE = "MY_RECOMMEND_FAILURE";
+
 export function getHomeData() {
   return async (dispatch, getState, { api }) => {
     try {
@@ -210,6 +214,25 @@ export function sendRecommandation(recommandationObj) {
     } catch (e) {
       return dispatch({
         type: SEND_RECOMMEND_FAILURE,
+        error: e.message
+      });
+    }
+  };
+}
+
+export function myRecommendation() {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: MY_RECOMMEND_REQUEST });
+      const result = await api.get(`recommendations`);
+      const resultJson = await result.json();
+      return dispatch({
+        type: MY_RECOMMEND_SUCCESS,
+        myRecommandation: resultJson.data
+      });
+    } catch (e) {
+      return dispatch({
+        type: MY_RECOMMEND_FAILURE,
         error: e.message
       });
     }

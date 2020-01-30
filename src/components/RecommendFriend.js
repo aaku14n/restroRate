@@ -9,8 +9,12 @@ class RecommendFriend extends React.Component {
       selectedUser: ""
     };
   }
+  componentDidMount() {
+    this.props.myRecommendation();
+  }
 
   render() {
+    console.log(this.props.myRecommandationList);
     return (
       <View style={styles.base}>
         <Text style={styles.heading}>Coming Soon.....</Text>

@@ -70,6 +70,12 @@ export default StyleSheet.create({
     width: "100%",
     alignItems: "center"
   },
+  commentsInput: {
+    marginTop: 80,
+    padding: 10,
+    width: "100%",
+    alignItems: "center"
+  },
   imageWrapper: {
     marginBottom: 30,
     width: "100%",
