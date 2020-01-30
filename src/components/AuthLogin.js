@@ -45,8 +45,9 @@ function AuthLogin(props) {
         permissions,
         declinedPermissions
       } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ["public_profile"]
+        permissions: ["public_profile", "email"]
       });
+
       if (type === "success") {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(
@@ -57,7 +58,7 @@ function AuthLogin(props) {
           id: userDetail.id,
           accessToken: token,
           name: userDetail.name,
-          email: "test@gmail.com",
+          email: userDetail.email,
           socialPlatform: "Facebook",
           profilePic: userDetail.picture.data.url
         };
