@@ -60,7 +60,7 @@ function AuthLogin(props) {
           name: userDetail.name,
           email: "test@gmail.com",
           socialPlatform: "Facebook",
-          profilePic: "qwerty"
+          profilePic: userDetail.picture.data.url
         };
         await props.userLogin(userDetailsObj);
         alert("Logged in!", `Hi ${await response.json()}!`);
