@@ -1,4 +1,7 @@
 import { StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
+const screenWidth = Math.round(Dimensions.get("window").width);
+console.log(screenWidth);
 export default StyleSheet.create({
   wrapper: {
     backgroundColor: "#fff"
@@ -9,7 +12,7 @@ export default StyleSheet.create({
   },
   foodImage: {
     width: "100%",
-    height: 220,
+    height: screenWidth > 500 ? 500 : screenWidth - 100,
     borderRadius: 15
   },
   detailSection: {

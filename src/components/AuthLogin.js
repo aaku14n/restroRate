@@ -79,7 +79,7 @@ function AuthLogin(props) {
         <View>
           <Image style={styles.logo} source={logoImg} />
         </View>
-        <Text style={styles.companyName}> Welcome to Dish Serve</Text>
+        <Text style={styles.companyName}> Welcome to Disherve</Text>
       </View>
       <View style={styles.loginButtonWrapper}>
         <TouchableWithoutFeedback

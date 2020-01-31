@@ -16,14 +16,14 @@ export default StyleSheet.create({
     width: 30
   },
   fbIcon: {
-    height: 35,
-    width: 35
+    height: 20,
+    width: 20
   },
   gbBase: {
     marginBottom: 30
   },
   fbBase: {
-    marginTop: 30
+    marginTop: 0
   },
   logo: {
     height: 140,
@@ -70,9 +70,10 @@ export default StyleSheet.create({
     fontSize: 18
   },
   companyName: {
-    fontWeight: "bold",
-    fontSize: 35,
-    marginTop: 20
+    // fontWeight: "bold",
+    fontSize: 30,
+    marginTop: 20,
+    textAlign: "center"
   },
   companyLogoWrapper: {
     justifyContent: "center",

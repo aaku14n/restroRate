@@ -91,7 +91,7 @@ class AddReviewForm extends React.Component {
           JSON.parse(location) &&
           JSON.parse(location).coords &&
           JSON.parse(location).coords.longitude;
-        this.accessRestaurantDetails(`12.933577,77.614224`);
+        this.accessRestaurantDetails(`12.903539,77.602076`);
         this.setState({ location });
       },
       error => {
