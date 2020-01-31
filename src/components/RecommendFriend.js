@@ -23,8 +23,14 @@ class RecommendFriend extends React.Component {
     return (
       <View style={styles.base} showsVerticalScrollIndicator={false}>
         <View>
-          <Text style={styles.heading}>MY RECOMMENDATION</Text>
+          <Text style={styles.heading}>MY RECOMMENDATIONS</Text>
         </View>
+        {!this.props.myRecommandationList ||
+          (this.props.myRecommandationList.length == 0 && (
+            <Text style={styles.emptyText}>
+              Sorry, You don't have any recommendations.
+            </Text>
+          ))}
         <FlatList
           data={this.props.myRecommandationList}
           keyExtractor={item => item._id}

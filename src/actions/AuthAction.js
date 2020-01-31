@@ -13,7 +13,6 @@ export const USER_LOGGED_IN = "USER_LOGGED_IN";
 export const LOG_OUT_USER = "LOG_OUT_USER";
 
 export function userLogin(userDetailsObject) {
-  console.log(userDetailsObject);
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: USER_LOGIN_REQUEST });

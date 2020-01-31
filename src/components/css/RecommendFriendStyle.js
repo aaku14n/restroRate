@@ -6,7 +6,8 @@ export default StyleSheet.create({
     width: "100%",
     backgroundColor: "white",
     height: "100%",
-    padding: 20
+    padding: 20,
+    marginTop: 30
   },
 
   heading: {
@@ -32,5 +33,9 @@ export default StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     color: "#c4c4c4"
+  },
+  emptyText: {
+    marginTop: 40,
+    textAlign: "center"
   }
 });

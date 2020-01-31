@@ -91,10 +91,15 @@ class AddReviewForm extends React.Component {
           JSON.parse(location) &&
           JSON.parse(location).coords &&
           JSON.parse(location).coords.longitude;
-        this.accessRestaurantDetails(`12.916217,77.615363`);
+        this.accessRestaurantDetails(`12.933577,77.614224`);
         this.setState({ location });
       },
-      error => Alert.alert(error.message),
+      error => {
+        if (!this.state.showErrorAlert) {
+          Alert.alert(error.message);
+          this.setState({ showErrorAlert: true });
+        }
+      },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   };

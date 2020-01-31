@@ -14,7 +14,9 @@ function AuthLogin(props) {
         androidClientId: ANDROID_CLIENT_ID,
         iosClientId: IOS_CLIENT_ID,
         scopes: ["profile", "email"],
-        redirectUrl: Auth.packageName + ":/oauthredirect"
+        redirectUrl: Auth.packageName + ":/oauthredirect",
+        iosStandaloneAppClientId: IOS_CLIENT_ID,
+        androidStandaloneAppClientId: ANDROID_CLIENT_ID
       });
       if (result.type === "success") {
         const userDetailsObj = {
@@ -68,7 +70,7 @@ function AuthLogin(props) {
         // type === 'cancel'
       }
     } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
+      // alert(`Facebook Login Error: ${message}`);
     }
   };
   return (
