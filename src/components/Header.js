@@ -79,7 +79,7 @@ function Header(props) {
           <View style={styles.iconTitleWrapper}>
             <View>
               <Text style={styles.location}>
-                {location ? location : "Your Location"}
+                {location ? location : "Loading..."}
               </Text>
             </View>
             <View style={styles.downIcon}>

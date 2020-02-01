@@ -73,6 +73,10 @@ function AuthLogin(props) {
       // alert(`Facebook Login Error: ${message}`);
     }
   };
+
+  const guestLogin = () => {
+    props.guestLogin();
+  };
   return (
     <View style={styles.base}>
       <View style={styles.companyLogoWrapper}>
@@ -111,6 +115,25 @@ function AuthLogin(props) {
             </View>
             <View style={styles.facebook}>
               <Text style={styles.facebookText}>Continue with Facebook</Text>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+        <View style={styles.orButton}>
+          <Text style={styles.orText}>OR</Text>
+        </View>
+        <TouchableWithoutFeedback
+          style={styles.guestLoginButton}
+          onPress={() => guestLogin()}
+        >
+          <View style={styles.guestLogin}>
+            <View>
+              <Image
+                style={styles.guestIcon}
+                source={require("../../assets/guest.png")}
+              />
+            </View>
+            <View style={styles.facebook}>
+              <Text style={styles.guestText}>Continue as Guest</Text>
             </View>
           </View>
         </TouchableWithoutFeedback>

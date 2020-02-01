@@ -30,6 +30,25 @@ export function userLogin(userDetailsObject) {
     }
   };
 }
+
+export function guestLogin() {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: USER_LOGIN_REQUEST });
+      const result = await api.post("guestLogin");
+      const resultJson = await result.json();
+
+      await createAsyncStorage("userDetails", resultJson);
+
+      return dispatch({
+        type: USER_LOGIN_SUCCESS,
+        userDetails: resultJson
+      });
+    } catch (e) {
+      return dispatch({ type: USER_LOGIN_FAILURE, error: e.message });
+    }
+  };
+}
 export function validateUserLogin() {
   return async (dispatch, getState) => {
     try {

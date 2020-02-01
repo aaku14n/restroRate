@@ -19,6 +19,10 @@ export default StyleSheet.create({
     height: 20,
     width: 20
   },
+  guestIcon: {
+    height: 30,
+    width: 30
+  },
   gbBase: {
     marginBottom: 30
   },
@@ -44,7 +48,7 @@ export default StyleSheet.create({
   googleText: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18
+    fontSize: 14
   },
   google: {
     marginLeft: 25
@@ -64,14 +68,36 @@ export default StyleSheet.create({
     backgroundColor: "#1877f2",
     borderRadius: 30
   },
+  guestLogin: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#000",
+    height: 60,
+    paddingLeft: 60,
+    paddingRight: 60,
+    backgroundColor: "#fff",
+    borderRadius: 30
+  },
   facebookText: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18
+    fontSize: 14
+  },
+  guestText: {
+    color: "#000",
+    fontWeight: "bold",
+    fontSize: 14
+  },
+  orText: {
+    color: "#000",
+    fontWeight: "bold",
+    fontSize: 14
   },
   companyName: {
     // fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 25,
     marginTop: 20,
     textAlign: "center"
   },
@@ -79,5 +105,9 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 60
+  },
+  orButton: {
+    marginTop: 20,
+    marginBottom: 20
   }
 });
