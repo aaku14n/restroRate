@@ -172,7 +172,7 @@ export default StyleSheet.create({
   dropdown: {
     marginTop: 50,
     height: 50,
-    backgroundColor: "#f4f4f4",
+    // backgroundColor: "#f4f4f4",
     marginLeft: 10,
     marginRight: 10
   },
@@ -183,11 +183,8 @@ export default StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     height: 50,
-    bottom: 150,
-    backgroundColor: THEME_COLOR,
     borderRadius: 5,
-    position: "absolute",
-    left: 50
+    backgroundColor: THEME_COLOR
   },
   skipButton: {
     width: "80%",
@@ -203,5 +200,26 @@ export default StyleSheet.create({
     height: 30,
     width: 30,
     transform: [{ rotate: "45deg" }]
+  },
+  buttons: {
+    width: "100%",
+
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+
+    position: "absolute",
+    bottom: 150
+  },
+  buttonsSkip: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+
+    position: "absolute",
+    bottom: 100
   }
 });

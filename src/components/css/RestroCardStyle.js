@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 const screenWidth = Math.round(Dimensions.get("window").width);
-console.log(screenWidth);
+
 export default StyleSheet.create({
   wrapper: {
     backgroundColor: "#fff"

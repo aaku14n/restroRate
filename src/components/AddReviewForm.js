@@ -9,6 +9,7 @@ import {
   Alert,
   Modal,
   Picker,
+  StyleSheet,
   TouchableHighlight
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
@@ -27,6 +28,7 @@ import {
 } from "../actions/Action";
 import * as Permissions from "expo-permissions";
 import RecommendFriends from "./RecommendFriend";
+import RNPickerSelect, { defaultStyles } from "react-native-picker-select";
 
 class AddReviewForm extends React.Component {
   constructor(props) {
@@ -91,12 +93,12 @@ class AddReviewForm extends React.Component {
           JSON.parse(location) &&
           JSON.parse(location).coords &&
           JSON.parse(location).coords.longitude;
-        this.accessRestaurantDetails(`12.903539,77.602076`);
+        this.accessRestaurantDetails(`12.933750,77.621162`);
         this.setState({ location });
       },
       error => {
         if (!this.state.showErrorAlert) {
-          Alert.alert(error.message);
+          // Alert.alert(error.message);
           this.setState({ showErrorAlert: true });
         }
       },
@@ -239,7 +241,11 @@ class AddReviewForm extends React.Component {
         </View>
       );
     }
-
+    const placeholder = {
+      label: "Select a User...",
+      value: null,
+      color: "#9EA0A4"
+    };
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.heading}>
@@ -369,46 +375,56 @@ class AddReviewForm extends React.Component {
                   </View>
                 </View>
                 <View style={styles.dropdown}>
-                  <Picker
-                    selectedValue={this.state.userID}
-                    style={{
-                      height: 50,
-                      width: "100%"
-                    }}
+                  <RNPickerSelect
+                    placeholder={placeholder}
+                    items={this.props.userList.map((item, id) => {
+                      return {
+                        label: item.name,
+                        value: item._id
+                      };
+                    })}
                     onValueChange={(itemValue, itemIndex) =>
                       this.selectedRecommendFriend(itemValue, itemIndex)
                     }
-                  >
-                    {this.props.userList && this.props.userList.map
-                      ? this.props.userList.map((item, id) => {
-                          return (
-                            <Picker.Item
-                              key={id}
-                              label={item.name}
-                              value={item._id}
-                            />
-                          );
-                        })
-                      : null}
-                  </Picker>
+                    style={{
+                      ...pickerSelectStyles,
+                      iconContainer: {
+                        top: 10,
+                        right: 12
+                      }
+                    }}
+                    value={this.state.userID}
+                    useNativeAndroidPickerStyle={false}
+                    textInputProps={{ underlineColor: "yellow" }}
+                    Icon={() => {
+                      return (
+                        <Image
+                          source={require("../../assets/download.png")}
+                          style={{ width: 20, height: 20, top: 5 }}
+                        />
+                      );
+                    }}
+                  />
                 </View>
                 <View style={styles.commentsInput}>
                   <TextInput
-                    style={styles.input}
+                    style={styles.textArea}
                     placeholder="Comments"
+                    numberOfLines={10}
+                    multiline
                     onChangeText={text => this.onChnageComments(text)}
                     value={this.state.comments}
                   />
                 </View>
-                <View style={styles.modalButton}>
+                <View style={styles.buttons}>
                   <TouchableHighlight
                     onPress={() => this.sendRecommd()}
-                    underlayColor={"#fff"}
+                    style={styles.modalButton}
                   >
                     <Text style={styles.buttonTitle}>RECOMMEND</Text>
                   </TouchableHighlight>
                 </View>
-                <View style={styles.skipButton}>
+                <View style={styles.buttonsSkip}>
                   <TouchableHighlight
                     underlayColor={"#fff"}
                     onPress={() => this.closeModal()}
@@ -426,3 +442,27 @@ class AddReviewForm extends React.Component {
 }
 
 export default AddReviewForm;
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+
+    borderColor: "gray",
+    borderRadius: 4,
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
+    height: 50,
+    backgroundColor: "#f4f4f4"
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: "purple",
+    borderRadius: 8,
+    color: "black",
+    paddingRight: 30 // to ensure the text is never behind the icon
+  }
+});
