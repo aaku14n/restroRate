@@ -4,7 +4,8 @@ import AuthLogin from "../components/AuthLogin";
 
 const mapStateToProps = state => {
   return {
-    loginDetails: state.AuthReducer.userLoginDetails
+    loginDetails: state.AuthReducer.userLoginDetails,
+    userLoginLoading: state.AuthReducer.userLoginLoading
   };
 };
 const mapDispatchToProps = dispatch => {

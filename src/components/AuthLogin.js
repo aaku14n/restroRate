@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./css/AuthLoginStyle";
-import { Text, View, Image, TouchableHighlight, Button } from "react-native";
+import { Text, View, Image, ActivityIndicator, Button } from "react-native";
 import * as Google from "expo-google-app-auth";
 import * as Facebook from "expo-facebook";
 import { ANDROID_CLIENT_ID, IOS_CLIENT_ID, APP_ID } from "../Constant";
@@ -77,6 +77,13 @@ function AuthLogin(props) {
   const guestLogin = () => {
     props.guestLogin();
   };
+  if (props.userLoginLoading) {
+    return (
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
   return (
     <View style={styles.base}>
       <View style={styles.companyLogoWrapper}>

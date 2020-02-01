@@ -109,5 +109,11 @@ export default StyleSheet.create({
   orButton: {
     marginTop: 20,
     marginBottom: 20
+  },
+  loader: {
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
