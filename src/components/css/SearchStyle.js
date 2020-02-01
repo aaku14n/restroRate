@@ -46,7 +46,8 @@ export default StyleSheet.create({
   title: {
     fontSize: 18,
     textAlign: "center",
-    marginTop: 15
+    marginTop: 15,
+    width: 100
   },
   recommendWrapper: {
     marginTop: 32
