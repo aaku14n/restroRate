@@ -109,12 +109,7 @@ class Search extends React.Component {
           ) : (
             <View style={styles.recommendWrapper}>
               <View>
-                {searchResult.dishes.length == 0 &&
-                searchResult.restaurants.length == 0 ? (
-                  <Text style={styles.recentSearchTitle}>
-                    Sorry, No Recomendation based on your search
-                  </Text>
-                ) : (
+                {searchResult.dishes && searchResult.restaurants && (
                   <Text style={styles.recentSearchTitle}>
                     Recomendation based on your search
                   </Text>
