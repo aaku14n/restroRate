@@ -75,7 +75,7 @@ class AddReviewForm extends React.Component {
     });
   };
   accessRestaurantDetails = async loc => {
-    const detailsRes = await this.props.getRestaurant("27.104939, 78.589965");
+    const detailsRes = await this.props.getRestaurant(loc);
     if (detailsRes && detailsRes[0]) {
       this.setState({ restaurantDetails: [detailsRes[0]] });
       this.onChnageRestraurentName(detailsRes[0].name);
