@@ -20,8 +20,6 @@ class RecommendFriend extends React.Component {
     await this.setState({ refreshing: false });
   };
   render() {
-    console.log(this.props.myRecommandationList);
-    console.log(this.props.loginDetails.data._id);
     return (
       <View style={styles.base} showsVerticalScrollIndicator={false}>
         <View>
@@ -42,14 +40,28 @@ class RecommendFriend extends React.Component {
                 {item.recommendedBy == this.props.loginDetails.data._id ? (
                   <View>
                     <Text style={styles.userName}>
-                      You recommend {item.dishInfo.name} to {item.userInfo.name}
+                      You recommend{" "}
+                      <Text style={styles.userNameBold}>
+                        {item.dishInfo.name}
+                      </Text>{" "}
+                      to{" "}
+                      <Text style={styles.userNameBold}>
+                        {item.userInfo.name}
+                      </Text>
                       .
                     </Text>
                   </View>
                 ) : (
                   <View>
                     <Text style={styles.userName}>
-                      {item.userInfo.name} Recommend me {item.dishInfo.name}.
+                      <Text style={styles.userNameBold}>
+                        {item.userInfo.name}
+                      </Text>{" "}
+                      Recommend me{" "}
+                      <Text style={styles.userNameBold}>
+                        {item.dishInfo.name}
+                      </Text>
+                      .
                     </Text>
                   </View>
                 )}
@@ -64,7 +76,7 @@ class RecommendFriend extends React.Component {
                   />
                 </View>
                 <View>
-                  <Text style={styles.userName}>{item.dishInfo.name}</Text>
+                  <Text style={styles.userNameBold}>{item.dishInfo.name}</Text>
                 </View>
                 <View>
                   <Text style={styles.discription}>{item.description}</Text>

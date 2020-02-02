@@ -15,7 +15,9 @@ export default StyleSheet.create({
     textAlign: "center"
   },
   recommendationWrapper: {
-    marginTop: 20
+    marginTop: 30,
+    borderBottomWidth: 1,
+    borderBottomColor: "#c4c4c4"
   },
   card: {},
   dishImage: {
@@ -25,12 +27,15 @@ export default StyleSheet.create({
   },
   userName: {
     fontSize: 16,
-    fontWeight: "bold",
+
     marginBottom: 10
+  },
+  userNameBold: {
+    fontWeight: "bold"
   },
   discription: {
     fontSize: 16,
-    fontWeight: "bold",
+
     marginBottom: 10,
     color: "#c4c4c4"
   },
