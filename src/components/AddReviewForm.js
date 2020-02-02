@@ -99,10 +99,40 @@ class AddReviewForm extends React.Component {
     this.props.getAllUser();
   }
 
+  openAlert = message => {
+    Alert.alert(
+      "ERROR",
+      message,
+      [
+        {
+          text: "Cancel"
+        }
+      ],
+      { cancelable: false }
+    );
+    return true;
+  };
   submitReview = async () => {
+    if (!this.state.restaurantDetails && !this.state.restroName) {
+      this.openAlert("Restaurant Name is require field");
+      return;
+    }
+    if (!this.state.photo) {
+      this.openAlert("Dish image is require field");
+      return;
+    }
+    if (!this.state.dishName) {
+      this.openAlert("Please enter dish name");
+      return;
+    }
+    if (!this.state.rating) {
+      this.openAlert("Please give rating");
+      return;
+    }
     this.setState({
       imageLoading: true
     });
+
     let localUri = this.state.photo.uri;
     let filename = localUri.split("/").pop();
     let match = /\.(\w+)$/.exec(filename);

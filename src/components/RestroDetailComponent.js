@@ -98,7 +98,7 @@ export default class RestroDetailsComponent extends React.Component {
             source={
               details.restaurantImage
                 ? { uri: getRestaurantsUrl(details.restaurantImage) }
-                : require("../../assets/profile.png")
+                : require("../../assets/defaultRestro.png")
             }
           />
         </View>
