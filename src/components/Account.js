@@ -84,24 +84,27 @@ function Account(props) {
           <Text style={styles.myReview}>My Reviews</Text>
         </View>
         <View style={styles.reviewComponentWrapper}>
-          <FlatList
-            data={props.reviewList}
-            keyExtractor={item => item._id}
-            renderItem={({ item }) => (
-              <ReviewComponent
-                key={id}
-                dishname={item.restaurantInfo.name}
-                restroName={item.dishInfo.name}
-                pic={item.dishInfo.dishImage}
-                review={item.feedback}
-                rating={item.rate}
-                time={renderDateFormat(item.createdAt)}
-              />
-            )}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={doRefresh} />
-            }
-          />
+          {props.reviewList ? (
+            <FlatList
+              data={props.reviewList}
+              keyExtractor={item => item._id}
+              renderItem={({ item }) => (
+                <ReviewComponent
+                  dishname={item.restaurantInfo.name}
+                  restroName={item.dishInfo.name}
+                  pic={item.dishInfo.dishImage}
+                  review={item.feedback}
+                  rating={item.rate}
+                  time={renderDateFormat(item.createdAt)}
+                />
+              )}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={doRefresh} />
+              }
+            />
+          ) : (
+            <Text />
+          )}
         </View>
       </View>
     </ScrollView>

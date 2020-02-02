@@ -5,7 +5,8 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Share
 } from "react-native";
 import styles from "./css/RestroDetailComponent";
 import RatingComponent from "./General/RatingComponent";
@@ -13,41 +14,8 @@ import ListItemComponent from "./ListItemComponent";
 import ReviewComponent from "./General/ReviewComponent";
 import { getRestaurantsUrl } from "../utils/Utils";
 import { renderDateFormat } from "../utils/DateUtils";
-const restroDetails = {
-  _id: "5e2d44d2ad77bb70d0fa177a",
-  name: "Sagar Fast Food",
-  fullAddress: "sd",
-  restaurantImage:
-    "https://maps.googleapis.com/maps/api/place/photo?photoreference=CmRaAAAA6rlCAGUO4mZb7MD99BIjs-jVis2JQGSmPPX9VpAMnpqdo_U49t8XrIz9GH6sjBw--8t--yDTmXinEy1HscNe6hzW7Na7fgqFqPFul5_lNu4OjbzOxLDesClfDn9LSMaJEhAivupkiMIDKIVpHgH2p-MyGhTnePULPu8FFu3JjumiBYgaX3VOsQ&maxwidth=UPDATE_IMAGE_WIDTH&maxheight=UPDATE_IMAGE_HEIGHT&key=UPDATE_GOOGLE_API_KEY",
-  latitude: "12.917437",
-  longitude: "77.61244429999999",
-  createdAt: "2020-01-26T07:50:42.582Z",
-  dishes: [
-    {
-      _id: "5e2d44d2ad77bb70d0fa177b",
-      name: "Idli Bada",
-      dishImage: "http://www.littra.in:4200/storage/image-1580024008643.jpeg",
-      createdAt: "2020-01-26T07:50:42.584Z",
-      totalReviews: 1,
-      averageRating: 4
-    }
-  ],
-  reviews: [
-    {
-      dishId: "5e2d44d2ad77bb70d0fa177b",
-      feedback: "It’s awesome dish.. you must try come here and try ...",
-      rate: "4",
-      createdAt: "2020-01-26T07:50:42.586Z",
-      dishInfo: {
-        _id: "5e2d44d2ad77bb70d0fa177b",
-        name: "Idli Bada",
-        dishImage: "http://www.littra.in:4200/storage/image-1580024008643.jpeg"
-      }
-    }
-  ],
-  totalReviews: 1,
-  averageRating: 4
-};
+
+import { Linking } from "expo";
 
 export default class RestroDetailsComponent extends React.Component {
   goBack = () => {
@@ -57,7 +25,33 @@ export default class RestroDetailsComponent extends React.Component {
     const restroId = this.props.navigation.getParam("restroId");
     this.props.restroDetails(restroId);
   }
-  share = () => {};
+  onShare = async () => {
+    try {
+      const details = this.props && this.props.getRestroDetails;
+      console.log(details);
+      const result = await Share.share({
+        message: `${details.name} | ${details.fullAddress}`,
+        url: "map://app"
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  goToLocation = () => {
+    Linking.openURL("map://").catch(err =>
+      console.error("An error occurred", err)
+    );
+  };
   render() {
     if (this.props.getRestroDetailLoading) {
       return (
@@ -76,10 +70,12 @@ export default class RestroDetailsComponent extends React.Component {
               source={require("../../assets/back.png")}
             />
           </TouchableOpacity>
-          <Image
-            style={styles.icon}
-            source={require("../../assets/share.png")}
-          />
+          <TouchableOpacity onPress={this.onShare}>
+            <Image
+              style={styles.icon}
+              source={require("../../assets/share.png")}
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.imageWrapper}>
           <Image
@@ -114,12 +110,14 @@ export default class RestroDetailsComponent extends React.Component {
               Based on {details.totalReviews} reviews
             </Text>
           </View>
-          <View style={styles.callIcon}>
-            <Image
-              style={styles.directionIcon}
-              source={require("../../assets/cursor.png")}
-            />
-          </View>
+          <TouchableOpacity onPress={this.goToLocation}>
+            <View style={styles.callIcon}>
+              <Image
+                style={styles.directionIcon}
+                source={require("../../assets/cursor.png")}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
 
         {/* <View style={styles.summary}>
