@@ -144,6 +144,7 @@ class AddReviewForm extends React.Component {
       const submitReviewResponse = await this.props.submitReview(reviewObj);
       if (submitReviewResponse.type === ADD_REVIEW_SUCCESS) {
         this.props.getHomeData(this.props.lat, this.props.long);
+        this.props.myAccountReviews();
         this.setState({
           photo: null,
           rating: 0,

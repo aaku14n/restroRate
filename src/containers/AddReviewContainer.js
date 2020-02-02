@@ -8,7 +8,8 @@ import {
   sendRecommandation,
   getHomeData,
   myRecommendation,
-  getCurrentLocation
+  getCurrentLocation,
+  myAccountReviews
 } from "../actions/Action";
 
 const mapStateToProps = (state, ownProps) => {
@@ -49,6 +50,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCurrentLocation: () => {
       return dispatch(getCurrentLocation());
+    },
+    myAccountReviews: () => {
+      return dispatch(myAccountReviews());
     }
   };
 };
