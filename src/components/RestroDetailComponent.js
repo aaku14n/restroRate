@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  Share
+  Share,
+  Platform
 } from "react-native";
 import styles from "./css/RestroDetailComponent";
 import RatingComponent from "./General/RatingComponent";
@@ -48,9 +49,23 @@ export default class RestroDetailsComponent extends React.Component {
     }
   };
   goToLocation = () => {
-    Linking.openURL("map://").catch(err =>
-      console.error("An error occurred", err)
-    );
+    const details = this.props && this.props.getRestroDetails;
+
+    const lat = details.latitude;
+    const lng = details.longitude;
+
+    const scheme = Platform.select({
+      ios: "maps:0,0?q=",
+      android: "geo:0,0?q="
+    });
+    const latLng = `${lat},${lng}`;
+    const label = details.name;
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
+    });
+
+    Linking.openURL(url);
   };
   render() {
     if (this.props.getRestroDetailLoading) {
@@ -70,12 +85,12 @@ export default class RestroDetailsComponent extends React.Component {
               source={require("../../assets/back.png")}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.onShare}>
+          {/* <TouchableOpacity onPress={this.onShare}>
             <Image
               style={styles.icon}
               source={require("../../assets/share.png")}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.imageWrapper}>
           <Image
@@ -92,12 +107,12 @@ export default class RestroDetailsComponent extends React.Component {
             <Text style={styles.textName}>{details.name}</Text>
             <Text style={styles.textDes}>{details.fullAddress}</Text>
           </View>
-          <View style={styles.callIcon}>
+          {/* <View style={styles.callIcon}>
             <Image
               style={styles.icon}
               source={require("../../assets/call.png")}
             />
-          </View>
+          </View> */}
         </View>
         <View style={styles.rateWrapper}>
           <View style={styles.details}>
