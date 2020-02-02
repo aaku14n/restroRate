@@ -46,7 +46,7 @@ function Account(props) {
     await setRefresing(false);
   };
   return (
-    <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
+    <View style={styles.base}>
       <View style={styles.infoWrapper}>
         <View style={styles.row}>
           <View style={styles.imageWrapper}>
@@ -89,7 +89,6 @@ function Account(props) {
             keyExtractor={item => item._id}
             renderItem={({ item }) => (
               <ReviewComponent
-                key={id}
                 dishname={item.restaurantInfo.name}
                 restroName={item.dishInfo.name}
                 pic={item.dishInfo.dishImage}
@@ -104,7 +103,7 @@ function Account(props) {
           />
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
