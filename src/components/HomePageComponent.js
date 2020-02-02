@@ -19,7 +19,7 @@ class HomePageComponent extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.getHomeData(28.493105, 77.095123);
+    this.props.getHomeData(this.props.lat, this.props.long);
   }
   gotoRestroPage = id => {
     this.props.navigation.navigate("RestroDetails", {
@@ -28,7 +28,7 @@ class HomePageComponent extends React.Component {
   };
   doRefresh = async () => {
     await this.setState({ refreshing: true });
-    await this.props.getHomeData(28.493105, 77.095123);
+    await this.props.getHomeData(this.props.lat, this.props.long);
     await this.setState({ refreshing: false });
   };
   render() {

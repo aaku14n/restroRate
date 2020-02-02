@@ -7,7 +7,8 @@ import {
   getAllUser,
   sendRecommandation,
   getHomeData,
-  myRecommendation
+  myRecommendation,
+  getCurrentLocation
 } from "../actions/Action";
 
 const mapStateToProps = (state, ownProps) => {
@@ -17,7 +18,9 @@ const mapStateToProps = (state, ownProps) => {
     addReview: state.Reducer.addReview,
     userList: state.Reducer.userList,
     sendRecommendationLoading: state.Reducer.sendRecommendationLoading,
-    recommandationResponse: state.Reducer.recommandationResponse
+    recommandationResponse: state.Reducer.recommandationResponse,
+    lat: state.Reducer.lat,
+    long: state.Reducer.long
   };
 };
 
@@ -43,6 +46,9 @@ const mapDispatchToProps = dispatch => {
     },
     myRecommendation: () => {
       return dispatch(myRecommendation());
+    },
+    getCurrentLocation: () => {
+      return dispatch(getCurrentLocation());
     }
   };
 };

@@ -35,22 +35,7 @@ function Header(props) {
 
   const [location, setLocation] = useState("");
   const onAccessCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        const location = JSON.stringify(position);
-        const latitude =
-          JSON.parse(location) &&
-          JSON.parse(location).coords &&
-          JSON.parse(location).coords.latitude;
-        const longitude =
-          JSON.parse(location) &&
-          JSON.parse(location).coords &&
-          JSON.parse(location).coords.longitude;
-        getCityDetails(latitude, longitude);
-      },
-      error => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
+    getCityDetails(props.lat, props.long);
   };
   const getCityDetails = async (lat, long) => {
     const cityResponse = await props.getCityName(lat, long);

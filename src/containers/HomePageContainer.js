@@ -7,7 +7,9 @@ const mapStateToProps = (state, ownProps) => {
     loginDetails: state.AuthReducer.userLoginDetails,
     ...ownProps,
     homeData: state.Reducer.homeData,
-    homeDataLoading: state.Reducer.homeDataLoading
+    homeDataLoading: state.Reducer.homeDataLoading,
+    lat: state.Reducer.lat,
+    long: state.Reducer.long
   };
 };
 

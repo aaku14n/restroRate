@@ -82,31 +82,10 @@ class AddReviewForm extends React.Component {
     }
   };
   onAccessCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        const location = JSON.stringify(position);
-        const latitude =
-          JSON.parse(location) &&
-          JSON.parse(location).coords &&
-          JSON.parse(location).coords.latitude;
-        const longitude =
-          JSON.parse(location) &&
-          JSON.parse(location).coords &&
-          JSON.parse(location).coords.longitude;
-        this.accessRestaurantDetails(`${latitude},${longitude}`);
-        this.setState({ location });
-      },
-      error => {
-        if (!this.state.showErrorAlert) {
-          // Alert.alert(error.message);
-          this.setState({ showErrorAlert: true });
-        }
-      },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
+    this.props.getCurrentLocation();
+    this.accessRestaurantDetails(`${this.props.lat},${this.props.long}`);
   };
 
-  // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=12.9153688,77.5969855&radius=100&type=restaurant&key=AIzaSyDM4BtVx-2cRWTEEu3JOdx0szr735nXzPU
   componentDidMount() {
     this.onAccessCurrentLocation();
     this.props.getAllUser();
@@ -152,7 +131,7 @@ class AddReviewForm extends React.Component {
       };
       const submitReviewResponse = await this.props.submitReview(reviewObj);
       if (submitReviewResponse.type === ADD_REVIEW_SUCCESS) {
-        this.props.getHomeData(28.493105, 77.095123);
+        this.props.getHomeData(this.props.lat, this.props.long);
         this.setState({
           photo: null,
           rating: 0,

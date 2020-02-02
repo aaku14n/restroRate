@@ -44,7 +44,9 @@ export function getHomeData(lat, long) {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: GET_HOME_DATA_REQUEST });
-      const result = await api.get("getAllReviews");
+      const result = await api.get(
+        `getAllReviews?latitude=${lat}&longitude=${long}`
+      );
       const resultJson = await result.json();
 
       dispatch({
