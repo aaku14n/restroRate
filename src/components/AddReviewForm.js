@@ -54,6 +54,7 @@ class AddReviewForm extends React.Component {
   }
 
   onChnageRestraurentName = name => {
+    this.accessRestaurantDetails();
     this.setState({
       restroName: name
     });
@@ -74,11 +75,17 @@ class AddReviewForm extends React.Component {
     });
   };
   accessRestaurantDetails = async loc => {
-    const detailsRes = await this.props.getRestaurant(loc);
-
-    if (detailsRes[0]) {
+    const detailsRes = await this.props.getRestaurant("27.104939, 78.589965");
+    if (detailsRes && detailsRes[0]) {
       this.setState({ restaurantDetails: [detailsRes[0]] });
       this.onChnageRestraurentName(detailsRes[0].name);
+    } else {
+      const obj = {
+        name: this.state.restroName,
+        latitude: this.props.lat,
+        longitude: this.props.long
+      };
+      this.setState({ restaurantDetails: obj });
     }
   };
   onAccessCurrentLocation = () => {
@@ -325,7 +332,11 @@ class AddReviewForm extends React.Component {
               title="SUBMIT REVIEW"
               style={styles.buttonStyle}
             >
-              <Text style={styles.buttonTitle}>SUBMIT REVIEW</Text>
+              {this.state.imageLoading ? (
+                <Text style={styles.buttonTitle}>Loading....</Text>
+              ) : (
+                <Text style={styles.buttonTitle}>SUBMIT REVIEW</Text>
+              )}
             </TouchableWithoutFeedback>
           </View>
         </View>

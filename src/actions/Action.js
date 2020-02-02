@@ -87,6 +87,7 @@ export function submitReview(reviewObj) {
       dispatch({ type: ADD_REVIEW_REQUEST });
       const result = await api.post("review", reviewObj);
       const resultJson = await result.json();
+      console.log(resultJson);
       return dispatch({
         type: ADD_REVIEW_SUCCESS,
         addReview: resultJson.data
