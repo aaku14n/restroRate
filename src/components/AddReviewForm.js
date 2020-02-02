@@ -43,7 +43,8 @@ class AddReviewForm extends React.Component {
       imageLoading: false,
       openModalState: false,
       comments: "",
-      userID: this.props.userList ? this.props.userList[0]._id : ""
+      userID: this.props.userList ? this.props.userList[0]._id : "",
+      customRestaurantDetails: ""
     };
   }
 
@@ -85,7 +86,7 @@ class AddReviewForm extends React.Component {
         latitude: this.props.lat,
         longitude: this.props.long
       };
-      this.setState({ restaurantDetails: obj });
+      this.setState({ customRestaurantDetails: obj });
     }
   };
   onAccessCurrentLocation = () => {
@@ -134,7 +135,9 @@ class AddReviewForm extends React.Component {
         feedback: this.state.review,
         rate: this.state.rating,
         dishImage: imageRes.imageInfo.filename,
-        restaurantData: { candidates: this.state.restaurantDetails }
+        restaurantData: this.state.customRestaurantDetails
+          ? this.state.customRestaurantDetails
+          : { candidates: this.state.restaurantDetails }
       };
       const submitReviewResponse = await this.props.submitReview(reviewObj);
       if (submitReviewResponse.type === ADD_REVIEW_SUCCESS) {
