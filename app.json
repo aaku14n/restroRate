@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Dishserve",
+    "name": "Disherve",
     "slug": "restroRate",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -8,7 +8,7 @@
     "facebookAppId": "162268665100396",
     "facebookDisplayName": "React-Native",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/homeIcon.png",
     "splash": {

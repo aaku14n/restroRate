@@ -35,9 +35,9 @@ export function guestLogin() {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: USER_LOGIN_REQUEST });
-      const result = await api.post("guestLogin");
+      const result = await api.get("guestLogin");
       const resultJson = await result.json();
-
+      console.log(resultJson);
       await createAsyncStorage("userDetails", resultJson);
 
       return dispatch({
