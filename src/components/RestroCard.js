@@ -34,7 +34,9 @@ function RestroCard(props) {
             </View>
             {props.distance && (
               <View style={styles.ratingStrip}>
-                <Text style={styles.rating}>{props.distance} Km</Text>
+                <Text style={styles.rating}>
+                  {parseInt(props.distance) / 1000} Km
+                </Text>
               </View>
             )}
           </View>

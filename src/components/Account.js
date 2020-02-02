@@ -45,6 +45,7 @@ function Account(props) {
     await props.myAccountReviews();
     await setRefresing(false);
   };
+  console.log(props.reviewList);
   return (
     <View style={styles.base}>
       <View style={styles.infoWrapper}>
@@ -84,7 +85,7 @@ function Account(props) {
           <Text style={styles.myReview}>My Reviews</Text>
         </View>
         <View style={styles.reviewComponentWrapper}>
-          {props.reviewList ? (
+          {props.reviewList && props.reviewList.length > 0 ? (
             <FlatList
               data={props.reviewList}
               keyExtractor={item => item._id}

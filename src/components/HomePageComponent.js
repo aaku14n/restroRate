@@ -49,6 +49,7 @@ class HomePageComponent extends React.Component {
                   imgUri={item.dishInfo.dishImage}
                   name={item.dishInfo.name}
                   cusions={item.restaurantInfo.name}
+                  distance={item.distance}
                   rate={item.rate}
                   onPress={() => this.gotoRestroPage(item.restaurantInfo._id)}
                 />

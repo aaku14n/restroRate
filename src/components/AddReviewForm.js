@@ -43,7 +43,10 @@ class AddReviewForm extends React.Component {
       imageLoading: false,
       openModalState: false,
       comments: "",
-      userID: this.props.userList ? this.props.userList[0]._id : "",
+      userID:
+        this.props.userList && this.props.userList[0]
+          ? this.props.userList[0]._id
+          : "",
       customRestaurantDetails: false
     };
   }
