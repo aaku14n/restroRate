@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { THEME_COLOR } from "../../Constant";
 
 export default StyleSheet.create({
   base: {
@@ -20,7 +19,8 @@ export default StyleSheet.create({
   },
   card: {},
   dishImage: {
-    width: 450,
+    width: "100%",
+    borderRadius: 15,
     height: 250
   },
   userName: {

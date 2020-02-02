@@ -20,6 +20,8 @@ class RecommendFriend extends React.Component {
     await this.setState({ refreshing: false });
   };
   render() {
+    console.log(this.props.myRecommandationList);
+    console.log(this.props.loginDetails.data._id);
     return (
       <View style={styles.base} showsVerticalScrollIndicator={false}>
         <View>
@@ -37,11 +39,20 @@ class RecommendFriend extends React.Component {
           renderItem={({ item }) => (
             <View style={styles.recommendationWrapper}>
               <View style={styles.card}>
-                <View>
-                  <Text style={styles.userName}>
-                    {item.userInfo.name} Recommend me .
-                  </Text>
-                </View>
+                {item.recommendedBy == this.props.loginDetails.data._id ? (
+                  <View>
+                    <Text style={styles.userName}>
+                      You recommend {item.dishInfo.name} to {item.userInfo.name}
+                      .
+                    </Text>
+                  </View>
+                ) : (
+                  <View>
+                    <Text style={styles.userName}>
+                      {item.userInfo.name} Recommend me {item.dishInfo.name}.
+                    </Text>
+                  </View>
+                )}
                 <View>
                   <Image
                     style={styles.dishImage}

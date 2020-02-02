@@ -34,12 +34,19 @@ export const MY_RECOMMEND_REQUEST = "MY_RECOMMEND_REQUEST";
 export const MY_RECOMMEND_SUCCESS = "MY_RECOMMEND_SUCCESS";
 export const MY_RECOMMEND_FAILURE = "MY_RECOMMEND_FAILURE";
 
-export function getHomeData() {
+export const MY_REVIEW_REQUEST = "MY_REVIEW_REQUEST";
+export const MY_REVIEW_SUCCESS = "MY_REVIEW_SUCCESS";
+export const MY_REVIEW_FAILURE = "MY_REVIEW_FAILURE";
+
+export const GET_LAT_LONG = "GET_LAT_LONG";
+
+export function getHomeData(lat, long) {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: GET_HOME_DATA_REQUEST });
       const result = await api.get("getAllReviews");
       const resultJson = await result.json();
+
       dispatch({
         type: GET_HOME_DATA_SUCCESS,
         homeData: resultJson.data
@@ -47,6 +54,25 @@ export function getHomeData() {
     } catch (e) {
       dispatch({
         type: GET_HOME_DATA_FAILURE,
+        error: e.message
+      });
+    }
+  };
+}
+
+export function myAccountReviews() {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: MY_REVIEW_REQUEST });
+      const result = await api.get("review");
+      const resultJson = await result.json();
+      return dispatch({
+        type: MY_REVIEW_SUCCESS,
+        myAccountReview: resultJson.data
+      });
+    } catch (e) {
+      return dispatch({
+        type: MY_REVIEW_FAILURE,
         error: e.message
       });
     }
@@ -235,6 +261,36 @@ export function myRecommendation() {
         type: MY_RECOMMEND_FAILURE,
         error: e.message
       });
+    }
+  };
+}
+
+export function getCurrentLocation() {
+  return async (dispatch, getState, { api }) => {
+    try {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const location = JSON.stringify(position);
+          const latitude =
+            JSON.parse(location) &&
+            JSON.parse(location).coords &&
+            JSON.parse(location).coords.latitude;
+          const longitude =
+            JSON.parse(location) &&
+            JSON.parse(location).coords &&
+            JSON.parse(location).coords.longitude;
+          return dispatch({
+            type: GET_LAT_LONG,
+            lat: latitude,
+            long: longitude
+          });
+        },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      );
+    } catch (e) {
+      return {
+        type: "Erro"
+      };
     }
   };
 }

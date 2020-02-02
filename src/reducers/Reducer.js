@@ -35,7 +35,14 @@ const Reducer = (
 
     myRecommendationLoading: false,
     myRecommandationList: "",
-    myRecommandationError: ""
+    myRecommandationError: "",
+
+    myAccountReviewLoading: false,
+    myAccountReview: "",
+    myAccountReviewError: "",
+
+    lat: "",
+    long: ""
   },
   action
 ) => {
@@ -170,6 +177,25 @@ const Reducer = (
     case Actions.MY_RECOMMEND_FAILURE:
       return Object.assign({}, state, {
         myRecommendationLoading: false
+      });
+    case Actions.MY_REVIEW_REQUEST:
+      return Object.assign({}, state, {
+        myAccountReviewLoading: true
+      });
+    case Actions.MY_REVIEW_SUCCESS:
+      return Object.assign({}, state, {
+        myAccountReviewLoading: false,
+        myAccountReview: action.myAccountReview
+      });
+
+    case Actions.MY_REVIEW_FAILURE:
+      return Object.assign({}, state, {
+        myAccountReviewLoading: false
+      });
+    case Actions.GET_LAT_LONG:
+      return Object.assign({}, state, {
+        lat: action.lat,
+        long: action.long
       });
 
     default:

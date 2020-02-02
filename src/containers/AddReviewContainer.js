@@ -5,7 +5,9 @@ import {
   getRestaurant,
   uploadImage,
   getAllUser,
-  sendRecommandation
+  sendRecommandation,
+  getHomeData,
+  myRecommendation
 } from "../actions/Action";
 
 const mapStateToProps = (state, ownProps) => {
@@ -35,6 +37,12 @@ const mapDispatchToProps = dispatch => {
     },
     sendRecommandation: recommedObj => {
       return dispatch(sendRecommandation(recommedObj));
+    },
+    getHomeData: (lat, long) => {
+      return dispatch(getHomeData(lat, long));
+    },
+    myRecommendation: () => {
+      return dispatch(myRecommendation());
     }
   };
 };

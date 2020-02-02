@@ -93,7 +93,7 @@ class AddReviewForm extends React.Component {
           JSON.parse(location) &&
           JSON.parse(location).coords &&
           JSON.parse(location).coords.longitude;
-        this.accessRestaurantDetails(`12.933750,77.621162`);
+        this.accessRestaurantDetails(`${latitude},${longitude}`);
         this.setState({ location });
       },
       error => {
@@ -152,6 +152,7 @@ class AddReviewForm extends React.Component {
       };
       const submitReviewResponse = await this.props.submitReview(reviewObj);
       if (submitReviewResponse.type === ADD_REVIEW_SUCCESS) {
+        this.props.getHomeData(28.493105, 77.095123);
         this.setState({
           photo: null,
           rating: 0,
@@ -229,6 +230,7 @@ class AddReviewForm extends React.Component {
     };
     const recommendResponse = await this.props.sendRecommandation(recommendObj);
     if (recommendResponse.type === SEND_RECOMMEND_SUCCESS) {
+      this.props.myRecommendation();
       this.setState({ openModalState: false });
     }
   };

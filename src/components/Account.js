@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./css/AccountStyle";
 import { View, Text, Image, ScrollView, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -26,6 +26,9 @@ function Account(props) {
       { cancelable: false }
     );
   };
+  useEffect(() => {
+    props.myAccountReviews();
+  });
   return (
     <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
       <View style={styles.infoWrapper}>

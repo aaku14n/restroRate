@@ -5,7 +5,8 @@ import { getAllUser, myRecommendation } from "../actions/Action";
 const mapStateToProps = (state, ownProps) => {
   return {
     myRecommendationLoading: state.Reducer.myRecommendationLoading,
-    myRecommandationList: state.Reducer.myRecommandationList
+    myRecommandationList: state.Reducer.myRecommandationList,
+    loginDetails: state.AuthReducer.userLoginDetails
   };
 };
 

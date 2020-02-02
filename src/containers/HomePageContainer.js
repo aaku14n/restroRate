@@ -13,8 +13,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getHomeData: () => {
-      dispatch(getHomeData());
+    getHomeData: (lat, long) => {
+      dispatch(getHomeData(lat, long));
     }
   };
 };
