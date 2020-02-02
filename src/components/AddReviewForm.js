@@ -44,7 +44,7 @@ class AddReviewForm extends React.Component {
       openModalState: false,
       comments: "",
       userID: this.props.userList ? this.props.userList[0]._id : "",
-      customRestaurantDetails: ""
+      customRestaurantDetails: false
     };
   }
 
@@ -55,7 +55,6 @@ class AddReviewForm extends React.Component {
   }
 
   onChnageRestraurentName = name => {
-    this.accessRestaurantDetails();
     this.setState({
       restroName: name
     });
@@ -78,15 +77,13 @@ class AddReviewForm extends React.Component {
   accessRestaurantDetails = async loc => {
     const detailsRes = await this.props.getRestaurant(loc);
     if (detailsRes && detailsRes[0]) {
-      this.setState({ restaurantDetails: [detailsRes[0]] });
+      this.setState({
+        restaurantDetails: [detailsRes[0]],
+        customRestaurantDetails: false
+      });
       this.onChnageRestraurentName(detailsRes[0].name);
     } else {
-      const obj = {
-        name: this.state.restroName,
-        latitude: this.props.lat,
-        longitude: this.props.long
-      };
-      this.setState({ customRestaurantDetails: obj });
+      this.setState({ customRestaurantDetails: true });
     }
   };
   onAccessCurrentLocation = () => {
@@ -130,13 +127,18 @@ class AddReviewForm extends React.Component {
       });
       return false;
     } else {
+      let customRestoObj = {
+        latitude: this.props.lat,
+        longitude: this.props.long,
+        name: this.state.restroName
+      };
       const reviewObj = {
         dishName: this.state.dishName,
         feedback: this.state.review,
         rate: this.state.rating,
         dishImage: imageRes.imageInfo.filename,
         restaurantData: this.state.customRestaurantDetails
-          ? this.state.customRestaurantDetails
+          ? customRestoObj
           : { candidates: this.state.restaurantDetails }
       };
       const submitReviewResponse = await this.props.submitReview(reviewObj);
@@ -330,17 +332,19 @@ class AddReviewForm extends React.Component {
             />
           </View>
           <View style={styles.button}>
-            <TouchableWithoutFeedback
-              onPress={() => this.submitReview()}
-              title="SUBMIT REVIEW"
-              style={styles.buttonStyle}
-            >
-              {this.state.imageLoading ? (
-                <Text style={styles.buttonTitle}>Loading....</Text>
-              ) : (
+            {this.state.imageLoading ? (
+              <View style={styles.disableButtonStyle}>
+                <Text style={styles.disableButtonTitle}>LOADING.....</Text>
+              </View>
+            ) : (
+              <TouchableWithoutFeedback
+                onPress={() => this.submitReview()}
+                title="SUBMIT REVIEW"
+                style={styles.buttonStyle}
+              >
                 <Text style={styles.buttonTitle}>SUBMIT REVIEW</Text>
-              )}
-            </TouchableWithoutFeedback>
+              </TouchableWithoutFeedback>
+            )}
           </View>
         </View>
         {this.state.openModalState && (

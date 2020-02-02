@@ -25,7 +25,18 @@
       "bundleIdentifier": "in.littra.disherve"
     },
     "android": {
-      "package": "in.littra.disherve"
+      "package": "in.littra.disherve",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "disherve"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "description": " Dish serve is platform for restaurants reviews"
   }

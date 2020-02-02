@@ -68,7 +68,6 @@ export function myAccountReviews() {
       dispatch({ type: MY_REVIEW_REQUEST });
       const result = await api.get("review");
       const resultJson = await result.json();
-      console.log("resultJson");
       return dispatch({
         type: MY_REVIEW_SUCCESS,
         myAccountReview: resultJson.data
@@ -86,10 +85,10 @@ export function submitReview(reviewObj) {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: ADD_REVIEW_REQUEST });
-      console.log(reviewObj);
+
       const result = await api.post("review", reviewObj);
       const resultJson = await result.json();
-      console.log(resultJson);
+
       return dispatch({
         type: ADD_REVIEW_SUCCESS,
         addReview: resultJson.data

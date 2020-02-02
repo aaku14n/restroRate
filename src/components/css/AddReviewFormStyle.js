@@ -122,6 +122,16 @@ export default StyleSheet.create({
     height: 50,
     marginBottom: 60
   },
+  disableButtonStyle: {
+    backgroundColor: "#c4c4c4",
+    height: 50,
+    width: 300,
+    borderRadius: 5,
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center"
+  },
   buttonStyle: {
     backgroundColor: THEME_COLOR,
     height: 50,
@@ -157,6 +167,12 @@ export default StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     marginTop: 15
+  },
+  disableButtonTitle: {
+    color: "#000",
+    fontSize: 16,
+    marginTop: 15,
+    fontWeight: "bold"
   },
   loader: {
     height: "100%",

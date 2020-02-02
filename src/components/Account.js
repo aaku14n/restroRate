@@ -46,7 +46,7 @@ function Account(props) {
     await setRefresing(false);
   };
   return (
-    <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
+    <View style={styles.base}>
       <View style={styles.infoWrapper}>
         <View style={styles.row}>
           <View style={styles.imageWrapper}>
@@ -107,7 +107,7 @@ function Account(props) {
           )}
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
