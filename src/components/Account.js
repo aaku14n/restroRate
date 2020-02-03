@@ -45,7 +45,7 @@ function Account(props) {
     await props.myAccountReviews();
     await setRefresing(false);
   };
-  console.log(props.reviewList);
+
   return (
     <View style={styles.base}>
       <View style={styles.infoWrapper}>

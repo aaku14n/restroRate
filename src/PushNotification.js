@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { post } from "./apiRequest";
 import { Text, View } from "react-native";
 import React from "react";
-async function registerForPushNotificationsAsync() {
+export async function registerForPushNotificationsAsync() {
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
   // only asks if permissions have not already been determined, because
   // iOS won't necessarily prompt the user a second time.
@@ -26,7 +26,7 @@ async function registerForPushNotificationsAsync() {
   });
 }
 
-export default class PushNotification extends React.Component {
+export class PushNotification extends React.Component {
   state = {
     notification: {}
   };
