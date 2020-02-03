@@ -27,6 +27,9 @@
     "android": {
       "package": "in.littra.disherve"
     },
+    "notification": {
+      "iosDisplayInForeground": true
+    },
     "description": " Dish serve is platform for restaurants reviews"
   }
 }

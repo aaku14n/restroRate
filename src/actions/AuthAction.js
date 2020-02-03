@@ -4,6 +4,7 @@ import {
   removeAsyncStorage
 } from "../utils/AsyncStorage.utils";
 import { Alert } from "react-native";
+import { registerForPushNotificationsAsync } from "../PushNotification";
 
 export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
@@ -20,7 +21,7 @@ export function userLogin(userDetailsObject) {
       const resultJson = await result.json();
 
       await createAsyncStorage("userDetails", resultJson);
-
+      registerForPushNotificationsAsync();
       return dispatch({
         type: USER_LOGIN_SUCCESS,
         userDetails: resultJson
@@ -37,7 +38,7 @@ export function guestLogin() {
       dispatch({ type: USER_LOGIN_REQUEST });
       const result = await api.get("guestLogin");
       const resultJson = await result.json();
-      console.log(resultJson);
+
       await createAsyncStorage("userDetails", resultJson);
 
       return dispatch({
@@ -67,7 +68,9 @@ export function validateUserLogin() {
   };
 }
 export function logoutUser() {
-  return async dispatch => {
+  return async (dispatch, getState, { api }) => {
+    await api.get("logout");
+
     await removeAsyncStorage("userDetails");
     dispatch({
       type: LOG_OUT_USER

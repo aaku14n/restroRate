@@ -126,11 +126,8 @@ export default class RestroDetailsComponent extends React.Component {
             </Text>
           </View>
           <TouchableOpacity onPress={this.goToLocation}>
-            <View style={styles.callIcon}>
-              <Image
-                style={styles.directionIcon}
-                source={require("../../assets/cursor.png")}
-              />
+            <View style={styles.goIcon}>
+              <Text style={styles.go}>GO</Text>
             </View>
           </TouchableOpacity>
         </View>

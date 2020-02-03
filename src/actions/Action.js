@@ -149,10 +149,25 @@ export function getCityName(lat, long) {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&sensor=true&key=AIzaSyDM4BtVx-2cRWTEEu3JOdx0szr735nXzPU`
       );
       const resultJson = await result.json();
-      return resultJson.plus_code;
+      const addresses = resultJson.results[0];
+      let localityName = resultJson.plus_code.compound_code
+        .split(" ")[1]
+        .split(",")[0];
+      if (
+        addresses &&
+        addresses.address_components &&
+        addresses.address_components.length > 0
+      ) {
+        const locality = addresses.address_components.find(item =>
+          item.types.includes("sublocality_level_1")
+        );
+        localityName =
+          locality && locality.long_name ? locality.long_name : localityName;
+      }
+      return localityName;
     } catch (e) {
       return {
-        type: "Erro"
+        type: "Error"
       };
     }
   };

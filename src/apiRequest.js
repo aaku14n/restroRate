@@ -27,6 +27,7 @@ export const post = async (url, data = []) => {
   if (userDetails) {
     headers["Authorization"] = `Bearer ${userDetails.token}`;
   }
+
   return fetch(`${API_URL}/${url}`, {
     method: "post",
     body: JSON.stringify(data),

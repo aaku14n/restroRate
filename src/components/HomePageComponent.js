@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   base: {
     width: "100%",
     padding: 20,
+    paddingBottom: 0,
     marginTop: 60,
     backgroundColor: "#fff"
   },

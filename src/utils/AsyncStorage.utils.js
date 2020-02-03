@@ -21,7 +21,7 @@ export async function removeAsyncStorage(key) {
   try {
     await AsyncStorage.removeItem(key);
 
-    return data;
+    return;
   } catch (error) {
     console.log("Something went wrong", error);
   }

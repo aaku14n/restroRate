@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
+import { THEME_COLOR } from "../../Constant";
 const screenWidth = Math.round(Dimensions.get("window").width);
 export default StyleSheet.create({
   base: {
@@ -107,5 +108,19 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center"
+  },
+  go: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    fontSize: 16
+  },
+  goIcon: {
+    backgroundColor: THEME_COLOR,
+    padding: 10,
+    borderRadius: 25,
+    height: 40,
+    width: 40,
+    display: "flex",
+    justifyContent: "center"
   }
 });
