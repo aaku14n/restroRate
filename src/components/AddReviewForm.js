@@ -29,6 +29,7 @@ import {
 import * as Permissions from "expo-permissions";
 import RecommendFriends from "./RecommendFriend";
 import RNPickerSelect, { defaultStyles } from "react-native-picker-select";
+// import { PushNotification } from "../PushNotification";
 
 class AddReviewForm extends React.Component {
   constructor(props) {
@@ -280,6 +281,7 @@ class AddReviewForm extends React.Component {
     };
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
+        {/* <PushNotification {...this.props} /> */}
         <View style={styles.heading}>
           <Text style={styles.review}>Add Review</Text>
         </View>

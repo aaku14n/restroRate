@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { post } from "./apiRequest";
 import { Text, View } from "react-native";
 import React from "react";
+import { NavigationActions } from "react-navigation";
+import { RECOMMEND_SCREEN } from "./Constant";
+
 export async function registerForPushNotificationsAsync() {
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
   // only asks if permissions have not already been determined, because
@@ -12,6 +15,7 @@ export async function registerForPushNotificationsAsync() {
   // `askAsync` will never prompt the user
 
   // Stop here if the user did not grant permissions
+  console.log(status);
   if (status !== "granted") {
     alert("No notification permissions!");
     return;
@@ -19,7 +23,7 @@ export async function registerForPushNotificationsAsync() {
 
   // Get the token that identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
-
+  console.log(token);
   // POST the token to your backend server from where you can retrieve it to send push notifications.
   return post("updateProfile", {
     pushToken: token
@@ -46,8 +50,12 @@ export class PushNotification extends React.Component {
 
   _handleNotification = notification => {
     // do whatever you want to do with the notification
+
     this.setState({ notification: notification });
   };
+  //   componentWillUnmount() {
+  //     Notifications.remove();
+  //   }
 
   render() {
     return <Text />;

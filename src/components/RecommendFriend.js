@@ -17,7 +17,7 @@ class RecommendFriend extends React.Component {
     this.state = {
       selectedUser: "",
       refreshing: false,
-      screenNo: 1
+      screenNo: 2
     };
   }
   componentDidMount() {
@@ -51,16 +51,20 @@ class RecommendFriend extends React.Component {
         </View>
         <View style={styles.tabWrapper}>
           <TouchableOpacity
-            style={this.state.screenNo == 1 ? styles.byMeTab : styles.forMeTab}
-            onPress={() => this.byMeClick(1)}
-          >
-            <Text>Recomendation by Me</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={this.state.screenNo == 1 ? styles.forMeTab : styles.byMeTab}
+            style={this.state.screenNo == 2 ? styles.forMeTab : styles.byMeTab}
             onPress={() => this.forMeClick(2)}
           >
-            <Text>Recomendation for Me</Text>
+            <Text style={this.state.screenNo == 2 ? styles.white : {}}>
+              Recommendation for Me
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={this.state.screenNo == 2 ? styles.byMeTab : styles.forMeTab}
+            onPress={() => this.byMeClick(1)}
+          >
+            <Text style={this.state.screenNo !== 2 ? styles.white : {}}>
+              Recommendation by Me
+            </Text>
           </TouchableOpacity>
         </View>
         {!this.props.myRecommandationList.recomendationByMe ||

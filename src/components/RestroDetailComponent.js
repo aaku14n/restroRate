@@ -29,7 +29,7 @@ export default class RestroDetailsComponent extends React.Component {
   onShare = async () => {
     try {
       const details = this.props && this.props.getRestroDetails;
-      console.log(details);
+
       const result = await Share.share({
         message: `${details.name} | ${details.fullAddress}`,
         url: "map://app"

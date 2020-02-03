@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { THEME_COLOR } from "../../Constant";
 
 export default StyleSheet.create({
   base: {
@@ -52,11 +53,16 @@ export default StyleSheet.create({
   byMeTab: {
     padding: 20,
     backgroundColor: "#fff",
-    borderWidth: 1
+    borderWidth: 1,
+    borderColor: "#c4c4c4"
   },
   forMeTab: {
     padding: 20,
-    backgroundColor: "#c4c4c4",
+    backgroundColor: THEME_COLOR,
+    borderColor: THEME_COLOR,
     borderWidth: 1
+  },
+  white: {
+    color: "#fff"
   }
 });
