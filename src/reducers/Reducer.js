@@ -41,6 +41,10 @@ const Reducer = (
     myAccountReview: "",
     myAccountReviewError: "",
 
+    updateProfileLoading: false,
+    updateProfileResponse: "",
+    updateProfileError: "",
+
     lat: "",
     long: ""
   },
@@ -191,6 +195,20 @@ const Reducer = (
     case Actions.MY_REVIEW_FAILURE:
       return Object.assign({}, state, {
         myAccountReviewLoading: false
+      });
+    case Actions.UPDATE_PROFILE_REQUEST:
+      return Object.assign({}, state, {
+        updateProfileLoading: true
+      });
+    case Actions.UPDATE_PROFILE_SUCCESS:
+      return Object.assign({}, state, {
+        updateProfileLoading: false,
+        updateProfileResponse: action.updateProfileResponse
+      });
+
+    case Actions.UPDATE_PROFILE_FAILURE:
+      return Object.assign({}, state, {
+        updateProfileLoading: false
       });
     case Actions.GET_LAT_LONG:
       return Object.assign({}, state, {

@@ -40,6 +40,10 @@ export const MY_REVIEW_FAILURE = "MY_REVIEW_FAILURE";
 
 export const GET_LAT_LONG = "GET_LAT_LONG";
 
+export const UPDATE_PROFILE_REQUEST = "UPDATE_PROFILE_REQUEST";
+export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
+export const UPDATE_PROFILE_FAILURE = "UPDATE_PROFILE_FAILURE";
+
 export function getHomeData(lat, long) {
   return async (dispatch, getState, { api }) => {
     try {
@@ -263,6 +267,25 @@ export function myRecommendation() {
     } catch (e) {
       return dispatch({
         type: MY_RECOMMEND_FAILURE,
+        error: e.message
+      });
+    }
+  };
+}
+
+export function updateProfile(userObj) {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: UPDATE_PROFILE_REQUEST });
+      const result = await api.post(`updateProfile`, userObj);
+      const resultJson = await result.json();
+      return dispatch({
+        type: UPDATE_PROFILE_SUCCESS,
+        updateProfileResponse: resultJson
+      });
+    } catch (e) {
+      return dispatch({
+        type: UPDATE_PROFILE_FAILURE,
         error: e.message
       });
     }

@@ -20,13 +20,14 @@ import {
   RECOMMEND_SCREEN
 } from "../Constant";
 import RecommendFriendContainer from "../containers/RecommendFriendContainer";
+import AccountPage from "./AccountPage";
 
 const tabs = {};
 tabs[HOME_SCREEN] = HomePage;
 tabs[SEARCH_SCREEN] = Search;
 tabs[ADD_REVIEW_SCREEN] = AddReviewForm;
 tabs[RECOMMEND_SCREEN] = RecommendFriendContainer;
-tabs[ACCOUNT_SCREEN] = AccountContainer;
+tabs[ACCOUNT_SCREEN] = AccountPage;
 
 const renderTabBar = navigation => {
   const { routeName } = navigation.state;

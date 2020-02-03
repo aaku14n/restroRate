@@ -18,6 +18,14 @@ export default StyleSheet.create({
   imageWrapper: {
     width: 60
   },
+  editText: {
+    color: "#fff",
+    marginTop: 10,
+    paddingBottom: 3,
+    borderBottomWidth: 1,
+    borderBottomColor: "#fff",
+    width: 70
+  },
   image: {
     width: 60,
     height: 60,

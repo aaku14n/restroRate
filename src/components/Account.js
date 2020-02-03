@@ -45,7 +45,10 @@ function Account(props) {
     await props.myAccountReviews();
     await setRefresing(false);
   };
-  console.log(props.reviewList);
+  const editProfile = () => {
+    props.navigation.navigate("EditScreen");
+  };
+
   return (
     <View style={styles.base}>
       <View style={styles.infoWrapper}>
@@ -79,6 +82,9 @@ function Account(props) {
             </TouchableOpacity>
           </View>
         </View>
+        <TouchableOpacity onPress={() => editProfile()}>
+          <Text style={styles.editText}>Edit Profile</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.reviews}>
         <View style={styles.heading}>
