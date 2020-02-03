@@ -224,7 +224,12 @@ class AddReviewForm extends React.Component {
       return;
     }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
 
     if (pickerResult.cancelled == false) {
       this.setState({
@@ -276,7 +281,7 @@ class AddReviewForm extends React.Component {
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.heading}>
-          <Text style={styles.review}>Add Review Form</Text>
+          <Text style={styles.review}>Add Review</Text>
         </View>
         <View style={styles.form}>
           <View style={styles.restroName}>

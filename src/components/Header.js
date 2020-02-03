@@ -34,15 +34,23 @@ function Header(props) {
   }
 
   const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(false);
   const onAccessCurrentLocation = () => {
     getCityDetails(props.lat, props.long);
   };
   const getCityDetails = async (lat, long) => {
+    await setLoading(true);
     const cityResponse = await props.getCityName(lat, long);
-    setLocation(cityResponse.compound_code.split(" ")[1].split(",")[0]);
+
+    if (cityResponse && cityResponse.type !== "Error") {
+      setLocation(cityResponse);
+    }
+    await setLoading(false);
   };
   useEffect(() => {
-    onAccessCurrentLocation();
+    if (!location && !loading) {
+      onAccessCurrentLocation();
+    }
   });
 
   const onPress = () => {

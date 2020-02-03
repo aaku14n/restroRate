@@ -12,11 +12,11 @@ export default StyleSheet.create({
   },
   foodImage: {
     width: "100%",
-    height: screenWidth > 500 ? 500 : screenWidth - 100,
+    height: screenWidth > 500 ? 500 : screenWidth - 200,
     borderRadius: 15
   },
   detailSection: {
-    marginTop: 25
+    marginTop: 10
   },
   nameRatingWrapper: {
     width: "100%",
