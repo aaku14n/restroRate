@@ -48,7 +48,6 @@ function Account(props) {
   const editProfile = () => {
     props.navigation.navigate("EditScreen");
   };
-
   return (
     <View style={styles.base}>
       <View style={styles.infoWrapper}>

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import EditProfile from "../components/EditProfile";
 import { uploadImage, updateProfile } from "../actions/Action";
+import { validateUserLogin } from "../actions/AuthAction";
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -16,6 +17,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateProfile: userObj => {
       return dispatch(updateProfile(userObj));
+    },
+    validateUserLogin: () => {
+      return dispatch(validateUserLogin());
     }
   };
 };

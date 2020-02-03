@@ -13,6 +13,10 @@ import {
 } from "react-native";
 import { UPDATE_PROFILE_SUCCESS } from "../actions/Action";
 import { ScrollView } from "react-native-gesture-handler";
+import {
+  getAsyncStorage,
+  createAsyncStorage
+} from "../utils/AsyncStorage.utils";
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -96,6 +100,12 @@ class EditProfile extends React.Component {
       };
       const updateProfile = await this.props.updateProfile(updateUserDetail);
       if (updateProfile.type === UPDATE_PROFILE_SUCCESS) {
+        const userDetails = await getAsyncStorage("userDetails");
+        let updatedUserDatail = userDetails;
+        updatedUserDatail.data.name = this.state.updatedName;
+        updatedUserDatail.data.profilePic = imageRes.imageInfo.filename;
+        await createAsyncStorage("userDetails", updatedUserDatail);
+        await this.props.validateUserLogin();
         this.props.navigation.goBack();
       }
     }
