@@ -8,15 +8,19 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  Alert
+  Alert,
+  ActivityIndicator
 } from "react-native";
+import { UPDATE_PROFILE_SUCCESS } from "../actions/Action";
+import { ScrollView } from "react-native-gesture-handler";
 
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       photo: null,
-      updatedName: ""
+      updatedName: "",
+      imageLoading: false
     };
   }
   goBack = () => {
@@ -66,6 +70,9 @@ class EditProfile extends React.Component {
       this.openAlert("Please enter name");
       return;
     }
+    this.setState({
+      imageLoading: true
+    });
     let localUri = this.state.photo.uri;
     let filename = localUri.split("/").pop();
     let match = /\.(\w+)$/.exec(filename);
@@ -77,6 +84,9 @@ class EditProfile extends React.Component {
       type
     };
     const imageRes = await this.props.uploadImage(imageObj);
+    this.setState({
+      imageLoading: false
+    });
     if (imageRes.imageInfo.err) {
       console.log("Error");
     } else {
@@ -85,10 +95,20 @@ class EditProfile extends React.Component {
         name: this.state.updatedName
       };
       const updateProfile = await this.props.updateProfile(updateUserDetail);
+      if (updateProfile.type === UPDATE_PROFILE_SUCCESS) {
+        this.props.navigation.goBack();
+      }
     }
   };
   render() {
     const { photo } = this.state;
+    if (this.props.updateProfileLoading) {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#c4c4c4" />
+        </View>
+      );
+    }
     return (
       <View style={styles.base}>
         <View style={styles.header}>
@@ -122,12 +142,18 @@ class EditProfile extends React.Component {
           </View>
         </View>
         <View style={styles.button}>
-          <TouchableOpacity
-            onPress={() => this.updateProfile()}
-            style={styles.buttonStyle}
-          >
-            <Text style={styles.buttonTitle}>UPDATE PROFILE</Text>
-          </TouchableOpacity>
+          {this.state.imageLoading ? (
+            <View style={styles.disableButtonStyle}>
+              <Text style={styles.disableButtonTitle}>UPDATING....</Text>
+            </View>
+          ) : (
+            <TouchableOpacity
+              onPress={() => this.updateProfile()}
+              style={styles.buttonStyle}
+            >
+              <Text style={styles.buttonTitle}>UPDATE PROFILE</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );

@@ -32,6 +32,12 @@ export default StyleSheet.create({
     height: 150,
     borderRadius: 70
   },
+  loader: {
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
+  },
   inputWrapper: {
     alignItems: "center",
     marginTop: 70,
@@ -72,5 +78,21 @@ export default StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     marginTop: 15
+  },
+  disableButtonTitle: {
+    color: "#000",
+    fontSize: 16,
+    marginTop: 15,
+    fontWeight: "bold"
+  },
+  disableButtonStyle: {
+    backgroundColor: "#c4c4c4",
+    height: 50,
+    width: 300,
+    borderRadius: 5,
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center"
   }
 });

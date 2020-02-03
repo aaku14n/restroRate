@@ -5,6 +5,7 @@ import { uploadImage, updateProfile } from "../actions/Action";
 const mapStateToProps = (state, ownProps) => {
   return {
     uploadImageLoading: state.Reducer.uploadImageLoading,
+    updateProfileLoading: state.Reducer.updateProfileLoading,
     ...ownProps
   };
 };
