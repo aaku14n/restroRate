@@ -21,9 +21,10 @@ import {
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
-      photo: null,
-      updatedName: "",
+      photo: { uri: props.loginDetails ? props.loginDetails.profilePic : "" },
+      updatedName: props.loginDetails ? props.loginDetails.name : "",
       imageLoading: false
     };
   }
@@ -43,7 +44,12 @@ class EditProfile extends React.Component {
       return;
     }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1
+    });
 
     if (pickerResult.cancelled == false) {
       this.setState({
@@ -162,6 +168,11 @@ class EditProfile extends React.Component {
               <Text style={styles.buttonTitle}>UPDATE PROFILE</Text>
             </TouchableOpacity>
           )}
+        </View>
+        <View style={styles.button}>
+          <TouchableOpacity onPress={() => this.goBack()}>
+            <Text style={styles.goBack}>Cancel</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );

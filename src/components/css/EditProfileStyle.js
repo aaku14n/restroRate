@@ -30,7 +30,9 @@ export default StyleSheet.create({
   dummyImage: {
     width: 150,
     height: 150,
-    borderRadius: 70
+    borderRadius: 75,
+    borderWidth: 1,
+    borderColor: "#c4c4c4"
   },
   loader: {
     height: "100%",
@@ -60,8 +62,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
-    position: "absolute",
-    bottom: 200,
+
     padding: 20
   },
   buttonStyle: {
@@ -94,5 +95,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center"
+  },
+  goBack: {
+    fontSize: 16
   }
 });

@@ -59,8 +59,8 @@ const renderTabBar = navigation => {
 };
 const TabNavigator = createBottomTabNavigator(tabs, {
   defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: renderTabBar(navigation)
-    // tabBarVisible: navigation.state.index == 1 ? false : true
+    tabBarIcon: renderTabBar(navigation),
+    tabBarVisible: navigation.state.index == 1 ? false : true
   }),
   initialRouteName: ADD_REVIEW_SCREEN,
   tabBarOptions: {

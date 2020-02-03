@@ -7,6 +7,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     uploadImageLoading: state.Reducer.uploadImageLoading,
     updateProfileLoading: state.Reducer.updateProfileLoading,
+    loginDetails: state.AuthReducer.userLoginDetails.data,
     ...ownProps
   };
 };
