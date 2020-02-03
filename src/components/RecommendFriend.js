@@ -1,5 +1,13 @@
 import React from "react";
-import { Text, View, Image, RefreshControl, FlatList } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  RefreshControl,
+  FlatList,
+  TouchableOpacity,
+  TouchableWithoutFeedback
+} from "react-native";
 import styles from "./css/RecommendFriendStyle";
 import defaultRestro from "../../assets/defaultRestro.png";
 
@@ -8,7 +16,8 @@ class RecommendFriend extends React.Component {
     super(props);
     this.state = {
       selectedUser: "",
-      refreshing: false
+      refreshing: false,
+      screenNo: 1
     };
   }
   componentDidMount() {
@@ -19,20 +28,53 @@ class RecommendFriend extends React.Component {
     await this.props.myRecommendation();
     await this.setState({ refreshing: false });
   };
+  byMeClick = screenNo => {
+    this.setState({
+      screenNo
+    });
+  };
+  forMeClick = screenNo => {
+    this.setState({
+      screenNo
+    });
+  };
+  gotoRestroPage = id => {
+    this.props.navigation.navigate("RestroDetails", {
+      restroId: id
+    });
+  };
   render() {
     return (
       <View style={styles.base} showsVerticalScrollIndicator={false}>
         <View>
           <Text style={styles.heading}>MY RECOMMENDATIONS</Text>
         </View>
-        {!this.props.myRecommandationList ||
+        <View style={styles.tabWrapper}>
+          <TouchableOpacity
+            style={this.state.screenNo == 1 ? styles.byMeTab : styles.forMeTab}
+            onPress={() => this.byMeClick(1)}
+          >
+            <Text>Recomendation by Me</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={this.state.screenNo == 1 ? styles.forMeTab : styles.byMeTab}
+            onPress={() => this.forMeClick(2)}
+          >
+            <Text>Recomendation for Me</Text>
+          </TouchableOpacity>
+        </View>
+        {/* {!this.props.myRecommandationList ||
           (this.props.myRecommandationList.length == 0 && (
             <Text style={styles.emptyText}>
               Sorry, You don't have any recommendations.
             </Text>
-          ))}
+          ))} */}
         <FlatList
-          data={this.props.myRecommandationList}
+          data={
+            this.state.screenNo == 1
+              ? this.props.myRecommandationList.recomendationByMe
+              : this.props.myRecommandationList.recommendationsForMe
+          }
           keyExtractor={item => item._id}
           renderItem={({ item }) => (
             <View style={styles.recommendationWrapper}>
@@ -65,7 +107,9 @@ class RecommendFriend extends React.Component {
                     </Text>
                   </View>
                 )}
-                <View>
+                <TouchableWithoutFeedback
+                  onPress={() => this.gotoRestroPage(item.restaurantInfo._id)}
+                >
                   <Image
                     style={styles.dishImage}
                     source={
@@ -74,7 +118,7 @@ class RecommendFriend extends React.Component {
                         : defaultRestro
                     }
                   />
-                </View>
+                </TouchableWithoutFeedback>
                 <View>
                   <Text style={styles.userNameBold}>{item.dishInfo.name}</Text>
                 </View>

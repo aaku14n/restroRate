@@ -277,7 +277,7 @@ export function myRecommendation() {
       const resultJson = await result.json();
       return dispatch({
         type: MY_RECOMMEND_SUCCESS,
-        myRecommandation: resultJson.data
+        myRecommandation: resultJson
       });
     } catch (e) {
       return dispatch({

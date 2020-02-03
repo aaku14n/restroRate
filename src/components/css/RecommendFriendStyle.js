@@ -35,12 +35,28 @@ export default StyleSheet.create({
   },
   discription: {
     fontSize: 16,
-
     marginBottom: 10,
     color: "#c4c4c4"
   },
   emptyText: {
     marginTop: 40,
     textAlign: "center"
+  },
+  tabWrapper: {
+    flexDirection: "row",
+    textAlign: "center",
+    justifyContent: "center",
+    marginTop: 20
+    // marginBottom: 20
+  },
+  byMeTab: {
+    padding: 20,
+    backgroundColor: "#fff",
+    borderWidth: 1
+  },
+  forMeTab: {
+    padding: 20,
+    backgroundColor: "#c4c4c4",
+    borderWidth: 1
   }
 });
