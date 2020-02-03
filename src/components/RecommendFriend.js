@@ -63,12 +63,20 @@ class RecommendFriend extends React.Component {
             <Text>Recomendation for Me</Text>
           </TouchableOpacity>
         </View>
-        {/* {!this.props.myRecommandationList ||
-          (this.props.myRecommandationList.length == 0 && (
-            <Text style={styles.emptyText}>
-              Sorry, You don't have any recommendations.
-            </Text>
-          ))} */}
+        {!this.props.myRecommandationList.recomendationByMe ||
+          (this.props.myRecommandationList.recomendationByMe.length == 0 &&
+            this.state.screenNo == 1 && (
+              <Text style={styles.emptyText}>
+                Sorry, You don't have any recommendations .
+              </Text>
+            ))}
+        {!this.props.myRecommandationList.recommendationsForMe ||
+          (this.props.myRecommandationList.recommendationsForMe.length == 0 &&
+            this.state.screenNo == 2 && (
+              <Text style={styles.emptyText}>
+                Sorry, You don't have any recommendations .
+              </Text>
+            ))}
         <FlatList
           data={
             this.state.screenNo == 1
