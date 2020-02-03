@@ -101,10 +101,8 @@ class EditProfile extends React.Component {
       const updateProfile = await this.props.updateProfile(updateUserDetail);
       if (updateProfile.type === UPDATE_PROFILE_SUCCESS) {
         const userDetails = await getAsyncStorage("userDetails");
-        let updatedUserDatail = userDetails;
-        updatedUserDatail.data.name = this.state.updatedName;
-        updatedUserDatail.data.profilePic = imageRes.imageInfo.filename;
-        await createAsyncStorage("userDetails", updatedUserDatail);
+        userDetails.data = updateProfile.data;
+        await createAsyncStorage("userDetails", userDetails);
         await this.props.validateUserLogin();
         this.props.navigation.goBack();
       }
