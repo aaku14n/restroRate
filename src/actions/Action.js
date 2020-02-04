@@ -125,11 +125,18 @@ export function getAllUser() {
   };
 }
 
-export function getRestaurant(loc) {
+export function getRestaurant(loc, query = "") {
   return async (dispatch, getState, { api }) => {
     try {
+      let searchBy = "";
+      let radius = 100;
+      if (query) {
+        searchBy = `&keyword=${query}`;
+        radius = 1500;
+      }
+
       const result = await fetch(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${loc}&radius=100&type=restaurant&key=AIzaSyDM4BtVx-2cRWTEEu3JOdx0szr735nXzPU`
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${loc}&radius=${radius}&type=restaurant&key=AIzaSyDM4BtVx-2cRWTEEu3JOdx0szr735nXzPU${searchBy}`
       );
       const resultJson = await result.json();
 

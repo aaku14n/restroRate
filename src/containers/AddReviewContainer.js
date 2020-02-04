@@ -30,8 +30,8 @@ const mapDispatchToProps = dispatch => {
     submitReview: reviewObj => {
       return dispatch(submitReview(reviewObj));
     },
-    getRestaurant: loc => {
-      return dispatch(getRestaurant(loc));
+    getRestaurant: (loc, query) => {
+      return dispatch(getRestaurant(loc, query));
     },
     uploadImage: image => {
       return dispatch(uploadImage(image));

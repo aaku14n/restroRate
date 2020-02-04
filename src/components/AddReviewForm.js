@@ -17,7 +17,6 @@ import styles from "./css/AddReviewFormStyle";
 import camera from "../../assets/camera.png";
 import galary from "../../assets/galary.png";
 import cross from "../../assets/plus.png";
-import defaultPic from "../../assets/defaultRestro.png";
 import compass from "../../assets/compass.png";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
@@ -27,9 +26,9 @@ import {
   SEND_RECOMMEND_SUCCESS
 } from "../actions/Action";
 import * as Permissions from "expo-permissions";
-import RecommendFriends from "./RecommendFriend";
 import RNPickerSelect, { defaultStyles } from "react-native-picker-select";
-// import { PushNotification } from "../PushNotification";
+
+import Autocomplete from "react-native-autocomplete-input";
 
 class AddReviewForm extends React.Component {
   constructor(props) {
@@ -48,7 +47,10 @@ class AddReviewForm extends React.Component {
         this.props.userList && this.props.userList[0]
           ? this.props.userList[0]._id
           : "",
-      customRestaurantDetails: false
+      customRestaurantDetails: false,
+      restaurantList: [],
+      showSuggestions: true,
+      suggestionFetching: false
     };
   }
 
@@ -59,9 +61,22 @@ class AddReviewForm extends React.Component {
   }
 
   onChnageRestraurentName = name => {
-    this.setState({
-      restroName: name
-    });
+    // this.setState({
+    //   restroName: name
+    // });
+    this.setState(
+      {
+        query: name,
+        showSuggestions: true
+      },
+      () => {
+        if (this.state.query && this.state.query.length > 2) {
+          if (this.state.query.length % 2 === 0) {
+            this.accessRestaurantDetails(this.state.query);
+          }
+        }
+      }
+    );
   };
   onChnageDishName = dishName => {
     this.setState({
@@ -78,21 +93,37 @@ class AddReviewForm extends React.Component {
       comments
     });
   };
-  accessRestaurantDetails = async loc => {
-    const detailsRes = await this.props.getRestaurant(loc);
+  accessRestaurantDetails = async query => {
+    const loc = `${this.props.lat},${this.props.long}`;
+    await this.setState({ suggestionFetching: true });
+    const detailsRes = await this.props.getRestaurant(loc, query);
+    await this.setState({ suggestionFetching: false });
     if (detailsRes && detailsRes[0]) {
+      if (!query) {
+        this.setState({
+          restaurantDetails: [detailsRes[0]],
+          query: detailsRes[0].name
+        });
+      }
       this.setState({
-        restaurantDetails: [detailsRes[0]],
-        customRestaurantDetails: false
+        // restaurantDetails: [detailsRes[0]],
+        customRestaurantDetails: false,
+        restaurantList: detailsRes,
+        showSuggestions: true
       });
-      this.onChnageRestraurentName(detailsRes[0].name);
-    } else {
-      this.setState({ customRestaurantDetails: true });
     }
+  };
+  onSelectRestaurant = restaurantData => {
+    this.setState({
+      restaurantDetails: [restaurantData],
+      query: restaurantData.name,
+      showSuggestions: false
+    });
   };
   onAccessCurrentLocation = () => {
     this.props.getCurrentLocation();
-    this.accessRestaurantDetails(`${this.props.lat},${this.props.long}`);
+
+    this.accessRestaurantDetails();
   };
 
   componentDidMount() {
@@ -114,7 +145,7 @@ class AddReviewForm extends React.Component {
     return true;
   };
   submitReview = async () => {
-    if (!this.state.restaurantDetails && !this.state.restroName) {
+    if (!this.state.restaurantDetails) {
       this.openAlert("Restaurant Name is require field");
       return;
     }
@@ -185,7 +216,9 @@ class AddReviewForm extends React.Component {
           dishName: "",
           review: "",
           imageLoading: false,
-          openModalState: true
+          openModalState: true,
+          restaurantDetails: "",
+          query: ""
         });
       }
     }
@@ -265,8 +298,19 @@ class AddReviewForm extends React.Component {
       this.setState({ openModalState: false });
     }
   };
+
+  showLocateAndLoader = () => {
+    return this.state.restaurantDetails && this.state.suggestionFetching ? (
+      <ActivityIndicator size="small" color="#c4c4c4" />
+    ) : (
+      <TouchableWithoutFeedback onPress={this.onAccessCurrentLocation}>
+        <Image source={compass} style={{ width: 20, height: 20 }} />
+      </TouchableWithoutFeedback>
+    );
+  };
   render() {
     const { photo } = this.state;
+
     if (this.props.addReviewLoading) {
       return (
         <View style={styles.loader}>
@@ -287,18 +331,32 @@ class AddReviewForm extends React.Component {
         </View>
         <View style={styles.form}>
           <View style={styles.restroName}>
-            <TextInput
-              style={styles.input}
-              placeholder="Search restaurants"
-              onChangeText={text => this.onChnageRestraurentName(text)}
-              value={this.state.restroName}
-            />
+            <View style={styles.input}>
+              <Autocomplete
+                data={
+                  this.state.showSuggestions
+                    ? this.state.restaurantList.splice(0, 5)
+                    : []
+                }
+                style={styles.autocompleteContainer}
+                defaultValue={this.state.query}
+                onChangeText={text => this.onChnageRestraurentName(text)}
+                renderItem={({ item, i }) => {
+                  return (
+                    <TouchableHighlight
+                      onPress={() => this.onSelectRestaurant(item)}
+                      key={i}
+                      style={styles.itemSuggest}
+                    >
+                      <Text>{item.name}</Text>
+                    </TouchableHighlight>
+                  );
+                }}
+              />
+            </View>
           </View>
-          <View style={styles.compassIcon}>
-            <TouchableWithoutFeedback onPress={this.onAccessCurrentLocation}>
-              <Image source={compass} style={{ width: 20, height: 20 }} />
-            </TouchableWithoutFeedback>
-          </View>
+
+          <View style={styles.compassIcon}>{this.showLocateAndLoader()}</View>
           <View style={styles.imageWrapper}>
             {photo && photo.uri ? (
               <View style={styles.imgBox}>
@@ -345,7 +403,7 @@ class AddReviewForm extends React.Component {
           </View>
           <View style={styles.restroName}>
             <TextInput
-              style={styles.input}
+              style={styles.inputName}
               placeholder="Dish Name"
               onChangeText={text => this.onChnageDishName(text)}
               value={this.state.dishName}

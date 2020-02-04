@@ -38,17 +38,29 @@ export default StyleSheet.create({
   input: {
     height: 50,
     backgroundColor: "#f4f4f4",
-    paddingLeft: 30,
+    paddingLeft: 0,
     width: "100%",
     borderRadius: 5
+  },
+  inputName: {
+    height: 50,
+    backgroundColor: "#f4f4f4",
+    paddingLeft: 0,
+    width: "100%",
+
+    borderColor: "#c4c4c4",
+    borderWidth: 1,
+    paddingLeft: 15
   },
   textArea: {
     height: 150,
     backgroundColor: "#f4f4f4",
-    paddingLeft: 30,
+    paddingLeft: 15,
     paddingTop: 10,
     width: "100%",
-    borderRadius: 5
+
+    borderColor: "#c4c4c4",
+    borderWidth: 1
   },
   header: {
     display: "flex",
@@ -80,7 +92,8 @@ export default StyleSheet.create({
     marginBottom: 30,
     width: "100%",
     alignItems: "center",
-    height: 250
+    height: 250,
+    zIndex: -1
   },
   imageLoader: {
     position: "absolute",
@@ -237,5 +250,18 @@ export default StyleSheet.create({
 
     position: "absolute",
     bottom: 100
+  },
+  itemSuggest: {
+    padding: 10,
+    borderBottomColor: "#c4c4c4",
+    borderBottomWidth: 1,
+    zIndex: 10000,
+    backgroundColor: "#ffffff"
+  },
+  autocompleteContainer: {
+    height: 50,
+    padding: 0,
+    zIndex: 1,
+    paddingLeft: 15
   }
 });
