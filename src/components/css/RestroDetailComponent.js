@@ -112,7 +112,7 @@ export default StyleSheet.create({
   go: {
     color: "#ffffff",
     fontWeight: "bold",
-    fontSize: 16
+    fontSize: 14
   },
   goIcon: {
     backgroundColor: THEME_COLOR,

@@ -26,13 +26,20 @@ function ReviewComponent(props) {
             {props.dishname ? (
               <Text style={styles.dishname}>{props.dishname}</Text>
             ) : null}
-            <View>
-              <RatingComponent size={15} rating={props.rating} />
-            </View>
+            {!props.rightAligned ? (
+              <View>
+                <RatingComponent size={15} rating={props.rating} />
+              </View>
+            ) : null}
           </View>
         </View>
         <View style={styles.timeDiv}>
           <Text style={styles.time}>{props.time}</Text>
+          {props.rightAligned ? (
+            <View>
+              <RatingComponent size={15} rating={props.rating} />
+            </View>
+          ) : null}
         </View>
       </View>
       <View style={styles.reviewWrapper}>

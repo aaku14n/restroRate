@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import styles from "./css/RecommendFriendStyle";
 import defaultRestro from "../../assets/defaultRestro.png";
+import moment from "moment";
+import RatingComponent from "./General/RatingComponent";
 
 class RecommendFriend extends React.Component {
   constructor(props) {
@@ -47,7 +49,7 @@ class RecommendFriend extends React.Component {
     return (
       <View style={styles.base} showsVerticalScrollIndicator={false}>
         <View>
-          <Text style={styles.heading}>MY RECOMMENDATIONS</Text>
+          <Text style={styles.heading}>RECOMMENDATIONS</Text>
         </View>
         <View style={styles.tabWrapper}>
           <TouchableOpacity
@@ -55,7 +57,7 @@ class RecommendFriend extends React.Component {
             onPress={() => this.forMeClick(2)}
           >
             <Text style={this.state.screenNo == 2 ? styles.white : {}}>
-              Recommendation for Me
+              For You
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -63,7 +65,7 @@ class RecommendFriend extends React.Component {
             onPress={() => this.byMeClick(1)}
           >
             <Text style={this.state.screenNo !== 2 ? styles.white : {}}>
-              Recommendation by Me
+              By You
             </Text>
           </TouchableOpacity>
         </View>
@@ -89,56 +91,67 @@ class RecommendFriend extends React.Component {
           }
           keyExtractor={item => item._id}
           renderItem={({ item }) => (
-            <View style={styles.recommendationWrapper}>
-              <View style={styles.card}>
-                {item.recommendedBy == this.props.loginDetails.data._id ? (
-                  <View>
-                    <Text style={styles.userName}>
-                      You recommend{" "}
-                      <Text style={styles.userNameBold}>
-                        {item.dishInfo.name}
-                      </Text>{" "}
-                      to{" "}
-                      <Text style={styles.userNameBold}>
-                        {item.userInfo.name}
-                      </Text>
-                      .
-                    </Text>
-                  </View>
-                ) : (
-                  <View>
-                    <Text style={styles.userName}>
-                      <Text style={styles.userNameBold}>
-                        {item.userInfo.name}
-                      </Text>{" "}
-                      Recommend me{" "}
-                      <Text style={styles.userNameBold}>
-                        {item.dishInfo.name}
-                      </Text>
-                      .
-                    </Text>
-                  </View>
-                )}
-                <TouchableWithoutFeedback
-                  onPress={() => this.gotoRestroPage(item.restaurantInfo._id)}
-                >
-                  <Image
-                    style={styles.dishImage}
-                    source={
-                      item.dishInfo.dishImage
-                        ? { uri: item.dishInfo.dishImage }
-                        : defaultRestro
-                    }
-                  />
-                </TouchableWithoutFeedback>
-                <View>
-                  <Text style={styles.userNameBold}>{item.dishInfo.name}</Text>
+            <TouchableWithoutFeedback
+              onPress={() => this.gotoRestroPage(item.restaurantInfo._id)}
+            >
+              <View style={styles.recommendationWrapper}>
+                <View style={styles.rating}>
+                  <RatingComponent rating={item.averageRating} size={20} />
                 </View>
-                <View>
-                  <Text style={styles.discription}>{item.description}</Text>
+                <Image
+                  style={styles.dishImage}
+                  source={
+                    item.dishInfo.dishImage
+                      ? { uri: item.dishInfo.dishImage }
+                      : defaultRestro
+                  }
+                />
+
+                <View style={styles.card}>
+                  <View style={styles.row}>
+                    <View style={styles.textWrapper}>
+                      {item.recommendedBy ==
+                      this.props.loginDetails.data._id ? (
+                        <View>
+                          <Text style={styles.userName}>
+                            You recommend{" "}
+                            <Text style={styles.userNameBold}>
+                              {item.dishInfo.name}
+                            </Text>{" "}
+                            to{" "}
+                            <Text style={styles.userNameBold}>
+                              {item.userInfo.name}
+                            </Text>
+                            .
+                          </Text>
+                        </View>
+                      ) : (
+                        <View>
+                          <Text style={styles.userName}>
+                            <Text style={styles.userNameBold}>
+                              {item.userInfo.name}
+                            </Text>{" "}
+                            recommend{" "}
+                            <Text style={styles.userNameBold}>
+                              {item.dishInfo.name}
+                            </Text>
+                            .
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                    <View style={styles.timeAgo}>
+                      <Text style={styles.timeAgo}>
+                        {moment(item.createdAt).fromNow(true)} ago
+                      </Text>
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={styles.discription}>{item.description}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           )}
           ref={ref => (this.flatlistref = ref)}
           refreshControl={

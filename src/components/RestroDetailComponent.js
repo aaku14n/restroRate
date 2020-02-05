@@ -85,12 +85,6 @@ export default class RestroDetailsComponent extends React.Component {
               source={require("../../assets/back.png")}
             />
           </TouchableOpacity>
-          {/* <TouchableOpacity onPress={this.onShare}>
-            <Image
-              style={styles.icon}
-              source={require("../../assets/share.png")}
-            />
-          </TouchableOpacity> */}
         </View>
         <View style={styles.imageWrapper}>
           <Image

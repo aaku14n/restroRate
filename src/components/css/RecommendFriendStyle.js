@@ -17,13 +17,20 @@ export default StyleSheet.create({
   },
   recommendationWrapper: {
     marginTop: 30,
-    borderBottomWidth: 1,
-    borderBottomColor: "#c4c4c4"
+    borderWidth: 1,
+    borderColor: "#c4c4c4",
+    borderRadius: 15,
+
+    position: "relative"
   },
-  card: {},
+  card: {
+    marginTop: 5,
+    padding: 10
+  },
   dishImage: {
     width: "100%",
-    borderRadius: 15,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
     height: 250
   },
   userName: {
@@ -47,22 +54,59 @@ export default StyleSheet.create({
     flexDirection: "row",
     textAlign: "center",
     justifyContent: "center",
-    marginTop: 20
-    // marginBottom: 20
+    marginTop: 20,
+    marginBottom: 10
   },
   byMeTab: {
-    padding: 20,
+    padding: 15,
     backgroundColor: "#fff",
     borderWidth: 1,
-    borderColor: "#c4c4c4"
+    borderColor: "#c4c4c4",
+    width: "50%",
+    flexDirection: "row",
+    textAlign: "center",
+    justifyContent: "center"
   },
   forMeTab: {
-    padding: 20,
+    padding: 15,
     backgroundColor: THEME_COLOR,
     borderColor: THEME_COLOR,
-    borderWidth: 1
+    borderWidth: 1,
+    width: "50%",
+    textAlign: "center",
+    flexDirection: "row",
+    textAlign: "center",
+    justifyContent: "center"
   },
   white: {
     color: "#fff"
+  },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    textAlign: "center",
+    justifyContent: "space-between"
+  },
+  textWrapper: {
+    width: "70%"
+  },
+  timeAgo: {
+    fontSize: 14,
+    color: "#c4c4c4"
+  },
+  rating: {
+    position: "absolute",
+    padding: 10,
+    zIndex: 5,
+    top: 210,
+    right: 0,
+    backgroundColor: "rgba(0,0,0, 0.6)",
+    width: "100%",
+    flexDirection: "row",
+    textAlign: "center",
+    justifyContent: "flex-end"
+
+    // borderTopLeftRadius: 15,
+    // borderTopRightRadius: 15
   }
 });

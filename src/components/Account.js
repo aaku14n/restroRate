@@ -94,6 +94,7 @@ function Account(props) {
                   review={item.feedback}
                   rating={item.rate}
                   time={renderDateFormat(item.createdAt)}
+                  rightAligned={true}
                 />
               )}
               refreshControl={

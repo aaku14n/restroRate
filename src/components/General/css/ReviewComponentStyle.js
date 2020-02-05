@@ -1,16 +1,11 @@
 import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   base: {
-    marginBottom: 40,
-    padding: 20,
+    marginBottom: 20,
+    padding: 10,
     borderColor: "#c4c4c4",
     borderWidth: 1,
-    borderRadius: 5,
-    shadowColor: "#c4c4c4",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-    elevation: 2
+    borderRadius: 5
   },
   imgNameWrapper: {
     flexDirection: "row",
@@ -37,7 +32,7 @@ export default StyleSheet.create({
     fontSize: 13
   },
   reviewWrapper: {
-    marginTop: 15
+    marginLeft: 70
   },
   nameRating: {
     marginLeft: 20

@@ -43,15 +43,13 @@ export default StyleSheet.create({
     height: 20
   },
   ratingWrapper: {
-    marginTop: 10,
-    flexDirection: "row"
+    marginTop: 10
   },
   peoplesReview: {
     color: "#999999",
     fontSize: 14,
     fontWeight: "bold",
-    marginTop: 6,
-    marginLeft: 10
+    marginTop: 6
   },
   stars: {
     marginTop: 8
