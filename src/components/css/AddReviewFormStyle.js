@@ -36,7 +36,6 @@ export default StyleSheet.create({
     marginBottom: 6
   },
   input: {
-    height: 50,
     backgroundColor: "#f4f4f4",
     paddingLeft: 0,
     width: "100%",
@@ -44,10 +43,9 @@ export default StyleSheet.create({
   },
   inputName: {
     height: 50,
-    backgroundColor: "#f4f4f4",
+
     paddingLeft: 0,
     width: "100%",
-
     borderColor: "#c4c4c4",
     borderWidth: 1,
     paddingLeft: 15
@@ -256,12 +254,11 @@ export default StyleSheet.create({
     borderBottomColor: "#c4c4c4",
     borderBottomWidth: 1,
     zIndex: 10000,
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    width: "100%"
   },
   autocompleteContainer: {
     height: 50,
-    padding: 0,
-    zIndex: 1,
     paddingLeft: 15
   }
 });

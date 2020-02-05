@@ -15,7 +15,7 @@ export async function registerForPushNotificationsAsync() {
   // `askAsync` will never prompt the user
 
   // Stop here if the user did not grant permissions
-  console.log(status);
+
   if (status !== "granted") {
     alert("No notification permissions!");
     return;
@@ -23,7 +23,7 @@ export async function registerForPushNotificationsAsync() {
 
   // Get the token that identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
-  console.log(token);
+
   // POST the token to your backend server from where you can retrieve it to send push notifications.
   return post("updateProfile", {
     pushToken: token

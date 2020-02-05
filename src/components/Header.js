@@ -4,6 +4,7 @@ import styles from "./css/HeaderStyle";
 import { Dimensions, Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ACCOUNT_SCREEN } from "../Constant";
+import ProfilePic from "./ProfilePic";
 
 function isIphoneX() {
   const dim = Dimensions.get("window");
@@ -86,7 +87,7 @@ function Header(props) {
       </View>
       <View style={styles.profileImage}>
         <TouchableOpacity onPress={() => gotoMyAccount()}>
-          <Image
+          {/* <Image
             style={styles.image}
             source={
               profilePic
@@ -95,7 +96,8 @@ function Header(props) {
                   }
                 : require("../../assets/profilePic.png")
             }
-          />
+          /> */}
+          <ProfilePic profilePic={profilePic} key={"234account_1232343"} />
         </TouchableOpacity>
       </View>
     </View>

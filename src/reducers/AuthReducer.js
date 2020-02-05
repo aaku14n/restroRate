@@ -1,4 +1,5 @@
 import * as AuthActions from "../actions/AuthAction";
+import { UPDATE_PROFILE_SUCCESS } from "../actions/Action";
 const AuthReducer = (
   state = {
     userLoginLoading: false,
@@ -27,6 +28,11 @@ const AuthReducer = (
     case AuthActions.LOG_OUT_USER:
       return Object.assign({}, state, {
         userLoginDetails: ""
+      });
+    case UPDATE_PROFILE_SUCCESS:
+      return Object.assign({}, state, {
+        userLoginLoading: false,
+        userLoginDetails: action.updateProfileResponse
       });
     default:
       return state;

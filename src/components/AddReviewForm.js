@@ -242,7 +242,8 @@ class AddReviewForm extends React.Component {
     }
     let pickerResult = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [4, 3]
+      aspect: [4, 3],
+      quality: 1
     });
     if (pickerResult.cancelled == false) {
       this.setState({

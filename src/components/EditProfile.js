@@ -21,7 +21,7 @@ import {
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
+
     this.state = {
       photo: { uri: props.loginDetails ? props.loginDetails.profilePic : "" },
       updatedName: props.loginDetails ? props.loginDetails.name : "",
@@ -107,9 +107,10 @@ class EditProfile extends React.Component {
       const updateProfile = await this.props.updateProfile(updateUserDetail);
       if (updateProfile.type === UPDATE_PROFILE_SUCCESS) {
         const userDetails = await getAsyncStorage("userDetails");
-        userDetails.data = updateProfile.data;
+
+        userDetails.data = updateProfile.updateProfileResponse.data;
         await createAsyncStorage("userDetails", userDetails);
-        await this.props.validateUserLogin();
+
         this.props.navigation.goBack();
       }
     }

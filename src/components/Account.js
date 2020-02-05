@@ -12,6 +12,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ReviewComponent from "./General/ReviewComponent";
 import { renderDateFormat } from "../utils/DateUtils";
+import ProfilePic from "./ProfilePic";
 function Account(props) {
   let profilePic,
     name = "Hi User",
@@ -53,16 +54,7 @@ function Account(props) {
       <View style={styles.infoWrapper}>
         <View style={styles.row}>
           <View style={styles.imageWrapper}>
-            <Image
-              style={styles.image}
-              source={
-                profilePic
-                  ? {
-                      uri: profilePic
-                    }
-                  : require("../../assets/profilePic.png")
-              }
-            />
+            <ProfilePic profilePic={profilePic} key={"account_123"} />
           </View>
           <View style={styles.info}>
             <View style={styles.name}>
