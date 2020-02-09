@@ -46,7 +46,8 @@ const Reducer = (
     updateProfileError: "",
 
     lat: "",
-    long: ""
+    long: "",
+    locationLoading: false
   },
   action
 ) => {
@@ -210,10 +211,15 @@ const Reducer = (
       return Object.assign({}, state, {
         updateProfileLoading: false
       });
+    case Actions.GET_LAT_LONG_REQUEST:
+      return Object.assign({}, state, {
+        locationLoading: true
+      });
     case Actions.GET_LAT_LONG:
       return Object.assign({}, state, {
         lat: action.lat,
-        long: action.long
+        long: action.long,
+        locationLoading: false
       });
 
     default:

@@ -21,7 +21,8 @@ const mapStateToProps = (state, ownProps) => {
     sendRecommendationLoading: state.Reducer.sendRecommendationLoading,
     recommandationResponse: state.Reducer.recommandationResponse,
     lat: state.Reducer.lat,
-    long: state.Reducer.long
+    long: state.Reducer.long,
+    locationLoading: state.Reducer.locationLoading
   };
 };
 

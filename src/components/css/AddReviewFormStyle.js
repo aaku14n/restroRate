@@ -230,12 +230,10 @@ export default StyleSheet.create({
   },
   buttons: {
     width: "100%",
-
     display: "flex",
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
-
     position: "absolute",
     bottom: 150
   },

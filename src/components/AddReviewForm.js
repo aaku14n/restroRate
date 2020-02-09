@@ -121,7 +121,6 @@ class AddReviewForm extends React.Component {
     this.accessRestaurantDetails();
   };
   accessRestaurantDetails = async query => {
-    console.log(this.props);
     const loc = `${this.props.lat},${this.props.long}`;
     await this.setState({ suggestionFetching: true });
     const detailsRes = await this.props.getRestaurant(loc, query);
@@ -150,7 +149,6 @@ class AddReviewForm extends React.Component {
   };
   onAccessCurrentLocation = async () => {
     await this.props.getCurrentLocation();
-    console.log("cammled me ");
     await this.accessRestaurantDetails();
   };
 
@@ -337,9 +335,11 @@ class AddReviewForm extends React.Component {
       </TouchableWithoutFeedback>
     );
   };
+  retryLocation = () => {
+    this.onAccessCurrentLocation();
+  };
   render() {
     const { photo, shift } = this.state;
-
     if (this.props.addReviewLoading) {
       return (
         <View style={styles.loader}>
@@ -347,7 +347,23 @@ class AddReviewForm extends React.Component {
         </View>
       );
     }
-    console.log(this.state);
+    if (!this.props.lat && !this.props.long) {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#c4c4c4" />
+          <Text>Fetching Location</Text>
+          <View style={styles.buttons}>
+            <TouchableHighlight
+              onPress={() => this.retryLocation()}
+              style={styles.modalButton}
+            >
+              <Text style={styles.buttonTitle}>RETRY</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      );
+    }
+
     const placeholder = {
       label: "Select a User...",
       value: null,

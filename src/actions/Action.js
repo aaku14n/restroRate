@@ -44,6 +44,8 @@ export const UPDATE_PROFILE_REQUEST = "UPDATE_PROFILE_REQUEST";
 export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
 export const UPDATE_PROFILE_FAILURE = "UPDATE_PROFILE_FAILURE";
 
+export const GET_LAT_LONG_REQUEST = "GET_LAT_LONG_REQUEST";
+
 export function getHomeData(lat, long) {
   return async (dispatch, getState, { api }) => {
     try {
@@ -337,7 +339,7 @@ export function getCurrentLocation() {
   return async (dispatch, getState, { api }) => {
     try {
       const position = await getPosition();
-
+      dispatch({ type: GET_LAT_LONG_REQUEST });
       const location = JSON.stringify(position);
       const latitude =
         JSON.parse(location) &&
