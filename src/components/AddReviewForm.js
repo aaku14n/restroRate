@@ -82,9 +82,6 @@ class AddReviewForm extends React.Component {
   }
 
   onChnageRestraurentName = name => {
-    // this.setState({
-    //   restroName: name
-    // });
     this.setState(
       {
         query: name,
@@ -92,9 +89,7 @@ class AddReviewForm extends React.Component {
       },
       () => {
         if (this.state.query && this.state.query.length > 1) {
-          if (this.state.query.length % 2 === 0) {
-            this.accessRestaurantDetails(this.state.query);
-          }
+          this.accessRestaurantDetails(this.state.query);
         }
       }
     );
@@ -127,11 +122,11 @@ class AddReviewForm extends React.Component {
     await this.setState({ suggestionFetching: false });
 
     if (detailsRes && detailsRes[0]) {
-      if (!query) {
-        this.setState({
-          query: detailsRes[0].name
-        });
-      }
+      // if (!query) {
+      //   this.setState({
+      //     query: detailsRes[0].name
+      //   });
+      // }
       this.setState({
         // restaurantDetails: [detailsRes[0]],
         customRestaurantDetails: false,
@@ -335,31 +330,12 @@ class AddReviewForm extends React.Component {
       </TouchableWithoutFeedback>
     );
   };
-  retryLocation = () => {
-    this.onAccessCurrentLocation();
-  };
   render() {
     const { photo, shift } = this.state;
     if (this.props.addReviewLoading) {
       return (
         <View style={styles.loader}>
           <ActivityIndicator size="large" color="#c4c4c4" />
-        </View>
-      );
-    }
-    if (!this.props.lat && !this.props.long) {
-      return (
-        <View style={styles.loader}>
-          <ActivityIndicator size="large" color="#c4c4c4" />
-          <Text>Fetching Location</Text>
-          <View style={styles.buttons}>
-            <TouchableHighlight
-              onPress={() => this.retryLocation()}
-              style={styles.modalButton}
-            >
-              <Text style={styles.buttonTitle}>RETRY</Text>
-            </TouchableHighlight>
-          </View>
         </View>
       );
     }
@@ -381,7 +357,7 @@ class AddReviewForm extends React.Component {
           <View style={styles.form}>
             <View style={styles.restroName}>
               <View style={styles.input}>
-                <TouchableWithoutFeedback onPress={this.onFirstTouch}>
+                <TouchableWithoutFeedback>
                   <Autocomplete
                     data={
                       this.state.restaurantList &&
@@ -392,6 +368,7 @@ class AddReviewForm extends React.Component {
                     hideResults={false}
                     style={styles.autocompleteContainer}
                     defaultValue={this.state.query}
+                    onFocus={() => this.onFirstTouch()}
                     onChangeText={text => this.onChnageRestraurentName(text)}
                     renderItem={({ item, i }) => {
                       return (

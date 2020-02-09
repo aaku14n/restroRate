@@ -1,10 +1,13 @@
 import { connect } from "react-redux";
 import { userLogin, validateUserLogin } from "../actions/AuthAction";
 import AuthHomeWrapper from "../components/AuthHomeWrapper";
+import { getCurrentLocation } from "../actions/Action";
 
 const mapStateToProps = state => {
   return {
-    loginDetails: state.AuthReducer.userLoginDetails
+    loginDetails: state.AuthReducer.userLoginDetails,
+    lat: state.Reducer.lat,
+    long: state.Reducer.long
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -14,6 +17,9 @@ const mapDispatchToProps = dispatch => {
     },
     validateUserLogin: () => {
       dispatch(validateUserLogin());
+    },
+    getCurrentLocation: () => {
+      return dispatch(getCurrentLocation());
     }
   };
 };
