@@ -30,6 +30,9 @@ import RNPickerSelect, { defaultStyles } from "react-native-picker-select";
 
 import Autocomplete from "react-native-autocomplete-input";
 
+import { Animated, Dimensions, Keyboard, UIManager } from "react-native";
+const { State: TextInputState } = TextInput;
+
 class AddReviewForm extends React.Component {
   constructor(props) {
     super(props);
@@ -50,8 +53,26 @@ class AddReviewForm extends React.Component {
       customRestaurantDetails: false,
       restaurantList: [],
       showSuggestions: true,
-      suggestionFetching: false
+      suggestionFetching: false,
+      shift: new Animated.Value(0),
+      query: ""
     };
+  }
+
+  componentWillMount() {
+    this.keyboardDidShowSub = Keyboard.addListener(
+      "keyboardDidShow",
+      this.handleKeyboardDidShow
+    );
+    this.keyboardDidHideSub = Keyboard.addListener(
+      "keyboardDidHide",
+      this.handleKeyboardDidHide
+    );
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowSub.remove();
+    this.keyboardDidHideSub.remove();
   }
 
   completeRate(rating) {
@@ -70,7 +91,7 @@ class AddReviewForm extends React.Component {
         showSuggestions: true
       },
       () => {
-        if (this.state.query && this.state.query.length > 2) {
+        if (this.state.query && this.state.query.length > 1) {
           if (this.state.query.length % 2 === 0) {
             this.accessRestaurantDetails(this.state.query);
           }
@@ -93,15 +114,22 @@ class AddReviewForm extends React.Component {
       comments
     });
   };
+  onFirstTouch = () => {
+    this.setState({
+      showSuggestions: true
+    });
+    this.accessRestaurantDetails();
+  };
   accessRestaurantDetails = async query => {
+    console.log(this.props);
     const loc = `${this.props.lat},${this.props.long}`;
     await this.setState({ suggestionFetching: true });
     const detailsRes = await this.props.getRestaurant(loc, query);
     await this.setState({ suggestionFetching: false });
+
     if (detailsRes && detailsRes[0]) {
       if (!query) {
         this.setState({
-          restaurantDetails: [detailsRes[0]],
           query: detailsRes[0].name
         });
       }
@@ -120,10 +148,10 @@ class AddReviewForm extends React.Component {
       showSuggestions: false
     });
   };
-  onAccessCurrentLocation = () => {
-    this.props.getCurrentLocation();
-
-    this.accessRestaurantDetails();
+  onAccessCurrentLocation = async () => {
+    await this.props.getCurrentLocation();
+    console.log("cammled me ");
+    await this.accessRestaurantDetails();
   };
 
   componentDidMount() {
@@ -145,7 +173,7 @@ class AddReviewForm extends React.Component {
     return true;
   };
   submitReview = async () => {
-    if (!this.state.restaurantDetails) {
+    if (!this.state.restaurantDetails && !this.state.query) {
       this.openAlert("Restaurant Name is require field");
       return;
     }
@@ -195,14 +223,14 @@ class AddReviewForm extends React.Component {
       let customRestoObj = {
         latitude: this.props.lat,
         longitude: this.props.long,
-        name: this.state.restroName
+        name: this.state.query
       };
       const reviewObj = {
         dishName: this.state.dishName,
         feedback: this.state.review,
         rate: this.state.rating,
         dishImage: imageRes.imageInfo.filename,
-        restaurantData: this.state.customRestaurantDetails
+        restaurantData: !this.state.restaurantDetails
           ? customRestoObj
           : { candidates: this.state.restaurantDetails }
       };
@@ -310,7 +338,7 @@ class AddReviewForm extends React.Component {
     );
   };
   render() {
-    const { photo } = this.state;
+    const { photo, shift } = this.state;
 
     if (this.props.addReviewLoading) {
       return (
@@ -319,6 +347,7 @@ class AddReviewForm extends React.Component {
         </View>
       );
     }
+    console.log(this.state);
     const placeholder = {
       label: "Select a User...",
       value: null,
@@ -327,217 +356,255 @@ class AddReviewForm extends React.Component {
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         {/* <PushNotification {...this.props} /> */}
-        <View style={styles.heading}>
-          <Text style={styles.review}>Add Review</Text>
-        </View>
-        <View style={styles.form}>
-          <View style={styles.restroName}>
-            <View style={styles.input}>
-              <Autocomplete
-                data={
-                  this.state.showSuggestions
-                    ? this.state.restaurantList.splice(0, 5)
-                    : []
-                }
-                style={styles.autocompleteContainer}
-                defaultValue={this.state.query}
-                onChangeText={text => this.onChnageRestraurentName(text)}
-                renderItem={({ item, i }) => {
-                  return (
-                    <TouchableHighlight
-                      onPress={() => this.onSelectRestaurant(item)}
-                      key={i}
-                      style={styles.itemSuggest}
-                    >
-                      <Text>{item.name}</Text>
-                    </TouchableHighlight>
-                  );
-                }}
-              />
-            </View>
+        <Animated.View
+          style={[styles.container, { transform: [{ translateY: shift }] }]}
+        >
+          <View style={styles.heading}>
+            <Text style={styles.review}>Add Review</Text>
           </View>
-
-          <View style={styles.compassIcon}>{this.showLocateAndLoader()}</View>
-          <View style={styles.imageWrapper}>
-            {photo && photo.uri ? (
-              <View style={styles.imgBox}>
-                <Image
-                  source={{ uri: photo.uri }}
-                  style={{ width: 200, height: 200, borderRadius: 10 }}
-                />
-                {this.state.imageLoading && (
-                  <View style={styles.imageLoader}>
-                    <ActivityIndicator size="large" color="#c4c4c4" />
-                  </View>
-                )}
-              </View>
-            ) : (
-              <View style={styles.captureButtonWrapper}>
-                <TouchableWithoutFeedback
-                  onPress={this.captureImageFromCamera}
-                  style={styles.captureImageButton}
-                >
-                  <Image
-                    source={camera}
-                    style={{ width: 50, height: 50, borderRadius: 10 }}
-                  />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback
-                  onPress={this.takeImageFormGallary}
-                  style={styles.captureImageButton}
-                >
-                  <Image
-                    source={galary}
-                    style={{ width: 50, height: 50, borderRadius: 10 }}
-                  />
-                </TouchableWithoutFeedback>
-              </View>
-            )}
-            {photo && photo.uri && (
-              <TouchableWithoutFeedback
-                onPress={this.removeImage}
-                style={styles.closeIcon}
-              >
-                <Image source={cross} style={styles.editIcon} />
-              </TouchableWithoutFeedback>
-            )}
-          </View>
-          <View style={styles.restroName}>
-            <TextInput
-              style={styles.inputName}
-              placeholder="Dish Name"
-              onChangeText={text => this.onChnageDishName(text)}
-              value={this.state.dishName}
-            />
-          </View>
-
-          <View style={styles.restroName}>
-            <TextInput
-              textAlignVertical={"top"}
-              style={styles.textArea}
-              multiline
-              numberOfLines={10}
-              placeholder="Type review here"
-              onChangeText={text => this.onChnageReview(text)}
-              value={this.state.review}
-            />
-          </View>
-          <View style={styles.restroName}>
-            <AirbnbRating
-              count={5}
-              defaultRating={0}
-              size={50}
-              showRating={false}
-              onFinishRating={r => this.completeRate(r)}
-            />
-          </View>
-          <View style={styles.button}>
-            {this.state.imageLoading ? (
-              <View style={styles.disableButtonStyle}>
-                <Text style={styles.disableButtonTitle}>LOADING.....</Text>
-              </View>
-            ) : (
-              <TouchableWithoutFeedback
-                onPress={() => this.submitReview()}
-                title="SUBMIT REVIEW"
-                style={styles.buttonStyle}
-              >
-                <Text style={styles.buttonTitle}>SUBMIT REVIEW</Text>
-              </TouchableWithoutFeedback>
-            )}
-          </View>
-        </View>
-        {this.state.openModalState && (
-          <View style={styles.modalBase}>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={this.state.openModalState}
-              onRequestClose={() => {
-                this.setState({ openModalState: false });
-              }}
-            >
-              <View style={styles.modal}>
-                <TouchableHighlight
-                  onPress={() => this.closeModal()}
-                  style={styles.closeModalIcon}
-                  underlayColor={"#fff"}
-                >
-                  <Image
-                    style={styles.icon}
-                    source={require("../../assets/plus.png")}
-                  />
-                </TouchableHighlight>
-                <View style={styles.header}>
-                  <View>
-                    <Text style={styles.heading}>Recommendation</Text>
-                  </View>
-                </View>
-                <View style={styles.dropdown}>
-                  <RNPickerSelect
-                    placeholder={placeholder}
-                    items={this.props.userList.map((item, id) => {
-                      return {
-                        label: item.name,
-                        value: item._id
-                      };
-                    })}
-                    onValueChange={(itemValue, itemIndex) =>
-                      this.selectedRecommendFriend(itemValue, itemIndex)
+          <View style={styles.form}>
+            <View style={styles.restroName}>
+              <View style={styles.input}>
+                <TouchableWithoutFeedback onPress={this.onFirstTouch}>
+                  <Autocomplete
+                    data={
+                      this.state.restaurantList &&
+                      this.state.restaurantList.length
+                        ? this.state.restaurantList.splice(0, 5)
+                        : []
                     }
-                    style={{
-                      ...pickerSelectStyles,
-                      iconContainer: {
-                        top: 10,
-                        right: 12
-                      }
-                    }}
-                    value={this.state.userID}
-                    useNativeAndroidPickerStyle={false}
-                    textInputProps={{ underlineColor: "yellow" }}
-                    Icon={() => {
+                    hideResults={false}
+                    style={styles.autocompleteContainer}
+                    defaultValue={this.state.query}
+                    onChangeText={text => this.onChnageRestraurentName(text)}
+                    renderItem={({ item, i }) => {
                       return (
-                        <Image
-                          source={require("../../assets/download.png")}
-                          style={{ width: 20, height: 20, top: 5 }}
-                        />
+                        <TouchableHighlight
+                          onPress={() => this.onSelectRestaurant(item)}
+                          key={i}
+                          style={styles.itemSuggest}
+                        >
+                          <Text>{item.name}</Text>
+                        </TouchableHighlight>
                       );
                     }}
                   />
-                </View>
-                <View style={styles.commentsInput}>
-                  <TextInput
-                    style={styles.textArea}
-                    placeholder="Comments"
-                    numberOfLines={10}
-                    multiline
-                    onChangeText={text => this.onChnageComments(text)}
-                    value={this.state.comments}
-                  />
-                </View>
-                <View style={styles.buttons}>
-                  <TouchableHighlight
-                    onPress={() => this.sendRecommd()}
-                    style={styles.modalButton}
-                  >
-                    <Text style={styles.buttonTitle}>RECOMMEND</Text>
-                  </TouchableHighlight>
-                </View>
-                <View style={styles.buttonsSkip}>
-                  <TouchableHighlight
-                    underlayColor={"#fff"}
-                    onPress={() => this.closeModal()}
-                  >
-                    <Text style={styles.skipTitle}>SKIP</Text>
-                  </TouchableHighlight>
-                </View>
+                </TouchableWithoutFeedback>
               </View>
-            </Modal>
+            </View>
+
+            <View style={styles.compassIcon}>{this.showLocateAndLoader()}</View>
+            <View style={styles.imageWrapper}>
+              {photo && photo.uri ? (
+                <View style={styles.imgBox}>
+                  <Image
+                    source={{ uri: photo.uri }}
+                    style={{ width: 200, height: 200, borderRadius: 10 }}
+                  />
+                  {this.state.imageLoading && (
+                    <View style={styles.imageLoader}>
+                      <ActivityIndicator size="large" color="#c4c4c4" />
+                    </View>
+                  )}
+                </View>
+              ) : (
+                <View style={styles.captureButtonWrapper}>
+                  <TouchableWithoutFeedback
+                    onPress={this.captureImageFromCamera}
+                    style={styles.captureImageButton}
+                  >
+                    <Image
+                      source={camera}
+                      style={{ width: 50, height: 50, borderRadius: 10 }}
+                    />
+                  </TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback
+                    onPress={this.takeImageFormGallary}
+                    style={styles.captureImageButton}
+                  >
+                    <Image
+                      source={galary}
+                      style={{ width: 50, height: 50, borderRadius: 10 }}
+                    />
+                  </TouchableWithoutFeedback>
+                </View>
+              )}
+              {photo && photo.uri && (
+                <TouchableWithoutFeedback
+                  onPress={this.removeImage}
+                  style={styles.closeIcon}
+                >
+                  <Image source={cross} style={styles.editIcon} />
+                </TouchableWithoutFeedback>
+              )}
+            </View>
+            <View style={styles.restroName}>
+              <TextInput
+                style={styles.inputName}
+                placeholder="Dish Name"
+                onChangeText={text => this.onChnageDishName(text)}
+                value={this.state.dishName}
+              />
+            </View>
+
+            <View style={styles.restroName}>
+              <TextInput
+                textAlignVertical={"top"}
+                style={styles.textArea}
+                multiline
+                numberOfLines={10}
+                placeholder="Type review here"
+                onChangeText={text => this.onChnageReview(text)}
+                value={this.state.review}
+              />
+            </View>
+            <View style={styles.restroName}>
+              <AirbnbRating
+                count={5}
+                defaultRating={0}
+                size={50}
+                showRating={false}
+                onFinishRating={r => this.completeRate(r)}
+              />
+            </View>
+            <View style={styles.button}>
+              {this.state.imageLoading ? (
+                <View style={styles.disableButtonStyle}>
+                  <Text style={styles.disableButtonTitle}>LOADING.....</Text>
+                </View>
+              ) : (
+                <TouchableWithoutFeedback
+                  onPress={() => this.submitReview()}
+                  title="SUBMIT REVIEW"
+                  style={styles.buttonStyle}
+                >
+                  <Text style={styles.buttonTitle}>SUBMIT REVIEW</Text>
+                </TouchableWithoutFeedback>
+              )}
+            </View>
           </View>
-        )}
+          {this.state.openModalState && (
+            <View style={styles.modalBase}>
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.state.openModalState}
+                onRequestClose={() => {
+                  this.setState({ openModalState: false });
+                }}
+              >
+                <View style={styles.modal}>
+                  <TouchableHighlight
+                    onPress={() => this.closeModal()}
+                    style={styles.closeModalIcon}
+                    underlayColor={"#fff"}
+                  >
+                    <Image
+                      style={styles.icon}
+                      source={require("../../assets/plus.png")}
+                    />
+                  </TouchableHighlight>
+                  <View style={styles.header}>
+                    <View>
+                      <Text style={styles.heading}>Recommendation</Text>
+                    </View>
+                  </View>
+                  <View style={styles.dropdown}>
+                    <RNPickerSelect
+                      placeholder={placeholder}
+                      items={this.props.userList.map((item, id) => {
+                        return {
+                          label: item.name,
+                          value: item._id
+                        };
+                      })}
+                      onValueChange={(itemValue, itemIndex) =>
+                        this.selectedRecommendFriend(itemValue, itemIndex)
+                      }
+                      style={{
+                        ...pickerSelectStyles,
+                        iconContainer: {
+                          top: 10,
+                          right: 12
+                        }
+                      }}
+                      value={this.state.userID}
+                      useNativeAndroidPickerStyle={false}
+                      textInputProps={{ underlineColor: "yellow" }}
+                      Icon={() => {
+                        return (
+                          <Image
+                            source={require("../../assets/download.png")}
+                            style={{ width: 20, height: 20, top: 5 }}
+                          />
+                        );
+                      }}
+                    />
+                  </View>
+                  <View style={styles.commentsInput}>
+                    <TextInput
+                      style={styles.textArea}
+                      placeholder="Comments"
+                      numberOfLines={10}
+                      multiline
+                      onChangeText={text => this.onChnageComments(text)}
+                      value={this.state.comments}
+                    />
+                  </View>
+                  <View style={styles.buttons}>
+                    <TouchableHighlight
+                      onPress={() => this.sendRecommd()}
+                      style={styles.modalButton}
+                    >
+                      <Text style={styles.buttonTitle}>RECOMMEND</Text>
+                    </TouchableHighlight>
+                  </View>
+                  <View style={styles.buttonsSkip}>
+                    <TouchableHighlight
+                      underlayColor={"#fff"}
+                      onPress={() => this.closeModal()}
+                    >
+                      <Text style={styles.skipTitle}>SKIP</Text>
+                    </TouchableHighlight>
+                  </View>
+                </View>
+              </Modal>
+            </View>
+          )}
+        </Animated.View>
       </ScrollView>
     );
   }
+
+  handleKeyboardDidShow = event => {
+    const { height: windowHeight } = Dimensions.get("window");
+    const keyboardHeight = event.endCoordinates.height;
+    const currentlyFocusedField = TextInputState.currentlyFocusedField();
+    UIManager.measure(
+      currentlyFocusedField,
+      (originX, originY, width, height, pageX, pageY) => {
+        const fieldHeight = height;
+        const fieldTop = pageY;
+        const gap = windowHeight - keyboardHeight - (fieldTop + fieldHeight);
+        if (gap >= 0) {
+          return;
+        }
+        Animated.timing(this.state.shift, {
+          toValue: gap,
+          duration: 0,
+          useNativeDriver: true
+        }).start();
+      }
+    );
+  };
+
+  handleKeyboardDidHide = () => {
+    Animated.timing(this.state.shift, {
+      toValue: 0,
+      duration: 0,
+      useNativeDriver: true
+    }).start();
+  };
 }
 
 export default AddReviewForm;

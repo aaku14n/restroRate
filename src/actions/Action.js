@@ -156,18 +156,29 @@ export function getCityName(lat, long) {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&sensor=true&key=AIzaSyDM4BtVx-2cRWTEEu3JOdx0szr735nXzPU`
       );
       const resultJson = await result.json();
-      const addresses = resultJson.results[0];
+      const addresses = resultJson.results;
       let localityName = resultJson.plus_code.compound_code
         .split(" ")[1]
         .split(",")[0];
-      if (
-        addresses &&
-        addresses.address_components &&
-        addresses.address_components.length > 0
-      ) {
-        const locality = addresses.address_components.find(item =>
-          item.types.includes("sublocality_level_1")
+      if (addresses && addresses.length > 0) {
+        const localityObj = addresses.find(
+          parentItem =>
+            parentItem.address_components &&
+            parentItem.address_components.length > 0 &&
+            parentItem.address_components.find(item =>
+              item.types.includes("route")
+            )
         );
+
+        if (
+          localityObj &&
+          localityObj.address_components &&
+          localityObj.address_components.length > 0
+        ) {
+          locality = localityObj.address_components.find(item =>
+            item.types.includes("route")
+          );
+        }
         localityName =
           locality && locality.long_name ? locality.long_name : localityName;
       }
@@ -313,29 +324,35 @@ export function updateProfile(userObj) {
     }
   };
 }
-
+var getPosition = function(options) {
+  return new Promise(function(resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject, {
+      enableHighAccuracy: true,
+      timeout: 20000,
+      maximumAge: 1000
+    });
+  });
+};
 export function getCurrentLocation() {
   return async (dispatch, getState, { api }) => {
     try {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const location = JSON.stringify(position);
-          const latitude =
-            JSON.parse(location) &&
-            JSON.parse(location).coords &&
-            JSON.parse(location).coords.latitude;
-          const longitude =
-            JSON.parse(location) &&
-            JSON.parse(location).coords &&
-            JSON.parse(location).coords.longitude;
-          return dispatch({
-            type: GET_LAT_LONG,
-            lat: latitude,
-            long: longitude
-          });
-        },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-      );
+      const position = await getPosition();
+
+      console.log(position);
+      const location = JSON.stringify(position);
+      const latitude =
+        JSON.parse(location) &&
+        JSON.parse(location).coords &&
+        JSON.parse(location).coords.latitude;
+      const longitude =
+        JSON.parse(location) &&
+        JSON.parse(location).coords &&
+        JSON.parse(location).coords.longitude;
+      return dispatch({
+        type: GET_LAT_LONG,
+        lat: latitude,
+        long: longitude
+      });
     } catch (e) {
       return {
         type: "Erro"
