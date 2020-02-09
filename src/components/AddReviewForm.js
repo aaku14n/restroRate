@@ -82,9 +82,6 @@ class AddReviewForm extends React.Component {
   }
 
   onChnageRestraurentName = name => {
-    // this.setState({
-    //   restroName: name
-    // });
     this.setState(
       {
         query: name,
@@ -121,7 +118,6 @@ class AddReviewForm extends React.Component {
     this.accessRestaurantDetails();
   };
   accessRestaurantDetails = async query => {
-    console.log(this.props);
     const loc = `${this.props.lat},${this.props.long}`;
     await this.setState({ suggestionFetching: true });
     const detailsRes = await this.props.getRestaurant(loc, query);
@@ -134,7 +130,6 @@ class AddReviewForm extends React.Component {
         });
       }
       this.setState({
-        // restaurantDetails: [detailsRes[0]],
         customRestaurantDetails: false,
         restaurantList: detailsRes,
         showSuggestions: true
@@ -142,6 +137,7 @@ class AddReviewForm extends React.Component {
     }
   };
   onSelectRestaurant = restaurantData => {
+    console.log("restaurantData");
     this.setState({
       restaurantDetails: [restaurantData],
       query: restaurantData.name,
@@ -150,7 +146,6 @@ class AddReviewForm extends React.Component {
   };
   onAccessCurrentLocation = async () => {
     await this.props.getCurrentLocation();
-    console.log("cammled me ");
     await this.accessRestaurantDetails();
   };
 
@@ -339,7 +334,6 @@ class AddReviewForm extends React.Component {
   };
   render() {
     const { photo, shift } = this.state;
-
     if (this.props.addReviewLoading) {
       return (
         <View style={styles.loader}>
@@ -347,7 +341,15 @@ class AddReviewForm extends React.Component {
         </View>
       );
     }
-    console.log(this.state);
+    if (this.state.suggestionFetching) {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#c4c4c4" />
+          <Text>Fetching location</Text>
+        </View>
+      );
+    }
+
     const placeholder = {
       label: "Select a User...",
       value: null,

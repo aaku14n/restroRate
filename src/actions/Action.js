@@ -338,7 +338,6 @@ export function getCurrentLocation() {
     try {
       const position = await getPosition();
 
-      console.log(position);
       const location = JSON.stringify(position);
       const latitude =
         JSON.parse(location) &&
