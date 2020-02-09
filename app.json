@@ -8,8 +8,9 @@
     "facebookAppId": "162268665100396",
     "facebookDisplayName": "React-Native",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.9",
+    "version": "1.1.0",
     "orientation": "portrait",
+    "scheme": "disherve",
     "icon": "./assets/homeIcon.png",
     "splash": {
       "image": "./assets/splash.png",
@@ -27,6 +28,7 @@
     "android": {
       "package": "in.littra.disherve"
     },
+
     "notification": {
       "iosDisplayInForeground": true
     },

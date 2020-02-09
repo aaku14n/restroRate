@@ -16,7 +16,7 @@ function AuthHomeWrapper(props) {
     if (!props.loginDetails) {
       props.validateUserLogin();
     }
-    if (props.loginDetails && !props.lat && !props.long) {
+    if (!props.lat && !props.long) {
       props.getCurrentLocation();
     }
   });

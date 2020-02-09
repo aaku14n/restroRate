@@ -36,7 +36,6 @@ export default StyleSheet.create({
     marginBottom: 6
   },
   input: {
-    backgroundColor: "#f4f4f4",
     paddingLeft: 0,
     width: "100%",
     borderRadius: 5
@@ -52,7 +51,7 @@ export default StyleSheet.create({
   },
   textArea: {
     height: 150,
-    backgroundColor: "#f4f4f4",
+
     paddingLeft: 15,
     paddingTop: 10,
     width: "100%",
@@ -234,8 +233,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
-    position: "absolute",
-    bottom: 150
+    marginTop: 50
   },
   buttonsSkip: {
     width: "100%",
@@ -244,13 +242,14 @@ export default StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
 
-    position: "absolute",
-    bottom: 100
+    marginTop: 30
   },
   itemSuggest: {
     padding: 10,
-    borderBottomColor: "#c4c4c4",
+    borderColor: "#c4c4c4",
     borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
     zIndex: 10000,
     backgroundColor: "#ffffff",
     width: "100%"
