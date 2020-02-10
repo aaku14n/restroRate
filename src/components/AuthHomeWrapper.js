@@ -1,17 +1,19 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
   ActivityIndicator,
   TouchableHighlight,
-  StyleSheet
+  StyleSheet,
+  AppState
 } from "react-native";
 import SocialLoginContainer from "../containers/SocialLoginContainer";
 import AuthContainer from "../containers/AuthContainer";
 import { THEME_COLOR } from "../Constant";
 
 function AuthHomeWrapper(props) {
+  const [appState, setAppState] = useState(AppState.currentState);
   useEffect(() => {
     if (!props.loginDetails) {
       props.validateUserLogin();
@@ -19,10 +21,22 @@ function AuthHomeWrapper(props) {
     if (!props.lat && !props.long) {
       props.getCurrentLocation();
     }
+    AppState.addEventListener("change", handleChange);
+
+    return () => {
+      AppState.removeEventListener("change", handleChange);
+    };
   });
   const retryLocation = () => {
     props.getCurrentLocation();
   };
+  const handleChange = nextAppState => {
+    if (appState.match(/inactive|background/) && nextAppState === "active") {
+      props.getCurrentLocation();
+    }
+    setAppState(nextAppState);
+  };
+
   if (props.loginDetails) {
     if (!props.lat && !props.long) {
       return (
