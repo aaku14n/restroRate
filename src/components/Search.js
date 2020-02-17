@@ -60,7 +60,7 @@ class Search extends React.Component {
               value={this.state.searchString}
             />
           </View>
-          {recentSearch.length > 0 ? (
+          {recentSearch && recentSearch.length > 0 ? (
             <View style={styles.recentSearch}>
               <View>
                 <Text style={styles.recentSearchTitle}>Recent Searches</Text>
