@@ -42,9 +42,9 @@ export default StyleSheet.create({
     width: "60%",
     height: 20
   },
-  ratingWrapper: {
-    marginTop: 10
-  },
+  // ratingWrapper: {
+  //   marginTop: 2
+  // },
   peoplesReview: {
     color: "#999999",
     fontSize: 14,

@@ -33,26 +33,23 @@ function ListItemComponent(props) {
           {props.subHeading && (
             <Text style={styles.discription}>{props.subHeading}</Text>
           )}
-          {props.rating ? (
-            <View style={styles.ratingWrapper}>
-              <View style={styles.stars}>
-                <RatingComponent rating={props.rating} size={15} />
-              </View>
-              <Text style={styles.peoplesReview}>
-                Based on {props.peoples} reviews
-              </Text>
+          <View style={styles.ratingWrapper}>
+            <View style={styles.stars}>
+              <RatingComponent rating={props.rating} size={15} />
             </View>
-          ) : (
+            <Text style={styles.peoplesReview}>
+              Based on {props.peoples} reviews
+            </Text>
+          </View>
+          {props.message ? (
             <View style={styles.thumb}>
               <Image
                 style={{ width: 15, height: 15, marginTop: 2 }}
                 source={thumbsUp}
               />
-              <Text style={styles.recomend}>
-                {recommedPeoples} peoples recomended
-              </Text>
+              <Text style={styles.recomend}>{props.message}</Text>
             </View>
-          )}
+          ) : null}
         </View>
       </View>
     </TouchableWithoutFeedback>

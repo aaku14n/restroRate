@@ -5,7 +5,8 @@ import {
   TextInput,
   Image,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  RefreshControlBase
 } from "react-native";
 import styles from "./css/SearchStyle";
 import ListItemComponent from "./ListItemComponent";
@@ -44,6 +45,7 @@ class Search extends React.Component {
   render() {
     const searchResult = this.props.searchResult;
     const recentSearch = this.props.recentSearch;
+
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
@@ -128,6 +130,7 @@ class Search extends React.Component {
                         onPress={() =>
                           this.onGotoDetails(recent.restaurantInfo._id)
                         }
+                        message={recent.message}
                         rating={recent.averageRating}
                         peoples={recent.totalReviews}
                         subHeading={recent.restaurantInfo.name}

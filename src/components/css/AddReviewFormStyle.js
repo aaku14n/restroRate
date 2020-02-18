@@ -152,13 +152,19 @@ export default StyleSheet.create({
     alignContent: "center",
     justifyContent: "center"
   },
+  captureHeading: {
+    color: "#999999",
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
   captureImageButton: {
     width: 150,
     borderRadius: 5,
     display: "flex",
-    flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
+    textAlign: "center",
     marginLeft: 15
   },
   buttonText: {

@@ -355,7 +355,7 @@ class AddReviewForm extends React.Component {
               <View style={styles.input}>
                 <TextInput
                   style={styles.inputName}
-                  placeholder="Dish Name"
+                  placeholder="Restaurants Name"
                   onChangeText={text => this.onChnageRestraurentName(text)}
                   value={this.state.query}
                   onFocus={() => this.onFirstTouch()}
@@ -402,19 +402,41 @@ class AddReviewForm extends React.Component {
                     onPress={this.captureImageFromCamera}
                     style={styles.captureImageButton}
                   >
-                    <Image
-                      source={camera}
-                      style={{ width: 50, height: 50, borderRadius: 10 }}
-                    />
+                    <View
+                      style={{
+                        alignItems: "center"
+                      }}
+                    >
+                      <Image
+                        source={camera}
+                        style={{
+                          width: 50,
+                          height: 50
+                        }}
+                      />
+                    </View>
+                    <Text style={styles.captureHeading}>Capture Image</Text>
                   </TouchableWithoutFeedback>
                   <TouchableWithoutFeedback
                     onPress={this.takeImageFormGallary}
                     style={styles.captureImageButton}
                   >
-                    <Image
-                      source={galary}
-                      style={{ width: 50, height: 50, borderRadius: 10 }}
-                    />
+                    <View
+                      style={{
+                        alignItems: "center"
+                      }}
+                    >
+                      <Image
+                        source={galary}
+                        style={{
+                          width: 50,
+                          height: 50
+                        }}
+                      />
+                    </View>
+                    <Text style={styles.captureHeading}>
+                      Upload From Galary
+                    </Text>
                   </TouchableWithoutFeedback>
                 </View>
               )}
