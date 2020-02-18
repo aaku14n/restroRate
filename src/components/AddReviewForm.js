@@ -10,7 +10,8 @@ import {
   Modal,
   Picker,
   StyleSheet,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import styles from "./css/AddReviewFormStyle";
@@ -18,7 +19,10 @@ import camera from "../../assets/camera.png";
 import galary from "../../assets/galary.png";
 import cross from "../../assets/plus.png";
 import compass from "../../assets/compass.png";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import {
+  TouchableWithoutFeedback,
+  FlatList
+} from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import {
   getRestaurant,
@@ -53,9 +57,12 @@ class AddReviewForm extends React.Component {
       customRestaurantDetails: false,
       restaurantList: [],
       showSuggestions: false,
+      frndSuggestion: false,
       suggestionFetching: false,
       shift: new Animated.Value(0),
-      query: ""
+      query: "",
+      searchFriend: "",
+      userName: ""
     };
   }
 
@@ -113,6 +120,11 @@ class AddReviewForm extends React.Component {
       showSuggestions: true
     });
     this.accessRestaurantDetails();
+  };
+  firstTouchOnFriendInput = () => {
+    this.setState({
+      frndSuggestion: true
+    });
   };
   accessRestaurantDetails = async query => {
     const loc = `${this.props.lat},${this.props.long}`;
@@ -298,9 +310,16 @@ class AddReviewForm extends React.Component {
       openModalState: !this.state.openModalState
     });
   };
-  selectedRecommendFriend = userID => {
+  selectedRecommendFriend = userObj => {
     this.setState({
-      userID
+      userID: userObj.id,
+      searchFriend: userObj.name,
+      frndSuggestion: false
+    });
+  };
+  onChnageFriend = searchFriend => {
+    this.setState({
+      searchFriend
     });
   };
   sendRecommd = async () => {
@@ -327,6 +346,13 @@ class AddReviewForm extends React.Component {
   };
   render() {
     const { photo, shift } = this.state;
+    const friendsList =
+      this.props.userList &&
+      this.props.userList.filter(friend => {
+        return friend.name
+          .toUpperCase()
+          .includes(this.state.searchFriend.toUpperCase());
+      });
     if (this.props.addReviewLoading) {
       return (
         <View style={styles.loader}>
@@ -334,12 +360,6 @@ class AddReviewForm extends React.Component {
         </View>
       );
     }
-
-    const placeholder = {
-      label: "Select a User...",
-      value: null,
-      color: "#9EA0A4"
-    };
 
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
@@ -522,36 +542,51 @@ class AddReviewForm extends React.Component {
                       </View>
                     </View>
                     <View style={styles.dropdown}>
-                      <RNPickerSelect
-                        placeholder={placeholder}
-                        items={this.props.userList.map((item, id) => {
-                          return {
-                            label: item.name,
-                            value: item._id
-                          };
-                        })}
-                        onValueChange={(itemValue, itemIndex) =>
-                          this.selectedRecommendFriend(itemValue, itemIndex)
-                        }
-                        style={{
-                          ...pickerSelectStyles,
-                          iconContainer: {
-                            top: 10,
-                            right: 12
+                      <View style={styles.input}>
+                        <TextInput
+                          style={styles.inputName}
+                          placeholder="Select Friend"
+                          onChangeText={text => this.onChnageFriend(text)}
+                          value={this.state.searchFriend}
+                          onFocus={() => this.firstTouchOnFriendInput()}
+                          onBlur={() =>
+                            this.setState({ frndSuggestion: false })
                           }
-                        }}
-                        value={this.state.userID}
-                        useNativeAndroidPickerStyle={false}
-                        textInputProps={{ underlineColor: "yellow" }}
-                        Icon={() => {
-                          return (
-                            <Image
-                              source={require("../../assets/download.png")}
-                              style={{ width: 20, height: 20, top: 5 }}
-                            />
-                          );
-                        }}
-                      />
+                        />
+                        {friendsList ? (
+                          friendsList.splice(0, 5).map((user, key) => {
+                            return (
+                              <TouchableHighlight
+                                onPress={() =>
+                                  this.selectedRecommendFriend(user)
+                                }
+                                key={key}
+                                style={styles.frndSuggest}
+                              >
+                                <View
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "row"
+                                  }}
+                                >
+                                  <Image
+                                    source={{ uri: user.profilePic }}
+                                    style={{
+                                      width: 25,
+                                      height: 25,
+                                      borderRadius: 15,
+                                      marginRight: 25
+                                    }}
+                                  />
+                                  <Text>{user.name}</Text>
+                                </View>
+                              </TouchableHighlight>
+                            );
+                          })
+                        ) : (
+                          <Text />
+                        )}
+                      </View>
                     </View>
                     <View style={styles.commentsInput}>
                       <TextInput

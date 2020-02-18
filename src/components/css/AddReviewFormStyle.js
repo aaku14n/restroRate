@@ -42,7 +42,6 @@ export default StyleSheet.create({
   },
   inputName: {
     height: 50,
-
     paddingLeft: 0,
     width: "100%",
     borderColor: "#c4c4c4",
@@ -257,6 +256,15 @@ export default StyleSheet.create({
     borderLeftWidth: 1,
     borderRightWidth: 1,
     zIndex: 10000,
+    backgroundColor: "#ffffff",
+    width: "100%"
+  },
+  frndSuggest: {
+    padding: 10,
+    borderColor: "#c4c4c4",
+    borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
     backgroundColor: "#ffffff",
     width: "100%"
   },
