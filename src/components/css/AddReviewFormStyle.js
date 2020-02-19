@@ -46,7 +46,8 @@ export default StyleSheet.create({
     width: "100%",
     borderColor: "#c4c4c4",
     borderWidth: 1,
-    paddingLeft: 15
+    paddingLeft: 15,
+    color: "#000000"
   },
   textArea: {
     height: 150,
@@ -215,10 +216,10 @@ export default StyleSheet.create({
     flexWrap: "wrap"
   },
   tag: {
-    borderWidth: 3,
+    borderWidth: 1,
     borderColor: "#c4c4c4",
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 3,
     marginRight: 10,
     marginTop: 10,
     display: "flex",

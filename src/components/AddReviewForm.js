@@ -327,7 +327,7 @@ class AddReviewForm extends React.Component {
     this.setState({
       userIDs,
       userNames,
-      searchFriend: userObj.name,
+      searchFriend: "",
       frndSuggestion: false
     });
   };
@@ -599,14 +599,11 @@ class AddReviewForm extends React.Component {
                       <View style={styles.input}>
                         <TextInput
                           style={styles.inputName}
-                          placeholder="Select Friend"
+                          placeholder="Search Friend"
                           onChangeText={text => this.onChnageFriend(text)}
-                          value={
-                            this.state.userIDs.length == 0
-                              ? null
-                              : this.state.searchFriend
-                          }
                           onFocus={() => this.firstTouchOnFriendInput()}
+                          value={this.state.searchFriend}
+                          placeholderTextColor="#c4c4c4"
                         />
                         {this.state.frndSuggestion && friendsList ? (
                           friendsList.splice(0, 5).map((user, key) => {
