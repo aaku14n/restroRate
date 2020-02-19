@@ -310,6 +310,7 @@ class AddReviewForm extends React.Component {
     });
   };
   selectedRecommendFriend = userObj => {
+    Keyboard.dismiss();
     const checkIdPresentOrNot = this.state.userIDs.includes(userObj._id);
     let userIDs = this.state.userIDs;
     let userNames = this.state.userNames;
@@ -391,7 +392,11 @@ class AddReviewForm extends React.Component {
     }
 
     return (
-      <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.base}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={"always"}
+      >
         {/* <PushNotification {...this.props} /> */}
         <Animated.View
           style={[styles.container, { transform: [{ translateY: shift }] }]}
@@ -554,7 +559,7 @@ class AddReviewForm extends React.Component {
                 }}
               >
                 <View style={styles.modal}>
-                  <ScrollView>
+                  <ScrollView keyboardShouldPersistTaps={"always"}>
                     <TouchableHighlight
                       onPress={() => this.closeModal()}
                       style={styles.closeModalIcon}
