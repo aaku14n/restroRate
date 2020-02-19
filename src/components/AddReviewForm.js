@@ -395,7 +395,7 @@ class AddReviewForm extends React.Component {
       <ScrollView
         style={styles.base}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps={"always"}
+        keyboardShouldPersistTaps={"handled"}
       >
         {/* <PushNotification {...this.props} /> */}
         <Animated.View
@@ -559,7 +559,7 @@ class AddReviewForm extends React.Component {
                 }}
               >
                 <View style={styles.modal}>
-                  <ScrollView keyboardShouldPersistTaps={"always"}>
+                  <ScrollView keyboardShouldPersistTaps={"handled"}>
                     <TouchableHighlight
                       onPress={() => this.closeModal()}
                       style={styles.closeModalIcon}
