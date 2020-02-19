@@ -274,7 +274,10 @@ export function sendRecommandation(recommandationObj) {
   return async (dispatch, getState, { api }) => {
     try {
       dispatch({ type: SEND_RECOMMEND_REQUEST });
-      const result = await api.post(`recommendApp`, recommandationObj);
+      const result = await api.post(
+        `recommendToMultipleUser`,
+        recommandationObj
+      );
       const resultJson = await result.json();
       return dispatch({
         type: SEND_RECOMMEND_SUCCESS,

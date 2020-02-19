@@ -18,6 +18,7 @@ import styles from "./css/AddReviewFormStyle";
 import camera from "../../assets/camera.png";
 import galary from "../../assets/galary.png";
 import cross from "../../assets/plus.png";
+import tick from "../../assets/tick.png";
 import compass from "../../assets/compass.png";
 import {
   TouchableWithoutFeedback,
@@ -50,10 +51,8 @@ class AddReviewForm extends React.Component {
       imageLoading: false,
       openModalState: false,
       comments: "",
-      userID:
-        this.props.userList && this.props.userList[0]
-          ? this.props.userList[0]._id
-          : "",
+      userIDs: [],
+      userNames: [],
       customRestaurantDetails: false,
       restaurantList: [],
       showSuggestions: false,
@@ -311,8 +310,23 @@ class AddReviewForm extends React.Component {
     });
   };
   selectedRecommendFriend = userObj => {
+    const checkIdPresentOrNot = this.state.userIDs.includes(userObj._id);
+    let userIDs = this.state.userIDs;
+    let userNames = this.state.userNames;
+    if (checkIdPresentOrNot) {
+      const deletedIndex = this.state.userIDs.findIndex(test => {
+        return test == userObj._id;
+      });
+      userIDs.splice(deletedIndex, 1);
+      userNames.splice(deletedIndex, 1);
+    } else {
+      userIDs.push(userObj._id);
+      userNames.push({ name: userObj.name, id: userObj._id });
+    }
+
     this.setState({
-      userID: userObj.id,
+      userIDs,
+      userNames,
       searchFriend: userObj.name,
       frndSuggestion: false
     });
@@ -324,11 +338,13 @@ class AddReviewForm extends React.Component {
   };
   sendRecommd = async () => {
     const recommendObj = {
-      recommendedTo: this.state.userID,
+      recommendedTo: this.state.userIDs,
       dishId: this.props.addReview.dishId,
       description: this.state.comments
     };
+
     const recommendResponse = await this.props.sendRecommandation(recommendObj);
+
     if (recommendResponse.type === SEND_RECOMMEND_SUCCESS) {
       this.props.myRecommendation();
       this.setState({ openModalState: false });
@@ -343,6 +359,19 @@ class AddReviewForm extends React.Component {
         <Image source={compass} style={{ width: 20, height: 20 }} />
       </TouchableWithoutFeedback>
     );
+  };
+  clearTags = id => {
+    const deletedIndex = this.state.userNames.findIndex(test => {
+      return test.id == id;
+    });
+    const userNames = this.state.userNames;
+    const userIDs = this.state.userIDs;
+    userNames.splice(deletedIndex, 1);
+    userIDs.splice(deletedIndex, 1);
+    this.setState({
+      userNames,
+      userIDs
+    });
   };
   render() {
     const { photo, shift } = this.state;
@@ -541,44 +570,89 @@ class AddReviewForm extends React.Component {
                         <Text style={styles.heading}>Recommendation</Text>
                       </View>
                     </View>
+                    <View style={styles.tagWrapper}>
+                      {this.state.userNames && this.state.userNames.map
+                        ? this.state.userNames.map((tag, id) => {
+                            return (
+                              <View style={styles.tag} key={id}>
+                                <Text>{tag.name}</Text>
+                                <TouchableHighlight
+                                  onPress={() => this.clearTags(tag.id)}
+                                  underlayColor={"#fff"}
+                                >
+                                  <Image
+                                    style={{
+                                      height: 18,
+                                      width: 18,
+                                      transform: [{ rotate: "45deg" }],
+                                      marginLeft: 10
+                                    }}
+                                    source={require("../../assets/plus.png")}
+                                  />
+                                </TouchableHighlight>
+                              </View>
+                            );
+                          })
+                        : null}
+                    </View>
                     <View style={styles.dropdown}>
                       <View style={styles.input}>
                         <TextInput
                           style={styles.inputName}
                           placeholder="Select Friend"
                           onChangeText={text => this.onChnageFriend(text)}
-                          value={this.state.searchFriend}
-                          onFocus={() => this.firstTouchOnFriendInput()}
-                          onBlur={() =>
-                            this.setState({ frndSuggestion: false })
+                          value={
+                            this.state.userIDs.length == 0
+                              ? null
+                              : this.state.searchFriend
                           }
+                          onFocus={() => this.firstTouchOnFriendInput()}
                         />
-                        {friendsList ? (
+                        {this.state.frndSuggestion && friendsList ? (
                           friendsList.splice(0, 5).map((user, key) => {
                             return (
                               <TouchableHighlight
                                 onPress={() =>
                                   this.selectedRecommendFriend(user)
                                 }
+                                underlayColor={"transparent"}
                                 key={key}
                                 style={styles.frndSuggest}
                               >
                                 <View
                                   style={{
                                     display: "flex",
-                                    flexDirection: "row"
+                                    flexDirection: "row",
+                                    justifyContent: "space-between"
                                   }}
                                 >
-                                  <Image
-                                    source={{ uri: user.profilePic }}
+                                  <View
                                     style={{
-                                      width: 25,
-                                      height: 25,
-                                      borderRadius: 15,
-                                      marginRight: 25
+                                      display: "flex",
+                                      flexDirection: "row"
                                     }}
-                                  />
-                                  <Text>{user.name}</Text>
+                                  >
+                                    <Image
+                                      source={{ uri: user.profilePic }}
+                                      style={{
+                                        width: 25,
+                                        height: 25,
+                                        borderRadius: 15,
+                                        marginRight: 25
+                                      }}
+                                    />
+                                    <Text>{user.name}</Text>
+                                  </View>
+                                  {this.state.userIDs.includes(user._id) ? (
+                                    <Image
+                                      source={tick}
+                                      style={{
+                                        width: 20,
+                                        height: 20,
+                                        marginRight: 25
+                                      }}
+                                    />
+                                  ) : null}
                                 </View>
                               </TouchableHighlight>
                             );
@@ -588,31 +662,33 @@ class AddReviewForm extends React.Component {
                         )}
                       </View>
                     </View>
-                    <View style={styles.commentsInput}>
-                      <TextInput
-                        style={styles.textArea}
-                        placeholder="Comments"
-                        numberOfLines={10}
-                        multiline
-                        onChangeText={text => this.onChnageComments(text)}
-                        value={this.state.comments}
-                      />
-                    </View>
-                    <View style={styles.buttons}>
-                      <TouchableHighlight
-                        onPress={() => this.sendRecommd()}
-                        style={styles.modalButton}
-                      >
-                        <Text style={styles.buttonTitle}>RECOMMEND</Text>
-                      </TouchableHighlight>
-                    </View>
-                    <View style={styles.buttonsSkip}>
-                      <TouchableHighlight
-                        underlayColor={"#fff"}
-                        onPress={() => this.closeModal()}
-                      >
-                        <Text style={styles.skipTitle}>SKIP</Text>
-                      </TouchableHighlight>
+                    <View>
+                      <View style={styles.commentsInput}>
+                        <TextInput
+                          style={styles.textArea}
+                          placeholder="Comments"
+                          numberOfLines={10}
+                          multiline
+                          onChangeText={text => this.onChnageComments(text)}
+                          value={this.state.comments}
+                        />
+                      </View>
+                      <View style={styles.buttons}>
+                        <TouchableHighlight
+                          onPress={() => this.sendRecommd()}
+                          style={styles.modalButton}
+                        >
+                          <Text style={styles.buttonTitle}>RECOMMEND</Text>
+                        </TouchableHighlight>
+                      </View>
+                      <View style={styles.buttonsSkip}>
+                        <TouchableHighlight
+                          underlayColor={"#fff"}
+                          onPress={() => this.closeModal()}
+                        >
+                          <Text style={styles.skipTitle}>SKIP</Text>
+                        </TouchableHighlight>
+                      </View>
                     </View>
                   </ScrollView>
                 </View>

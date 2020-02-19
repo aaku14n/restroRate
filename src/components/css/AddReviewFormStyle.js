@@ -201,11 +201,28 @@ export default StyleSheet.create({
     top: 90
   },
   dropdown: {
-    marginTop: 50,
-    height: 50,
-    // backgroundColor: "#f4f4f4",
+    height: "auto",
     marginLeft: 10,
     marginRight: 10
+  },
+  tagWrapper: {
+    marginTop: 40,
+    marginBottom: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap"
+  },
+  tag: {
+    borderWidth: 3,
+    borderColor: "#c4c4c4",
+    padding: 10,
+    borderRadius: 20,
+    marginRight: 10,
+    marginTop: 10,
+    display: "flex",
+    flexDirection: "row"
   },
   modalButton: {
     width: "80%",
@@ -261,12 +278,14 @@ export default StyleSheet.create({
   },
   frndSuggest: {
     padding: 10,
+    position: "relative",
     borderColor: "#c4c4c4",
     borderBottomWidth: 1,
     borderLeftWidth: 1,
     borderRightWidth: 1,
     backgroundColor: "#ffffff",
-    width: "100%"
+    width: "100%",
+    zIndex: 10000
   },
   autocompleteContainer: {
     height: 50,
