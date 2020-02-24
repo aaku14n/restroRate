@@ -29,10 +29,9 @@ export default class RestroDetailsComponent extends React.Component {
   onShare = async () => {
     try {
       const details = this.props && this.props.getRestroDetails;
-
       const result = await Share.share({
-        message: `${details.name} | ${details.fullAddress}`,
-        url: "map://app"
+        message: `http://disherve.com?restId=${details._id}`,
+        url: `http://disherve.com?restId=${details._id}`
       });
 
       if (result.action === Share.sharedAction) {
@@ -83,6 +82,12 @@ export default class RestroDetailsComponent extends React.Component {
             <Image
               style={styles.icon}
               source={require("../../assets/back.png")}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.onShare}>
+            <Image
+              style={styles.icon}
+              source={require("../../assets/share.png")}
             />
           </TouchableOpacity>
         </View>
