@@ -46,6 +46,9 @@ export const UPDATE_PROFILE_FAILURE = "UPDATE_PROFILE_FAILURE";
 
 export const GET_LAT_LONG_REQUEST = "GET_LAT_LONG_REQUEST";
 
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
+
 export function getHomeData(lat, long) {
   return async (dispatch, getState, { api }) => {
     try {
@@ -334,24 +337,27 @@ var getPosition = function(options) {
     navigator.geolocation.getCurrentPosition(resolve, reject, {
       enableHighAccuracy: true,
       timeout: 20000,
-      maximumAge: 1000
+      maximumAge: 0
     });
   });
 };
 export function getCurrentLocation() {
   return async (dispatch, getState, { api }) => {
     try {
-      const position = await getPosition();
       dispatch({ type: GET_LAT_LONG_REQUEST });
-      const location = JSON.stringify(position);
-      const latitude =
-        JSON.parse(location) &&
-        JSON.parse(location).coords &&
-        JSON.parse(location).coords.latitude;
+
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== "granted") {
+        return {
+          type: "Erro"
+        };
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+
+      const latitude = location && location.coords && location.coords.latitude;
       const longitude =
-        JSON.parse(location) &&
-        JSON.parse(location).coords &&
-        JSON.parse(location).coords.longitude;
+        location && location.coords && location.coords.longitude;
       return dispatch({
         type: GET_LAT_LONG,
         lat: latitude,

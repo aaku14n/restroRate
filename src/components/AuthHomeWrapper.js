@@ -14,12 +14,16 @@ import { THEME_COLOR } from "../Constant";
 
 function AuthHomeWrapper(props) {
   const [appState, setAppState] = useState(AppState.currentState);
+  const [loadingLocation, setLoadingLocation] = useState(false);
   useEffect(() => {
     if (!props.loginDetails) {
       props.validateUserLogin();
     }
     if (!props.lat && !props.long) {
-      props.getCurrentLocation();
+      if (!loadingLocation) {
+        setLoadingLocation(true);
+        props.getCurrentLocation();
+      }
     }
     AppState.addEventListener("change", handleChange);
 
@@ -38,7 +42,7 @@ function AuthHomeWrapper(props) {
   };
 
   if (props.loginDetails) {
-    if (!props.lat && !props.long) {
+    if (!props.lat || !props.long) {
       return (
         <View style={styles.loader}>
           <ActivityIndicator size="large" color="#c4c4c4" />
