@@ -30,21 +30,18 @@ export default class RestroDetailsComponent extends React.Component {
     try {
       const details = this.props && this.props.getRestroDetails;
       const result = await Share.share({
-        message: `http://disherve.com?restId=${details._id}`,
-        url: `http://disherve.com?restId=${details._id}`
+        title: details.name,
+        url: `http://disherve.com?restId=${details._id}`,
+        message: details.name
       });
-
       if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
+        alert("Shared");
       } else if (result.action === Share.dismissedAction) {
         // dismissed
+        alert("Cancelled");
       }
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
     }
   };
   goToLocation = () => {
@@ -75,6 +72,7 @@ export default class RestroDetailsComponent extends React.Component {
       );
     }
     const details = this.props && this.props.getRestroDetails;
+
     return (
       <ScrollView style={styles.base} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>

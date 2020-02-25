@@ -11,7 +11,8 @@ import {
   Picker,
   StyleSheet,
   TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  Share
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import styles from "./css/AddReviewFormStyle";
@@ -31,9 +32,6 @@ import {
   SEND_RECOMMEND_SUCCESS
 } from "../actions/Action";
 import * as Permissions from "expo-permissions";
-import RNPickerSelect, { defaultStyles } from "react-native-picker-select";
-
-import Autocomplete from "react-native-autocomplete-input";
 
 import { Animated, Dimensions, Keyboard, UIManager } from "react-native";
 const { State: TextInputState } = TextInput;
@@ -61,7 +59,8 @@ class AddReviewForm extends React.Component {
       shift: new Animated.Value(0),
       query: "",
       searchFriend: "",
-      userName: ""
+      userName: "",
+      showFirstModal: false
     };
   }
 
@@ -106,7 +105,8 @@ class AddReviewForm extends React.Component {
   };
   onChnageReview = review => {
     this.setState({
-      review
+      review,
+      showFirstModal: true
     });
   };
   onChnageComments = comments => {
@@ -245,8 +245,10 @@ class AddReviewForm extends React.Component {
           imageLoading: false,
           openModalState: true,
           restaurantDetails: "",
-          query: ""
+          query: "",
+          showFirstModal: false
         });
+        addReviewFormTab = false;
       }
     }
   };
@@ -373,6 +375,24 @@ class AddReviewForm extends React.Component {
       userNames,
       userIDs
     });
+  };
+
+  onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Disherve Recommendation`,
+        url: `http://disherve.com?restId=${this.props.addReview.restaurantId}`
+      });
+
+      if (result.action === Share.sharedAction) {
+        alert("Shared");
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+        alert("Cancelled");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   render() {
     const { photo, shift } = this.state;
@@ -509,6 +529,8 @@ class AddReviewForm extends React.Component {
                 placeholder="Dish Name"
                 onChangeText={text => this.onChnageDishName(text)}
                 value={this.state.dishName}
+                onBlur={() => this.setState({ showFirstModal: false })}
+                onFocus={() => this.setState({ showFirstModal: true })}
               />
             </View>
 
@@ -521,6 +543,8 @@ class AddReviewForm extends React.Component {
                 placeholder="Type review here"
                 onChangeText={text => this.onChnageReview(text)}
                 value={this.state.review}
+                onBlur={() => this.setState({ showFirstModal: false })}
+                onFocus={() => this.setState({ showFirstModal: true })}
               />
             </View>
             <View style={styles.restroName}>
@@ -675,12 +699,18 @@ class AddReviewForm extends React.Component {
                           value={this.state.comments}
                         />
                       </View>
+
                       <View style={styles.buttons}>
                         <TouchableHighlight
                           onPress={() => this.sendRecommd()}
                           style={styles.modalButton}
                         >
                           <Text style={styles.buttonTitle}>RECOMMEND</Text>
+                        </TouchableHighlight>
+                      </View>
+                      <View style={styles.buttonsSkip}>
+                        <TouchableHighlight onPress={() => this.onShare()}>
+                          <Text style={styles.skipTitle}>OR Share link</Text>
                         </TouchableHighlight>
                       </View>
                       <View style={styles.buttonsSkip}>
@@ -703,25 +733,30 @@ class AddReviewForm extends React.Component {
   }
 
   handleKeyboardDidShow = event => {
-    const { height: windowHeight } = Dimensions.get("window");
-    const keyboardHeight = event.endCoordinates.height;
-    const currentlyFocusedField = TextInputState.currentlyFocusedField();
-    UIManager.measure(
-      currentlyFocusedField,
-      (originX, originY, width, height, pageX, pageY) => {
-        const fieldHeight = height;
-        const fieldTop = pageY;
-        const gap = windowHeight - keyboardHeight - (fieldTop + fieldHeight);
-        if (gap >= 0) {
-          return;
+    console.log("came in function");
+    if (this.state.showFirstModal) {
+      console.log("in");
+      const { height: windowHeight } = Dimensions.get("window");
+      const keyboardHeight = event.endCoordinates.height;
+      console.log(windowHeight, keyboardHeight);
+      const currentlyFocusedField = TextInputState.currentlyFocusedField();
+      UIManager.measure(
+        currentlyFocusedField,
+        (originX, originY, width, height, pageX, pageY) => {
+          const fieldHeight = height;
+          const fieldTop = pageY;
+          const gap = windowHeight - keyboardHeight - (fieldTop + fieldHeight);
+          if (gap >= 0) {
+            return;
+          }
+          Animated.timing(this.state.shift, {
+            toValue: gap,
+            duration: 0,
+            useNativeDriver: true
+          }).start();
         }
-        Animated.timing(this.state.shift, {
-          toValue: gap,
-          duration: 0,
-          useNativeDriver: true
-        }).start();
-      }
-    );
+      );
+    }
   };
 
   handleKeyboardDidHide = () => {
