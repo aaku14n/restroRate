@@ -30,9 +30,13 @@ export default class RestroDetailsComponent extends React.Component {
     try {
       const details = this.props && this.props.getRestroDetails;
       const result = await Share.share({
-        title: details.name,
+        title: `${
+          details.name
+        } | ${`http://disherve.com?restId=${details._id}`}`,
         url: `http://disherve.com?restId=${details._id}`,
-        message: details.name
+        message: `${
+          details.name
+        } | ${`http://disherve.com?restId=${details._id}`}`
       });
       if (result.action === Share.sharedAction) {
         alert("Shared");

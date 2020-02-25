@@ -12,7 +12,9 @@ import {
   StyleSheet,
   TouchableHighlight,
   TouchableOpacity,
-  Share
+  Share,
+  Platform,
+  Linking
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import styles from "./css/AddReviewFormStyle";
@@ -78,6 +80,7 @@ class AddReviewForm extends React.Component {
   componentWillUnmount() {
     this.keyboardDidShowSub.remove();
     this.keyboardDidHideSub.remove();
+    Linking.removeEventListener("url", this.handleOpenURL);
   }
 
   completeRate(rating) {
@@ -156,8 +159,29 @@ class AddReviewForm extends React.Component {
   componentDidMount() {
     this.onAccessCurrentLocation();
     this.props.getAllUser();
+    if (Platform.OS === "android") {
+      Linking.getInitialURL().then(url => {
+        this.navigate(url);
+      });
+    } else {
+      Linking.addEventListener("url", this.handleOpenURL);
+    }
   }
+  handleOpenURL = event => {
+    this.navigate(event.url);
+  };
+  navigate = url => {
+    const { navigate } = this.props.navigation;
+    const route = url.replace(/.*?:\/\//g, "");
+    const restroId = route.match(/\/([^\/]+)\/?$/)[1];
+    const routeName = route.split("/")[0];
 
+    if (routeName === "restaurant") {
+      navigate("RestroDetails", {
+        restroId: restroId
+      });
+    }
+  };
   openAlert = message => {
     Alert.alert(
       "ERROR",
@@ -380,7 +404,7 @@ class AddReviewForm extends React.Component {
   onShare = async () => {
     try {
       const result = await Share.share({
-        message: `Disherve Recommendation`,
+        message: `Disherve Recommendation | ${`http://disherve.com?restId=${this.props.addReview.restaurantId}`}`,
         url: `http://disherve.com?restId=${this.props.addReview.restaurantId}`
       });
 
