@@ -596,12 +596,12 @@ class AddReviewForm extends React.Component {
               )}
             </View>
           </View>
-          {!this.state.openModalState && (
+          {this.state.openModalState && (
             <View style={styles.modalBase}>
               <Modal
                 animationType="slide"
                 transparent={true}
-                visible={!this.state.openModalState}
+                visible={this.state.openModalState}
                 onRequestClose={() => {
                   this.setState({ openModalState: false });
                 }}
