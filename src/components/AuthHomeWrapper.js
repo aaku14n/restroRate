@@ -30,7 +30,7 @@ function AuthHomeWrapper(props) {
     AppState.addEventListener("change", handleChange);
     if (Platform.OS === "android") {
       Linking.getInitialURL().then(url => {
-        this.navigate(url);
+        navigate(url);
       });
     } else {
       Linking.addEventListener("url", handleOpenURL);
