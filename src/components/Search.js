@@ -6,7 +6,8 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
-  RefreshControlBase
+  TouchableHighlight,
+  Keyboard
 } from "react-native";
 import styles from "./css/SearchStyle";
 import ListItemComponent from "./ListItemComponent";
@@ -18,7 +19,8 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchString: ""
+      searchString: "",
+      restroSuggestion: false
     };
   }
   componentDidMount() {
@@ -31,14 +33,24 @@ class Search extends React.Component {
   };
 
   searchText = searchString => {
+    this.props.getSearchRestrList(searchString);
     this.setState({
-      searchString
+      searchString,
+      restroSuggestion: true
     });
   };
   onBlurCall = keyword => {
     this.props.searchResults(keyword ? keyword : this.state.searchString);
     this.setState({
-      searchString: keyword
+      searchString: this.state.searchString,
+      restroSuggestion: false
+    });
+  };
+  selectedRestroName = restro => {
+    Keyboard.dismiss();
+    this.setState({
+      searchString: restro.name,
+      restroSuggestion: false
     });
   };
 
@@ -61,6 +73,30 @@ class Search extends React.Component {
               onBlur={() => this.onBlurCall()}
               value={this.state.searchString}
             />
+            {this.state.restroSuggestion &&
+            this.props.searchRestroListingResponse &&
+            this.props.searchRestroListingResponse.map ? (
+              this.props.searchRestroListingResponse
+                .splice(0, 5)
+                .map((restro, key) => {
+                  return (
+                    <View style={{ width: "100%" }}>
+                      <TouchableWithoutFeedback
+                        onPress={() => this.selectedRestroName(restro)}
+                        underlayColor={"transparent"}
+                        key={key}
+                        style={styles.frndSuggest}
+                      >
+                        <View style={{ width: "100%" }}>
+                          <Text style={{ marginLeft: 15 }}>{restro.name}</Text>
+                        </View>
+                      </TouchableWithoutFeedback>
+                    </View>
+                  );
+                })
+            ) : (
+              <Text />
+            )}
           </View>
           {recentSearch && recentSearch.length > 0 ? (
             <View style={styles.recentSearch}>

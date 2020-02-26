@@ -38,6 +38,10 @@ export const MY_REVIEW_REQUEST = "MY_REVIEW_REQUEST";
 export const MY_REVIEW_SUCCESS = "MY_REVIEW_SUCCESS";
 export const MY_REVIEW_FAILURE = "MY_REVIEW_FAILURE";
 
+export const SEARCH_RESTRO_LIST_REQUEST = "SEARCH_RESTRO_LIST_REQUEST";
+export const SEARCH_RESTRO_LIST_SUCCESS = "SEARCH_RESTRO_LIST_SUCCESS";
+export const SEARCH_RESTRO_LIST_FAILURE = "SEARCH_RESTRO_LIST_FAILURE";
+
 export const GET_LAT_LONG = "GET_LAT_LONG";
 
 export const UPDATE_PROFILE_REQUEST = "UPDATE_PROFILE_REQUEST";
@@ -367,6 +371,25 @@ export function getCurrentLocation() {
       return {
         type: "Erro"
       };
+    }
+  };
+}
+
+export function searchRestroList(query) {
+  return async (dispatch, getState, { api }) => {
+    try {
+      dispatch({ type: SEARCH_RESTRO_LIST_REQUEST });
+      const result = await api.get(`autocompleteSearch?keyword=${query}`);
+      const resultJson = await result.json();
+      return dispatch({
+        type: SEARCH_RESTRO_LIST_SUCCESS,
+        searchRestroList: resultJson.response
+      });
+    } catch (e) {
+      return dispatch({
+        type: SEARCH_RESTRO_LIST_FAILURE,
+        error: e.message
+      });
     }
   };
 }

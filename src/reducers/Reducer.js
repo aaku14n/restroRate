@@ -45,6 +45,10 @@ const Reducer = (
     updateProfileResponse: "",
     updateProfileError: "",
 
+    searchRestroListingLoading: false,
+    searchRestroListingResponse: "",
+    searchRestroListingError: "",
+
     lat: "",
     long: "",
     locationLoading: false
@@ -210,6 +214,20 @@ const Reducer = (
     case Actions.UPDATE_PROFILE_FAILURE:
       return Object.assign({}, state, {
         updateProfileLoading: false
+      });
+    case Actions.SEARCH_RESTRO_LIST_REQUEST:
+      return Object.assign({}, state, {
+        searchRestroListingLoading: true
+      });
+    case Actions.SEARCH_RESTRO_LIST_SUCCESS:
+      return Object.assign({}, state, {
+        searchRestroListingLoading: false,
+        searchRestroListingResponse: action.searchRestroList
+      });
+
+    case Actions.SEARCH_RESTRO_LIST_FAILURE:
+      return Object.assign({}, state, {
+        searchRestroListingLoading: false
       });
     case Actions.GET_LAT_LONG_REQUEST:
       return Object.assign({}, state, {
