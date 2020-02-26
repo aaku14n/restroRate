@@ -596,12 +596,12 @@ class AddReviewForm extends React.Component {
               )}
             </View>
           </View>
-          {this.state.openModalState && (
+          {!this.state.openModalState && (
             <View style={styles.modalBase}>
               <Modal
                 animationType="slide"
                 transparent={true}
-                visible={this.state.openModalState}
+                visible={!this.state.openModalState}
                 onRequestClose={() => {
                   this.setState({ openModalState: false });
                 }}
@@ -657,6 +657,12 @@ class AddReviewForm extends React.Component {
                           onFocus={() => this.firstTouchOnFriendInput()}
                           value={this.state.searchFriend}
                           placeholderTextColor="#c4c4c4"
+                          onBlur={() =>
+                            this.setState({
+                              frndSuggestion: false,
+                              searchFriend: ""
+                            })
+                          }
                         />
                         {this.state.frndSuggestion && friendsList ? (
                           friendsList.splice(0, 5).map((user, key) => {
@@ -712,6 +718,11 @@ class AddReviewForm extends React.Component {
                         )}
                       </View>
                     </View>
+                    <View style={styles.buttonsSkip}>
+                      <TouchableHighlight onPress={() => this.onShare()}>
+                        <Text style={styles.skipTitle}>OR Share link</Text>
+                      </TouchableHighlight>
+                    </View>
                     <View>
                       <View style={styles.commentsInput}>
                         <TextInput
@@ -732,11 +743,7 @@ class AddReviewForm extends React.Component {
                           <Text style={styles.buttonTitle}>RECOMMEND</Text>
                         </TouchableHighlight>
                       </View>
-                      <View style={styles.buttonsSkip}>
-                        <TouchableHighlight onPress={() => this.onShare()}>
-                          <Text style={styles.skipTitle}>OR Share link</Text>
-                        </TouchableHighlight>
-                      </View>
+
                       <View style={styles.buttonsSkip}>
                         <TouchableHighlight
                           underlayColor={"#fff"}
