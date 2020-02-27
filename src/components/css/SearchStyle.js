@@ -21,7 +21,16 @@ export default StyleSheet.create({
   searchInput: {
     marginTop: 110,
     width: "100%",
-    alignItems: "center"
+    alignItems: "center",
+    position: "relative",
+    zIndex: 10
+  },
+  searchList: {
+    width: "100%",
+    position: "absolute",
+    top: 50,
+    zIndex: 20,
+    backgroundColor: "#ffffff"
   },
   recentSearch: {
     marginTop: 28
@@ -29,7 +38,8 @@ export default StyleSheet.create({
   recentSearchTitle: {
     fontSize: 23,
     fontWeight: "bold",
-    color: "black"
+    color: "black",
+    zIndex: 0
   },
   image: {
     width: 100,
@@ -64,5 +74,9 @@ export default StyleSheet.create({
     backgroundColor: "#ffffff",
     width: "100%",
     zIndex: 10000
+  },
+  searchPageHeight: {
+    paddingBottom: 400,
+    height: "100%"
   }
 });

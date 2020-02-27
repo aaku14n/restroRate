@@ -50,7 +50,7 @@ export default StyleSheet.create({
     color: "#000000"
   },
   textArea: {
-    height: 150,
+    height: 120,
 
     paddingLeft: 15,
     paddingTop: 10,
