@@ -150,56 +150,60 @@ class Search extends React.Component {
               <ActivityIndicator size="large" color="#c4c4c4" />
             </View>
           ) : (
-            <View style={styles.recommendWrapper}>
-              <View>
-                {searchResult.dishes && searchResult.restaurants && (
-                  <Text style={styles.recentSearchTitle}>
-                    Recomendation based on your search
-                  </Text>
-                )}
-              </View>
-              <ScrollView style={styles.listItemWrapper}>
-                {searchResult &&
-                searchResult.dishes &&
-                searchResult.dishes.map ? (
-                  searchResult.dishes.map((recent, id) => {
-                    return (
-                      <ListItemComponent
-                        key={id}
-                        imgUri={recent.dishImage}
-                        name={recent.name}
-                        onPress={() =>
-                          this.onGotoDetails(recent.restaurantInfo._id)
-                        }
-                        message={recent.message}
-                        rating={recent.averageRating}
-                        peoples={recent.totalReviews}
-                        subHeading={recent.restaurantInfo.name}
-                      />
-                    );
-                  })
-                ) : (
-                  <Text />
-                )}
-                {searchResult &&
-                searchResult.restaurants &&
-                searchResult.restaurants.map ? (
-                  searchResult.restaurants.map((recent, id) => {
-                    return (
-                      <ListItemComponent
-                        key={id}
-                        imgUri={getRestaurantsUrl(recent.restaurantImage)}
-                        name={recent.name}
-                        onPress={() => this.onGotoDetails(recent._id)}
-                        rating={recent.averageRating}
-                        peoples={recent.totalReviews}
-                      />
-                    );
-                  })
-                ) : (
-                  <Text />
-                )}
-              </ScrollView>
+            <View>
+              {!this.state.restroSuggestion && (
+                <View style={styles.recommendWrapper}>
+                  <View>
+                    {searchResult.dishes && searchResult.restaurants && (
+                      <Text style={styles.recentSearchTitle}>
+                        Recomendation based on your search
+                      </Text>
+                    )}
+                  </View>
+                  <ScrollView style={styles.listItemWrapper}>
+                    {searchResult &&
+                    searchResult.dishes &&
+                    searchResult.dishes.map ? (
+                      searchResult.dishes.map((recent, id) => {
+                        return (
+                          <ListItemComponent
+                            key={id}
+                            imgUri={recent.dishImage}
+                            name={recent.name}
+                            onPress={() =>
+                              this.onGotoDetails(recent.restaurantInfo._id)
+                            }
+                            message={recent.message}
+                            rating={recent.averageRating}
+                            peoples={recent.totalReviews}
+                            subHeading={recent.restaurantInfo.name}
+                          />
+                        );
+                      })
+                    ) : (
+                      <Text />
+                    )}
+                    {searchResult &&
+                    searchResult.restaurants &&
+                    searchResult.restaurants.map ? (
+                      searchResult.restaurants.map((recent, id) => {
+                        return (
+                          <ListItemComponent
+                            key={id}
+                            imgUri={getRestaurantsUrl(recent.restaurantImage)}
+                            name={recent.name}
+                            onPress={() => this.onGotoDetails(recent._id)}
+                            rating={recent.averageRating}
+                            peoples={recent.totalReviews}
+                          />
+                        );
+                      })
+                    ) : (
+                      <Text />
+                    )}
+                  </ScrollView>
+                </View>
+              )}
             </View>
           )}
         </View>
