@@ -19,7 +19,6 @@ export default StyleSheet.create({
     width: "100%"
   },
   searchInput: {
-    height: "auto",
     marginTop: 110,
     width: "100%",
     alignItems: "center"
@@ -58,7 +57,6 @@ export default StyleSheet.create({
   },
   frndSuggest: {
     padding: 10,
-    position: "relative",
     borderColor: "#c4c4c4",
     borderBottomWidth: 1,
     borderLeftWidth: 1,

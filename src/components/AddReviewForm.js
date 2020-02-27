@@ -720,7 +720,7 @@ class AddReviewForm extends React.Component {
                     </View>
                     <View style={styles.buttonsSkip}>
                       <TouchableHighlight onPress={() => this.onShare()}>
-                        <Text style={styles.skipTitle}>OR Share link</Text>
+                        <Text style={styles.skipTitle}>OR Recommand Via</Text>
                       </TouchableHighlight>
                     </View>
                     <View>

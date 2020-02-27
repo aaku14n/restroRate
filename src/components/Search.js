@@ -64,39 +64,43 @@ class Search extends React.Component {
           <HeaderContainer />
         </View>
         <View style={styles.subBase}>
-          <View style={styles.searchInput}>
-            <TextInput
-              style={styles.input}
-              placeholder="Search restaurants or Cuisines"
-              placeholderTextColor="black"
-              onChangeText={text => this.searchText(text)}
-              onBlur={() => this.onBlurCall()}
-              value={this.state.searchString}
-            />
-            {this.state.restroSuggestion &&
-            this.props.searchRestroListingResponse &&
-            this.props.searchRestroListingResponse.map ? (
-              this.props.searchRestroListingResponse
-                .splice(0, 5)
-                .map((restro, key) => {
-                  return (
-                    <View style={{ width: "100%" }}>
-                      <TouchableWithoutFeedback
-                        onPress={() => this.selectedRestroName(restro)}
-                        underlayColor={"transparent"}
-                        key={key}
-                        style={styles.frndSuggest}
-                      >
-                        <View style={{ width: "100%" }}>
-                          <Text style={{ marginLeft: 15 }}>{restro.name}</Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    </View>
-                  );
-                })
-            ) : (
-              <Text />
-            )}
+          <View>
+            <View style={styles.searchInput}>
+              <TextInput
+                style={styles.input}
+                placeholder="Search restaurants or Cuisines"
+                placeholderTextColor="black"
+                onChangeText={text => this.searchText(text)}
+                onBlur={() => this.onBlurCall()}
+                value={this.state.searchString}
+              />
+              {this.state.restroSuggestion &&
+              this.props.searchRestroListingResponse &&
+              this.props.searchRestroListingResponse.map ? (
+                this.props.searchRestroListingResponse
+                  .splice(0, 5)
+                  .map((restro, key) => {
+                    return (
+                      <View style={{ width: "100%" }} key={key}>
+                        <TouchableWithoutFeedback
+                          onPress={() => this.selectedRestroName(restro)}
+                          underlayColor={"transparent"}
+                          key={key}
+                          style={styles.frndSuggest}
+                        >
+                          <View style={{ width: "100%" }}>
+                            <Text style={{ marginLeft: 15 }}>
+                              {restro.name}
+                            </Text>
+                          </View>
+                        </TouchableWithoutFeedback>
+                      </View>
+                    );
+                  })
+              ) : (
+                <Text />
+              )}
+            </View>
           </View>
           {recentSearch && recentSearch.length > 0 ? (
             <View style={styles.recentSearch}>

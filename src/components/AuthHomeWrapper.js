@@ -6,9 +6,7 @@ import {
   ActivityIndicator,
   TouchableHighlight,
   StyleSheet,
-  AppState,
-  Platform,
-  Linking
+  AppState
 } from "react-native";
 import SocialLoginContainer from "../containers/SocialLoginContainer";
 import AuthContainer from "../containers/AuthContainer";
@@ -28,34 +26,12 @@ function AuthHomeWrapper(props) {
       }
     }
     AppState.addEventListener("change", handleChange);
-    if (Platform.OS === "android") {
-      Linking.getInitialURL().then(url => {
-        navigate(url);
-      });
-    } else {
-      Linking.addEventListener("url", handleOpenURL);
-    }
 
     return () => {
       AppState.removeEventListener("change", handleChange);
-      Linking.removeEventListener("url", handleOpenURL);
     };
   });
-  const handleOpenURL = event => {
-    navigate(event.url);
-  };
-  const navigate = url => {
-    const { navigate } = props.navigation;
-    const route = url.replace(/.*?:\/\//g, "");
-    const restroId = route.match(/\/([^\/]+)\/?$/)[1];
-    const routeName = route.split("/")[0];
 
-    if (routeName === "restaurant") {
-      navigate("RestroDetails", {
-        restroId: restroId
-      });
-    }
-  };
   const retryLocation = () => {
     props.getCurrentLocation();
   };
