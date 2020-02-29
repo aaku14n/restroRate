@@ -171,15 +171,17 @@ class AddReviewForm extends React.Component {
     this.navigate(event.url);
   };
   navigate = url => {
+    const routeName = url.split("/")[2];
     const { navigate } = this.props.navigation;
-    const route = url.replace(/.*?:\/\//g, "");
-    const restroId = route.match(/\/([^\/]+)\/?$/)[1];
-    const routeName = route.split("/")[0];
-
     if (routeName === "restaurant") {
+      const route = url.replace(/.*?:\/\//g, "")
+      const restroId = route.match(/\/([^\/]+)\/?$/)[1];  
       navigate("RestroDetails", {
         restroId: restroId
       });
+    }
+    else if(routeName === "recommend"){
+      navigate("RecommendScreen");
     }
   };
   openAlert = message => {
