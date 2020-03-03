@@ -77,12 +77,6 @@ class AddReviewForm extends React.Component {
     );
   }
 
-  componentWillUnmount() {
-    Linking.removeEventListener("url", this.handleOpenURL);
-    this.keyboardDidShowSub.remove();
-    this.keyboardDidHideSub.remove();
-  }
-
   completeRate(rating) {
     this.setState({
       rating
@@ -157,15 +151,19 @@ class AddReviewForm extends React.Component {
   };
 
   componentDidMount() {
-    if (Platform.OS === "android") {
-      Linking.getInitialURL().then(url => {
+    Linking.addEventListener("url", this.handleOpenURL);
+    Linking.getInitialURL().then(url => {
+      if (url) {
         this.navigate(url);
-      });
-    } else {
-      Linking.addEventListener("url", this.handleOpenURL);
-    }
+      }
+    });
     this.onAccessCurrentLocation();
     this.props.getAllUser();
+  }
+  componentWillUnmount() {
+    Linking.removeEventListener("url", this.handleOpenURL);
+    this.keyboardDidShowSub.remove();
+    this.keyboardDidHideSub.remove();
   }
   handleOpenURL = event => {
     this.navigate(event.url);
