@@ -78,9 +78,9 @@ class AddReviewForm extends React.Component {
   }
 
   componentWillUnmount() {
+    Linking.removeEventListener("url", this.handleOpenURL);
     this.keyboardDidShowSub.remove();
     this.keyboardDidHideSub.remove();
-    Linking.removeEventListener("url", this.handleOpenURL);
   }
 
   completeRate(rating) {
@@ -157,8 +157,6 @@ class AddReviewForm extends React.Component {
   };
 
   componentDidMount() {
-    this.onAccessCurrentLocation();
-    this.props.getAllUser();
     if (Platform.OS === "android") {
       Linking.getInitialURL().then(url => {
         this.navigate(url);
@@ -166,6 +164,8 @@ class AddReviewForm extends React.Component {
     } else {
       Linking.addEventListener("url", this.handleOpenURL);
     }
+    this.onAccessCurrentLocation();
+    this.props.getAllUser();
   }
   handleOpenURL = event => {
     this.navigate(event.url);
@@ -174,13 +174,12 @@ class AddReviewForm extends React.Component {
     const routeName = url.split("/")[2];
     const { navigate } = this.props.navigation;
     if (routeName === "restaurant") {
-      const route = url.replace(/.*?:\/\//g, "")
-      const restroId = route.match(/\/([^\/]+)\/?$/)[1];  
+      const route = url.replace(/.*?:\/\//g, "");
+      const restroId = route.match(/\/([^\/]+)\/?$/)[1];
       navigate("RestroDetails", {
         restroId: restroId
       });
-    }
-    else if(routeName === "recommend"){
+    } else if (routeName === "recommend") {
       navigate("RecommendScreen");
     }
   };
