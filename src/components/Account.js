@@ -47,7 +47,7 @@ function Account(props) {
   const editProfile = () => {
     props.navigation.navigate("EditScreen");
   };
-  console.log(profilePic);
+
   return (
     <View style={styles.base}>
       <View style={styles.infoWrapper}>
