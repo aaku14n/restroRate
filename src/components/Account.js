@@ -10,8 +10,6 @@ import {
   RefreshControl
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ReviewComponent from "./General/ReviewComponent";
-import { renderDateFormat } from "../utils/DateUtils";
 import ProfilePic from "./ProfilePic";
 function Account(props) {
   let profilePic,
@@ -49,6 +47,7 @@ function Account(props) {
   const editProfile = () => {
     props.navigation.navigate("EditScreen");
   };
+  console.log(profilePic);
   return (
     <View style={styles.base}>
       <View style={styles.infoWrapper}>
@@ -73,17 +72,54 @@ function Account(props) {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity onPress={() => editProfile()}>
-          <Text style={styles.editText}>Edit Profile</Text>
-        </TouchableOpacity>
       </View>
       <View style={styles.reviews}>
-        <TouchableOpacity
-          style={styles.myReviews}
-          onPress={() => showReviewws()}
-        >
-          <Text style={styles.reviewTab}>My Reviews</Text>
-        </TouchableOpacity>
+        <View style={styles.tabs}>
+          <TouchableOpacity
+            style={styles.myReviews}
+            onPress={() => showReviewws()}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <View style={styles.tabIcon}>
+                <Image
+                  style={styles.reviewIcon}
+                  source={require("../../assets/my-review.png")}
+                />
+              </View>
+              <View>
+                <Text style={styles.reviewTab}>My Reviews</Text>
+              </View>
+            </View>
+            <View style={styles.arrowIcon}>
+              <Image
+                style={styles.backIcon}
+                source={require("../../assets/back.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.myReviews}
+            onPress={() => editProfile()}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <View style={styles.tabIcon}>
+                <Image
+                  style={styles.reviewIcon}
+                  source={require("../../assets/account-settings.png")}
+                />
+              </View>
+              <View>
+                <Text style={styles.reviewTab}>Account Settings</Text>
+              </View>
+            </View>
+            <View style={styles.arrowIcon}>
+              <Image
+                style={styles.backIcon}
+                source={require("../../assets/back.png")}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

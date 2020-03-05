@@ -120,6 +120,9 @@ export default StyleSheet.create({
     marginTop: 40
   },
   tncText: {
-    fontSize: 14
+    fontSize: 14,
+    borderColor: "#000",
+    paddingBottom: 5,
+    borderBottomWidth: 1
   }
 });
