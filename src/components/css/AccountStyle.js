@@ -49,9 +49,7 @@ export default StyleSheet.create({
     transform: [{ rotate: "-90deg" }]
   },
   reviews: {
-    marginTop: 30,
-    paddingLeft: 20,
-    paddingRight: 20
+    marginTop: 30
   },
   myReview: {
     fontSize: 20,
@@ -62,5 +60,41 @@ export default StyleSheet.create({
     borderBottomWidth: 2,
     marginBottom: 30,
     paddingBottom: 10
+  },
+  myReviews: {
+    width: "100%",
+    borderColor: "#000",
+    borderWidth: 1,
+    alignContent: "center",
+    alignItems: "center",
+    padding: 10
+  },
+  reviewTab: {
+    fontSize: 20
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    marginTop: 10,
+    marginBottom: 30,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  iconWrapper: {
+    width: "32%"
+  },
+  icon: {
+    width: 30,
+    height: 30
+  },
+  headingWrapper: {
+    fontWeight: "bold",
+    fontSize: 20
+  },
+  reviewBase: {
+    width: "100%",
+    height: "100%",
+    padding: 10
   }
 });

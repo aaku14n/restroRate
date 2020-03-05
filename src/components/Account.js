@@ -41,10 +41,10 @@ function Account(props) {
       props.myAccountReviews();
     }
   });
-  const doRefresh = async () => {
-    await setRefresing(true);
-    await props.myAccountReviews();
-    await setRefresing(false);
+  const showReviewws = () => {
+    props.navigation.navigate("ReviewScreen", {
+      reviewList: props.reviewList
+    });
   };
   const editProfile = () => {
     props.navigation.navigate("EditScreen");
@@ -78,33 +78,12 @@ function Account(props) {
         </TouchableOpacity>
       </View>
       <View style={styles.reviews}>
-        <View style={styles.heading}>
-          <Text style={styles.myReview}>My Reviews</Text>
-        </View>
-        <View style={styles.reviewComponentWrapper}>
-          {props.reviewList && props.reviewList.length > 0 ? (
-            <FlatList
-              data={props.reviewList}
-              keyExtractor={item => item._id}
-              renderItem={({ item }) => (
-                <ReviewComponent
-                  dishname={item.restaurantInfo.name}
-                  restroName={item.dishInfo.name}
-                  pic={item.dishInfo.dishImage}
-                  review={item.feedback}
-                  rating={item.rate}
-                  time={renderDateFormat(item.createdAt)}
-                  rightAligned={true}
-                />
-              )}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={doRefresh} />
-              }
-            />
-          ) : (
-            <Text />
-          )}
-        </View>
+        <TouchableOpacity
+          style={styles.myReviews}
+          onPress={() => showReviewws()}
+        >
+          <Text style={styles.reviewTab}>My Reviews</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
