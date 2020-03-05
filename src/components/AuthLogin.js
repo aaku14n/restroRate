@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./css/AuthLoginStyle";
-import { Text, View, Image, ActivityIndicator, Button } from "react-native";
+import { Text, View, Image, ActivityIndicator, Linking } from "react-native";
 import * as Google from "expo-google-app-auth";
 import * as Facebook from "expo-facebook";
 import { ANDROID_CLIENT_ID, IOS_CLIENT_ID, APP_ID } from "../Constant";
@@ -77,6 +77,15 @@ function AuthLogin(props) {
   const guestLogin = () => {
     props.guestLogin();
   };
+  const viewTnC = () => {
+    Linking.canOpenURL("http://disherve.com/tnc").then(supported => {
+      if (supported) {
+        Linking.openURL("http://disherve.com/tnc");
+      } else {
+        console.log("Don't know how to open URI: " + "http://disherve.com/tnc");
+      }
+    });
+  };
   if (props.userLoginLoading) {
     return (
       <View style={styles.loader}>
@@ -143,6 +152,12 @@ function AuthLogin(props) {
               <Text style={styles.guestText}>Continue as Guest</Text>
             </View>
           </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => viewTnC()}
+          style={styles.tncButton}
+        >
+          <Text style={styles.tncText}>View Term and Conditions</Text>
         </TouchableWithoutFeedback>
       </View>
     </View>

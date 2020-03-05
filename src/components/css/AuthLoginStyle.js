@@ -115,5 +115,11 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center"
+  },
+  tncButton: {
+    marginTop: 40
+  },
+  tncText: {
+    fontSize: 14
   }
 });
