@@ -10,9 +10,9 @@ import {
   RefreshControl
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ReviewComponent from "./General/ReviewComponent";
 import { renderDateFormat } from "../utils/DateUtils";
 import backArrow from "../../assets/back.png";
+import ReviewContainer from "../containers/ReviewContainer";
 function AccountReviewScreen(props) {
   const goBack = () => {
     props.navigation.goBack();
@@ -37,7 +37,7 @@ function AccountReviewScreen(props) {
               data={getReviewList}
               keyExtractor={item => item._id}
               renderItem={({ item }) => (
-                <ReviewComponent
+                <ReviewContainer
                   dishname={item.restaurantInfo.name}
                   restroName={item.dishInfo.name}
                   pic={item.dishInfo.dishImage}
@@ -45,6 +45,9 @@ function AccountReviewScreen(props) {
                   rating={item.rate}
                   time={renderDateFormat(item.createdAt)}
                   rightAligned={true}
+                  showShare={true}
+                  dishId={item.dishInfo._id}
+                  restaurantId={item.restaurantInfo._id}
                 />
               )}
             />

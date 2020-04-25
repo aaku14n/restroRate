@@ -17,12 +17,12 @@ import styles from "./css/RestroDetailComponent";
 import modalStyles from "./css/AddReviewFormStyle";
 import RatingComponent from "./General/RatingComponent";
 import ListItemComponent from "./ListItemComponent";
-import ReviewComponent from "./General/ReviewComponent";
 import { getRestaurantsUrl } from "../utils/Utils";
 import { renderDateFormat } from "../utils/DateUtils";
 import tick from "../../assets/tick.png";
 import { Linking } from "expo";
 import { SEND_RECOMMEND_SUCCESS } from "../actions/Action";
+import ReviewContainer from "../containers/ReviewContainer";
 const { State: TextInputState } = TextInput;
 export default class RestroDetailsComponent extends React.Component {
   constructor(props) {
@@ -307,7 +307,7 @@ export default class RestroDetailsComponent extends React.Component {
           {details && details.reviews && details.reviews.map
             ? details.reviews.map((recent, id) => {
                 return (
-                  <ReviewComponent
+                  <ReviewContainer
                     key={id}
                     restroName={recent.dishInfo.name}
                     pic={recent.dishInfo.dishImage}
