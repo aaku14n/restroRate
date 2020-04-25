@@ -125,7 +125,11 @@ class EditProfile extends React.Component {
       );
     }
     return (
-      <View style={styles.base}>
+      <ScrollView
+        style={styles.base}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={"handled"}
+      >
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => this.goBack()}
@@ -175,7 +179,7 @@ class EditProfile extends React.Component {
             <Text style={styles.goBack}>Cancel</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
