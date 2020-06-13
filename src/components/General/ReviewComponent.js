@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Image,
@@ -8,7 +8,10 @@ import {
   TextInput,
   Keyboard,
   Share,
-  ScrollView
+  ScrollView,
+  Animated,
+  Dimensions,
+  UIManager
 } from "react-native";
 import profile from "../../../assets/profilePic.png";
 import styles from "./css/ReviewComponentStyle";
@@ -16,6 +19,7 @@ import RatingComponent from "./RatingComponent";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SEND_RECOMMEND_SUCCESS } from "../../actions/Action";
 import tick from "../../../assets/tick.png";
+import RecommendationForm from "./RecommendationForm";
 
 function ReviewComponent(props) {
   const [openModal, setOpenModal] = useState(false);
@@ -24,6 +28,7 @@ function ReviewComponent(props) {
   const [searchFriend, setSearchFriend] = useState("");
   const [frndSuggestion, setFrndSuggestion] = useState(false);
   const [comments, setComments] = useState("");
+  const [shift, setShift] = useState(new Animated.Value(0));
 
   const onOpenModal = () => {
     console.log("open");
@@ -53,8 +58,9 @@ function ReviewComponent(props) {
     setFrndSuggestion(true);
   };
   const changeOnBlur = () => {
-    setFrndSuggestion(false);
-    setSearchFriend("");
+    // setFrndSuggestion(false);
+    // setSearchFriend("");
+    Keyboard.dismiss();
   };
   const selectedRecommendFriend = userObj => {
     console.log("here", userObj);
@@ -112,6 +118,7 @@ function ReviewComponent(props) {
       setUserIDs([]);
     }
   };
+
   const friendsList =
     props.userList &&
     props.userList.filter(friend => {
@@ -171,158 +178,12 @@ function ReviewComponent(props) {
         <Text style={styles.review}>{props.review}</Text>
       </View>
       {openModal ? (
-        <View>
-          <Modal animationType="slide" transparent={true} visible={openModal}>
-            <View style={styles.modal}>
-              <ScrollView
-                keyboardShouldPersistTaps={"handled"}
-                showsVerticalScrollIndicator={false}
-              >
-                <TouchableHighlight
-                  onPress={() => closeModal()}
-                  style={styles.closeModalIcon}
-                  underlayColor={"#fff"}
-                >
-                  <Image
-                    style={styles.icon}
-                    source={require("../../../assets/plus.png")}
-                  />
-                </TouchableHighlight>
-                <View style={styles.header}>
-                  <View>
-                    <Text style={styles.heading}>Recommendation</Text>
-                  </View>
-                </View>
-                <View style={styles.tagWrapper}>
-                  {userNames && userNames.map
-                    ? userNames.map((tag, id) => {
-                        return (
-                          <View style={styles.tag} key={id}>
-                            <Text>{tag.name}</Text>
-                            <TouchableHighlight
-                              onPress={() => clearTags(tag.id)}
-                              underlayColor={"#fff"}
-                            >
-                              <Image
-                                style={{
-                                  height: 18,
-                                  width: 18,
-                                  transform: [{ rotate: "45deg" }],
-                                  marginLeft: 10
-                                }}
-                                source={require("../../../assets/plus.png")}
-                              />
-                            </TouchableHighlight>
-                          </View>
-                        );
-                      })
-                    : null}
-                </View>
-                <View style={styles.dropdown}>
-                  <View style={styles.input}>
-                    <TextInput
-                      style={styles.inputName}
-                      placeholder="Search Friend"
-                      onChangeText={text => onChnageFriend(text)}
-                      onFocus={() => firstTouchOnFriendInput()}
-                      value={searchFriend}
-                      placeholderTextColor="#c4c4c4"
-                      onBlur={() => changeOnBlur()}
-                    />
-                    {frndSuggestion && friendsList ? (
-                      friendsList.splice(0, 5).map((user, key) => {
-                        return (
-                          <TouchableHighlight
-                            onPress={() => selectedRecommendFriend(user)}
-                            underlayColor={"transparent"}
-                            key={key}
-                            style={styles.frndSuggest}
-                          >
-                            <View
-                              style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "space-between"
-                              }}
-                            >
-                              <View
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row"
-                                }}
-                              >
-                                <Image
-                                  source={{ uri: user.profilePic }}
-                                  style={{
-                                    width: 25,
-                                    height: 25,
-                                    borderRadius: 15,
-                                    marginRight: 25
-                                  }}
-                                />
-                                <Text>{user.name}</Text>
-                              </View>
-                              {userIDs.includes(user._id) ? (
-                                <Image
-                                  source={tick}
-                                  style={{
-                                    width: 20,
-                                    height: 20,
-                                    marginRight: 25
-                                  }}
-                                />
-                              ) : null}
-                            </View>
-                          </TouchableHighlight>
-                        );
-                      })
-                    ) : (
-                      <Text />
-                    )}
-                  </View>
-                </View>
-                <View style={styles.buttonsSkip}>
-                  <TouchableHighlight
-                    onPress={() => onShare()}
-                    underlayColor={"transparent"}
-                  >
-                    <Text style={styles.skipTitle}>OR Recommand Via</Text>
-                  </TouchableHighlight>
-                </View>
-                <View>
-                  <View style={styles.commentsInput}>
-                    <TextInput
-                      style={styles.textArea}
-                      placeholder="Comments"
-                      numberOfLines={10}
-                      multiline
-                      onChangeText={text => onChnageComments(text)}
-                      value={comments}
-                    />
-                  </View>
-
-                  <View style={styles.buttons}>
-                    <TouchableHighlight
-                      onPress={() => sendRecommd()}
-                      style={styles.modalButton}
-                    >
-                      <Text style={styles.buttonTitle}>RECOMMEND</Text>
-                    </TouchableHighlight>
-                  </View>
-
-                  <View style={styles.buttonsSkip}>
-                    <TouchableHighlight
-                      underlayColor={"#fff"}
-                      onPress={() => closeModal()}
-                    >
-                      <Text style={styles.skipTitle}>SKIP</Text>
-                    </TouchableHighlight>
-                  </View>
-                </View>
-              </ScrollView>
-            </View>
-          </Modal>
-        </View>
+        <RecommendationForm
+          userList={props.userList}
+          getAllUser={props.getAllUser}
+          sendRecommandation={props.sendRecommandation}
+          myRecommendation={props.myRecommendation}
+        />
       ) : null}
     </ScrollView>
   );

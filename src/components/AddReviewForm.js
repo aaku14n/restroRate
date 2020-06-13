@@ -763,12 +763,10 @@ class AddReviewForm extends React.Component {
   }
 
   handleKeyboardDidShow = event => {
-    console.log("came in function");
     if (this.state.showFirstModal) {
-      console.log("in");
       const { height: windowHeight } = Dimensions.get("window");
       const keyboardHeight = event.endCoordinates.height;
-      console.log(windowHeight, keyboardHeight);
+
       const currentlyFocusedField = TextInputState.currentlyFocusedField();
       UIManager.measure(
         currentlyFocusedField,
