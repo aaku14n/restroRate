@@ -36,6 +36,7 @@ import {
 import * as Permissions from "expo-permissions";
 
 import { Animated, Dimensions, Keyboard, UIManager } from "react-native";
+import { insertItem, fetchSearchedItems } from "../utils/Database.utils";
 const { State: TextInputState } = TextInput;
 
 class AddReviewForm extends React.Component {
@@ -62,7 +63,8 @@ class AddReviewForm extends React.Component {
       query: "",
       searchFriend: "",
       userName: "",
-      showFirstModal: false
+      showFirstModal: false,
+      cachedRestoDetails: []
     };
   }
 
@@ -159,7 +161,17 @@ class AddReviewForm extends React.Component {
     });
     this.onAccessCurrentLocation();
     this.props.getAllUser();
+    this.fetchCachedRestInfo();
   }
+  fetchCachedRestInfo = async () => {
+    const results = await fetchSearchedItems();
+
+    let finalData = results.map(i => JSON.parse(i.value));
+
+    this.setState({
+      cachedRestoDetails: finalData
+    });
+  };
   componentWillUnmount() {
     Linking.removeEventListener("url", this.handleOpenURL);
     this.keyboardDidShowSub.remove();
@@ -256,8 +268,12 @@ class AddReviewForm extends React.Component {
           ? customRestoObj
           : { candidates: this.state.restaurantDetails }
       };
+
       const submitReviewResponse = await this.props.submitReview(reviewObj);
       if (submitReviewResponse.type === ADD_REVIEW_SUCCESS) {
+        if (this.state.restaurantDetails) {
+          await insertItem(this.state.restaurantDetails[0]);
+        }
         this.props.getHomeData(this.props.lat, this.props.long);
         this.props.myAccountReviews();
         this.setState({
@@ -271,7 +287,7 @@ class AddReviewForm extends React.Component {
           query: "",
           showFirstModal: false
         });
-        addReviewFormTab = false;
+        this.fetchCachedRestInfo();
       }
     }
   };
@@ -433,6 +449,22 @@ class AddReviewForm extends React.Component {
         </View>
       );
     }
+    let restroDetails = this.state.restaurantList;
+    if (this.state.cachedRestoDetails.length) {
+      let filterCachedData = this.state.cachedRestoDetails.filter(i =>
+        i.name
+          .toLocaleLowerCase()
+          .includes(this.state.query.toLocaleLowerCase())
+      );
+      restroDetails.unshift(...filterCachedData);
+      let filterData = [];
+      restroDetails = restroDetails.splice(0, 10).filter(i => {
+        if (!filterData.find(j => j && j.id == i.id)) {
+          filterData.push(i);
+        }
+      });
+      restroDetails = filterData;
+    }
 
     return (
       <ScrollView
@@ -460,13 +492,13 @@ class AddReviewForm extends React.Component {
                 />
 
                 {this.state.showSuggestions &&
-                this.state.restaurantList &&
-                this.state.restaurantList.length > 0 ? (
-                  this.state.restaurantList.splice(0, 5).map((item, key) => {
+                restroDetails &&
+                restroDetails.length > 0 ? (
+                  restroDetails.splice(0, 6).map((item, key) => {
                     return (
                       <TouchableWithoutFeedback
                         onPress={() => this.onSelectRestaurant(item)}
-                        key={item.id}
+                        key={`${item.id}-${key}`}
                         style={styles.itemSuggest}
                       >
                         <Text>{item.name}</Text>
