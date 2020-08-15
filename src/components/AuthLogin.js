@@ -76,7 +76,6 @@ function AuthLogin(props) {
   };
 
   const appleLogin = async userDetail => {
-    console.log(userDetail, userDetail.fullName.givenName);
     const userDetailsObj = {
       appleId: userDetail.user,
       accessToken: userDetail.identityToken,
