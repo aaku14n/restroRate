@@ -7,6 +7,7 @@ import { ANDROID_CLIENT_ID, IOS_CLIENT_ID, APP_ID } from "../Constant";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import logoImg from "../../assets/logo.png";
 import Auth from "../Auth";
+import LoginWithApple from "./LoginWithApple";
 function AuthLogin(props) {
   const googleLogin = async function signInWithGoogleAsync() {
     try {
@@ -74,6 +75,19 @@ function AuthLogin(props) {
     }
   };
 
+  const appleLogin = async userDetail => {
+    console.log(userDetail, userDetail.fullName.givenName);
+    const userDetailsObj = {
+      appleId: userDetail.user,
+      accessToken: userDetail.identityToken,
+      name: userDetail.fullName.givenName ? userDetail.fullName.givenName : "",
+      email: userDetail.email,
+      socialPlatform: "Apple",
+      profilePic: ""
+    };
+    await props.userLogin(userDetailsObj);
+    alert("Logged in!", `Hi ${await response.json()}!`);
+  };
   const guestLogin = () => {
     props.guestLogin();
   };
@@ -134,6 +148,9 @@ function AuthLogin(props) {
             </View>
           </View>
         </TouchableWithoutFeedback>
+
+        <LoginWithApple onLogin={appleLogin} />
+
         <View style={styles.orButton}>
           <Text style={styles.orText}>OR</Text>
         </View>

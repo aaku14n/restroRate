@@ -15,10 +15,15 @@ function Account(props) {
   let profilePic,
     name = "Hi User",
     email = "xyz@gmail.com";
+  console.log(props.loginDetails.data.name);
   if (props.loginDetails && props.loginDetails.data) {
     profilePic = props.loginDetails.data.profilePic;
-    name = props.loginDetails.data.name;
-    email = props.loginDetails.data.email;
+    if (props.loginDetails.data.name) {
+      name = props.loginDetails.data.name;
+    }
+    if (props.loginDetails.data.email) {
+      email = props.loginDetails.data.email;
+    }
   }
   const [refreshing, setRefresing] = useState(false);
   const logout = () => {

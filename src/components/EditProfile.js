@@ -23,8 +23,16 @@ class EditProfile extends React.Component {
     super(props);
 
     this.state = {
-      photo: { uri: props.loginDetails ? props.loginDetails.profilePic : "" },
-      updatedName: props.loginDetails ? props.loginDetails.name : "",
+      photo: {
+        uri:
+          props.loginDetails && props.loginDetails.profilePic
+            ? props.loginDetails.profilePic
+            : ""
+      },
+      updatedName:
+        props.loginDetails && props.loginDetails.name
+          ? props.loginDetails.name
+          : "",
       imageLoading: false
     };
   }

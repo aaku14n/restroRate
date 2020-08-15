@@ -438,9 +438,12 @@ class AddReviewForm extends React.Component {
     const friendsList =
       this.props.userList &&
       this.props.userList.filter(friend => {
-        return friend.name
-          .toUpperCase()
-          .includes(this.state.searchFriend.toUpperCase());
+        return (
+          friend.name &&
+          friend.name
+            .toUpperCase()
+            .includes(this.state.searchFriend.toUpperCase())
+        );
       });
     if (this.props.addReviewLoading) {
       return (
