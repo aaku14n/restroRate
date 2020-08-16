@@ -8,7 +8,7 @@
     "facebookAppId": "162268665100396",
     "facebookDisplayName": "React-Native",
     "platforms": ["ios", "android", "web"],
-    "version": "1.2.8",
+    "version": "1.2.9",
     "orientation": "portrait",
     "scheme": "disherve",
     "icon": "./assets/homeIcon.png",
@@ -24,6 +24,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "in.littra.disherve",
+      "usesAppleSignIn": true,
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to capture dish images",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses the user's location to find nearest hotel or restaurants."
