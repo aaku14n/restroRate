@@ -305,8 +305,8 @@ class AddReviewForm extends React.Component {
     let permissionResult = await this.getLocationAsync();
 
     if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
+      // alert("Permission to access camera roll is required!");
+      return false;
     }
     let pickerResult = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
@@ -323,8 +323,8 @@ class AddReviewForm extends React.Component {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
+      // alert("Permission to access camera roll is required!");
+      return false;
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync({

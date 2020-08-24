@@ -17,8 +17,8 @@ export async function registerForPushNotificationsAsync() {
   // Stop here if the user did not grant permissions
 
   if (status !== "granted") {
-    alert("No notification permissions!");
-    return;
+    // alert("No notification permissions!");
+    return false;
   }
 
   // Get the token that identifies this device
