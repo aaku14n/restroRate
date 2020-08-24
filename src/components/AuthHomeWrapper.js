@@ -43,7 +43,7 @@ function AuthHomeWrapper(props) {
   };
 
   if (props.loginDetails) {
-    if (!props.lat || !props.long) {
+    if (props.locationLoading) {
       return (
         <View style={styles.loader}>
           <ActivityIndicator size="large" color="#c4c4c4" />

@@ -7,7 +7,8 @@ const mapStateToProps = state => {
   return {
     loginDetails: state.AuthReducer.userLoginDetails,
     lat: state.Reducer.lat,
-    long: state.Reducer.long
+    long: state.Reducer.long,
+    locationLoading: state.Reducer.locationLoading
   };
 };
 const mapDispatchToProps = dispatch => {

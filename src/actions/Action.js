@@ -43,6 +43,7 @@ export const SEARCH_RESTRO_LIST_SUCCESS = "SEARCH_RESTRO_LIST_SUCCESS";
 export const SEARCH_RESTRO_LIST_FAILURE = "SEARCH_RESTRO_LIST_FAILURE";
 
 export const GET_LAT_LONG = "GET_LAT_LONG";
+export const GET_LAT_LONG_FAILED = "GET_LAT_LONG_FAILED";
 
 export const UPDATE_PROFILE_REQUEST = "UPDATE_PROFILE_REQUEST";
 export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
@@ -352,9 +353,7 @@ export function getCurrentLocation() {
 
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status !== "granted") {
-        return {
-          type: "Erro"
-        };
+        throw new Error("Erro");
       }
 
       let location = await Location.getCurrentPositionAsync({});
@@ -368,9 +367,9 @@ export function getCurrentLocation() {
         long: longitude
       });
     } catch (e) {
-      return {
-        type: "Erro"
-      };
+      return dispatch({
+        type: GET_LAT_LONG_FAILED
+      });
     }
   };
 }

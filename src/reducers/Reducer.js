@@ -51,7 +51,7 @@ const Reducer = (
 
     lat: "",
     long: "",
-    locationLoading: false
+    locationLoading: true
   },
   action
 ) => {
@@ -237,6 +237,13 @@ const Reducer = (
       return Object.assign({}, state, {
         lat: action.lat,
         long: action.long,
+        locationLoading: false
+      });
+
+    case Actions.GET_LAT_LONG_FAILED:
+      return Object.assign({}, state, {
+        lat: "53.335120",
+        long: "-6.270160",
         locationLoading: false
       });
 
