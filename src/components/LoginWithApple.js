@@ -3,16 +3,17 @@ import * as AppleAuthentication from "expo-apple-authentication";
 export default function LoginWithApple(props) {
   return (
     <AppleAuthentication.AppleAuthenticationButton
-      buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+      buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
       buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-      cornerRadius={5}
+      cornerRadius={50}
       style={{
-        width: 250,
-        height: 45,
-
+        width: 300,
+        height: 50,
+        fontSize: 12,
         marginTop: 20,
         borderColor: "#000"
       }}
+      fontSize={12}
       onPress={async () => {
         try {
           const credential = await AppleAuthentication.signInAsync({

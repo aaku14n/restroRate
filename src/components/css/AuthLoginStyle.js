@@ -39,22 +39,22 @@ export default StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderColor: "#ea4335",
-    height: 60,
-    paddingLeft: 70,
-    paddingRight: 70,
+    height: 50,
+
     backgroundColor: "#ea4335",
-    borderRadius: 30
+    borderRadius: 30,
+    width: 300
   },
   googleText: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 14
+    fontSize: 18
   },
   google: {
-    marginLeft: 25
+    marginLeft: 10
   },
   facebook: {
-    marginLeft: 20
+    marginLeft: 10
   },
   facebookLogin: {
     justifyContent: "center",
@@ -62,10 +62,10 @@ export default StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderColor: "#1877f2",
-    height: 60,
-    paddingLeft: 60,
-    paddingRight: 60,
+    height: 50,
+
     backgroundColor: "#1877f2",
+    width: 300,
     borderRadius: 30
   },
   guestLogin: {
@@ -78,12 +78,13 @@ export default StyleSheet.create({
     paddingLeft: 60,
     paddingRight: 60,
     backgroundColor: "#fff",
-    borderRadius: 30
+    borderRadius: 30,
+    width: 300
   },
   facebookText: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 14
+    fontSize: 18
   },
   guestText: {
     color: "#000",
