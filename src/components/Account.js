@@ -15,7 +15,7 @@ function Account(props) {
   let profilePic,
     name = "Hi User",
     email = "xyz@gmail.com";
-  console.log(props.loginDetails.data.name);
+
   if (props.loginDetails && props.loginDetails.data) {
     profilePic = props.loginDetails.data.profilePic;
     if (props.loginDetails.data.name) {

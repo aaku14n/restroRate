@@ -7,7 +7,7 @@ export async function insertItem(data) {
   let checkAlreadyExist = items.find(
     i => i.value && data && JSON.parse(i.value).id == data.id
   );
-  console.log(data, checkAlreadyExist, data.id);
+
   if (!checkAlreadyExist) {
     const stringifiedData = JSON.stringify(data);
     db.transaction(tx => {

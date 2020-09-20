@@ -22,8 +22,7 @@ export default function LoginWithApple(props) {
               AppleAuthentication.AppleAuthenticationScope.EMAIL
             ]
           });
-          console.log("in Apple logged in ");
-          console.log(typeof credential);
+
           props.onLogin(credential);
           // signed in
         } catch (e) {

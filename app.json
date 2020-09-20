@@ -8,7 +8,7 @@
     "facebookAppId": "162268665100396",
     "facebookDisplayName": "React-Native",
     "platforms": ["ios", "android", "web"],
-    "version": "1.3.2",
+    "version": "1.3.3",
     "orientation": "portrait",
     "scheme": "disherve",
     "icon": "./assets/homeIcon.png",

@@ -181,9 +181,12 @@ class RecommendationForm extends React.Component {
     const friendsList =
       this.props.userList &&
       this.props.userList.filter(friend => {
-        return friend.name
-          .toUpperCase()
-          .includes(this.state.searchFriend.toUpperCase());
+        return (
+          friend.name &&
+          friend.name
+            .toUpperCase()
+            .includes(this.state.searchFriend.toUpperCase())
+        );
       });
     if (this.props.addReviewLoading) {
       return (
@@ -360,12 +363,10 @@ class RecommendationForm extends React.Component {
   }
 
   handleKeyboardDidShow = event => {
-    console.log("came in function");
     if (this.state.showFirstModal) {
-      console.log("in");
       const { height: windowHeight } = Dimensions.get("window");
       const keyboardHeight = event.endCoordinates.height;
-      console.log(windowHeight, keyboardHeight);
+
       const currentlyFocusedField = TextInputState.currentlyFocusedField();
       UIManager.measure(
         currentlyFocusedField,

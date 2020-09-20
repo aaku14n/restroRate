@@ -31,16 +31,13 @@ function ReviewComponent(props) {
   const [shift, setShift] = useState(new Animated.Value(0));
 
   const onOpenModal = () => {
-    console.log("open");
     setOpenModal(true);
     props.getAllUser();
   };
   const closeModal = () => {
-    console.log("close");
     setOpenModal(false);
   };
   const clearTags = id => {
-    console.log(id);
     const deletedIndex = userNames.findIndex(test => {
       return test.id == id;
     });
@@ -118,12 +115,6 @@ function ReviewComponent(props) {
       setUserIDs([]);
     }
   };
-
-  const friendsList =
-    props.userList &&
-    props.userList.filter(friend => {
-      return friend.name.toUpperCase().includes(searchFriend.toUpperCase());
-    });
 
   return (
     <ScrollView
